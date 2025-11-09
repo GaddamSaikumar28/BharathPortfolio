@@ -106,11 +106,13 @@ import AdminContactEditor from './pages/admin/editors/AdminContactEditor';
 import AdminSubmissions from './pages/admin/AdminSubmissions';
 import Login from './components/common/Login';
 import SignUp from './components/common/SignUp';
+import ErrorPage from './components/common/ErrorPage';
 const router = createBrowserRouter([
   {
     // --- Public Routes ---
     path: '/',
     element: <RootLayout />,
+    errorElement: <ErrorPage />,
     children: [
       { path: '/', element: <App /> },
       { path: '/about', element: <About /> },
@@ -125,6 +127,7 @@ const router = createBrowserRouter([
     // --- Admin Routes ---
     path: '/admin',
     element: <ProtectedRoute />, // 1. Checks for Auth & Admin Role
+    errorElement: <ErrorPage />,
     children: [
       {
         element: <AdminLayout />, // 2. If allowed, shows the Admin Layout
