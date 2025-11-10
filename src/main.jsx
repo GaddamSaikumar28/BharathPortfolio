@@ -107,6 +107,8 @@ import AdminSubmissions from './pages/admin/AdminSubmissions';
 import Login from './components/common/Login';
 import SignUp from './components/common/SignUp';
 import ErrorPage from './components/common/ErrorPage';
+import AdminPhotoMarqueeEditor from './pages/admin/editors/AdminPhotoMarqueeEditor';
+import AdminPortfolioBannerEditor from './pages/admin/editors/AdminPortfolioBannerEditor';
 const router = createBrowserRouter([
   {
     // --- Public Routes ---
@@ -140,7 +142,9 @@ const router = createBrowserRouter([
           { path: 'homepage-config', element: <AdminHomepage /> },
           { path: 'homepage-config/hero', element: <AdminHeroEditor /> },
           { path: 'homepage-config/logo-cloud', element: <AdminLogoCloudEditor /> },
+          { path: 'homepage-config/photo-marquee', element: <AdminPhotoMarqueeEditor />},  
           { path: 'homepage-config/services', element: <AdminServicesEditor /> },
+          { path: 'homepage-config/portfolio-banner' , element:<AdminPortfolioBannerEditor />},
           { path: 'homepage-config/feature-showcase', element: <AdminFeatureShowcaseEditor /> },
           { path: 'homepage-config/parallax-project', element: <AdminParallaxEditor /> },
           { path: 'homepage-config/toolkit', element: <AdminToolkitEditor /> },

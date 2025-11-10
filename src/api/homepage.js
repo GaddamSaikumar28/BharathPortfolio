@@ -100,6 +100,12 @@ export const fetchBlogPosts = () =>
 export const fetchFAQs = () => fetchData('faqs');
 export const fetchCallToAction = () => fetchSingleton('call_to_action');
 export const fetchGlobalConfig = () => fetchSingleton('global_config');
+export async function fetchPhotoMarquee() {
+  return fetchData('photo_marquee', '*, media_assets ( file_path, alt_text )');
+}
+
+export const fetchPortfolioBanners = () => fetchData('portfolio_banners', '*, media_assets ( file_path, alt_text )');
+
 
 // --- Real-time Subscription Helper ---
 /**
