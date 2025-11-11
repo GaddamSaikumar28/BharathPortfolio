@@ -147,11 +147,11 @@ const PhotoMarquee = () => {
       {/* Fades the edges of the marquees */}
       <div className="relative w-full max-w-7xl mx-auto mask-gradient-horizontal py-8">
         {row1.length > 0 && (
-          <MarqueeRow photos={row1} baseVelocity={-2} /> // Moves left
+          <MarqueeRow photos={row1} baseVelocity={-6} /> // Moves left
         )}
         {row2.length > 0 && (
           <div className="mt-8">
-            <MarqueeRow photos={row2} baseVelocity={2} />
+            <MarqueeRow photos={row2} baseVelocity={6} />
           </div>
         )}
       </div>

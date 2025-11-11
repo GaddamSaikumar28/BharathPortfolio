@@ -94,7 +94,8 @@ const FileInput = ({ name, control, errors, currentImage = null }) => {
 
   const clearFile = (field) => {
     field.onChange(null);
-    setPreview(currentImage); // Revert to original image or null
+    //setPreview(currentImage); // Revert to original image or null
+     setPreview(null);
   };
 
   return (
