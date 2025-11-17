@@ -109,6 +109,8 @@ import SignUp from './components/common/SignUp';
 import ErrorPage from './components/common/ErrorPage';
 import AdminPhotoMarqueeEditor from './pages/admin/editors/AdminPhotoMarqueeEditor';
 import AdminPortfolioBannerEditor from './pages/admin/editors/AdminPortfolioBannerEditor';
+import AdminHeaderEditor from './pages/admin/editors/AdminHeaderEditor';
+import AdminFooterEditor from './pages/admin/editors/AdminFooterEditor';
 const router = createBrowserRouter([
   {
     // --- Public Routes ---
@@ -167,6 +169,8 @@ const router = createBrowserRouter([
           {path:'projects-config/:slug' , element:<AdminProjectEditor />},
           {path:'contact-config' , element:<AdminContactEditor />},
           {path:'submissions' , element: <AdminSubmissions />},
+          {path:'header-config' , element:<AdminHeaderEditor />},
+          {path:'footer-config' , element:<AdminFooterEditor />},
           // { path: 'projects-config/new', element: <AdminProjectEditor /> },
           // { path: 'projects-config/edit/:id', element: <AdminProjectEditor /> },
           // { path: 'contact-config', element: <AdminContactEditor /> },

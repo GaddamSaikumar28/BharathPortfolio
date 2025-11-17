@@ -139,6 +139,7 @@ import {
   Info,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { path } from 'framer-motion/client';
 
 // Sidebar navigation items
 const navItems = [
@@ -157,6 +158,8 @@ const navItems = [
   },
   // { path: '/admin/projects', label: 'Projects', icon: Briefcase },
   { path: '/admin/submissions', label: 'Submissions', icon: Mail },
+  { path: '/admin/header-config', label: 'Header', icon: Settings },
+  {path:'/admin/footer-config', label:'Footer', icon:Settings},
   // { path: '/admin/settings', label: 'Settings', icon: Settings },
 ];
 
