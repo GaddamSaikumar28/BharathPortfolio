@@ -24443,9 +24443,370 @@ export default ProfessionalProjectDetail;
 // };
 
 // export default ProjectCard;
+// import React, { useState, useEffect,useRef} from 'react';
+// import {
+//   motion,
+//   useSpring,
+//   useTransform,
+//   useMotionValue,
+//   useAnimationFrame,
+//   wrap,
+// } from 'framer-motion';
+// import { fetchPhotoMarquee } from '../../api/homepage';
+// import { useHomepageData, getStorageUrl } from '../../hooks/useHomepageData';
+// import AnimateOnScroll from '../common/AnimateOnScroll';
+// import { Loader2 } from 'lucide-react';
+
+// /**
+//  * Individual Photo Item
+//  * Applies the "tossed photo" effect and hover animation.
+//  */
+// const PhotoItem = ({ photo }) => {
+//   const imageUrl = getStorageUrl(photo.media_assets);
+//   // Give each photo a unique, random rotation
+//   const [rotate] = useState(() => Math.random() * 8 - 4); // -4 to +4 degrees
+
+//   if (!imageUrl) {
+//     return null; // Don't render if there's no image
+//   }
+
+//   return (
+//     <motion.div
+//       className="flex-shrink-0 h-64 p-3" // h-64 is the height constraint
+//       style={{ rotate: `${rotate}deg` }}
+//       whileHover={{ scale: 1.1, rotate: 0, zIndex: 10 }}
+//       transition={{ type: 'spring', stiffness: 300, damping: 15 }}
+//     >
+//       <img
+//         src={imageUrl}
+//         alt={photo.media_assets?.alt_text || 'Photo marquee item'}
+//         className="h-full w-auto object-cover rounded-lg shadow-xl bg-gray-200"
+//         loading="lazy"
+//         onError={(e) => {
+//           e.target.src = 'https://placehold.co/400x600/eee/ccc?text=Image';
+//         }}
+//       />
+//     </motion.div>
+//   );
+// };
+
+// /**
+//  * The Marquee Row
+//  * This component uses physics-based animation for the loop.
+//  */
+// const MarqueeRow = ({ photos, baseVelocity = -2 }) => {
+//   const [isHovered, setIsHovered] = useState(false);
+
+//   // Spring-based velocity. This will smoothly transition between speeds.
+//   const targetVelocity = useSpring(baseVelocity, {
+//     stiffness: 400,
+//     damping: 50,
+//   });
+
+//   // Update spring target velocity on hover
+//   useEffect(() => {
+//     targetVelocity.set(isHovered ? baseVelocity * 0.1 : baseVelocity); // Slows to 10% speed on hover
+//   }, [isHovered, baseVelocity, targetVelocity]);
+
+//   // The raw x position, updated by useAnimationFrame
+//   const baseX = useMotionValue(0);
+
+//   // We use useAnimationFrame to update the x position
+//   // based on the target velocity every frame.
+//   useAnimationFrame((t, delta) => {
+//     // Calculate movement based on velocity and time delta
+//     let moveBy = targetVelocity.get() * (delta / 1000); // pixels per second
+
+//     // Use wrap to loop the value from -100% to 0%
+//     // This creates the seamless looping effect.
+//     baseX.set(wrap(-100, 0, baseX.get() + moveBy));
+//   });
+
+//   // Create a percentage-based transform for x
+//   const x = useTransform(baseX, (v) => `${v}%`);
+
+//   // Duplicate the photos for a seamless loop
+//   const allPhotos = [...photos, ...photos];
+
+//   return (
+//     <div
+//       className="w-full overflow-hidden"
+//       onMouseEnter={() => setIsHovered(true)}
+//       onMouseLeave={() => setIsHovered(false)}
+//       style={{
+//         // This creates the cool 3D perspective effect
+//         perspective: '1000px',
+//       }}
+//     >
+//       <motion.div
+//         className="flex"
+//         style={{
+//           x,
+//           rotateX: 5, // Tilts the whole row in 3D
+//         }}
+//       >
+//         {allPhotos.map((photo, i) => (
+//           <PhotoItem photo={photo} key={`${photo.id}-${i}`} />
+//         ))}
+//       </motion.div>
+//     </div>
+//   );
+// };
+
+// /**
+//  * Main PhotoMarquee Component
+//  * Fetches data and renders the two rows.
+//  */
+// const PhotoMarquee = () => {
+//   const { data: photos, loading } = useHomepageData(
+//     fetchPhotoMarquee,
+//     'photo_marquee',
+//     { additionalTables: ['media_assets'] }
+//   );
+
+//   if (loading) {
+//     return (
+//       <section className="py-24 bg-gray-50 flex justify-center">
+//         <Loader2 className="w-12 h-12 animate-spin text-blue-600" />
+//       </section>
+//     );
+//   }
+
+//   if (!photos || photos.length < 4) {
+//     // Don't render if not enough photos
+//     return null;
+//   }
+
+//   // Split photos into two rows
+//   const row1 = photos.filter((p) => p.marquee_row === 1);
+//   const row2 = photos.filter((p) => p.marquee_row === 2);
+
+//   return (
+//     <section className="py-24 bg-gray-50 overflow-hidden">
+//       <AnimateOnScroll className="max-w-3xl mx-auto text-center mb-12">
+//         <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900">
+//           Our Work in Motion
+//         </h2>
+//       </AnimateOnScroll>
+
+//       {/* Fades the edges of the marquees */}
+//       <div className="relative w-full max-w-7xl mx-auto mask-gradient-horizontal py-8">
+//         {row1.length > 0 && (
+//           <MarqueeRow photos={row1} baseVelocity={-6} /> // Moves left
+//         )}
+//         {row2.length > 0 && (
+//           <div className="mt-8">
+//             <MarqueeRow photos={row2} baseVelocity={6} />
+//           </div>
+//         )}
+//       </div>
+//     </section>
+//   );
+// };
+
+// export default PhotoMarquee;
+// import React from 'react';
+// import { motion } from 'framer-motion';
+// import { Loader2 } from 'lucide-react';
+// import {
+//   fetchAboutHero,
+//   fetchAboutHeroStats,
+// } from '../../api/aboutpage';
+// import { useHomepageData, getStorageUrl } from '../../hooks/useHomepageData';
+// import AnimatedTextWord from '../common/AnimatedTextWord';
+
+// const AboutHero = () => {
+//   const { data: hero, loading: loadingHero } = useHomepageData(
+//     fetchAboutHero,
+//     'about_hero',
+//     { additionalTables: ['media_assets'] }
+//   );
+//   const { data: stats, loading: loadingStats } = useHomepageData(
+//     fetchAboutHeroStats,
+//     'about_hero_stats'
+//   );
+
+//   if (loadingHero || loadingStats) {
+//     return (
+//       <div className="h-screen flex items-center justify-center">
+//         <Loader2 className="w-12 h-12 animate-spin text-blue-600" />
+//       </div>
+//     );
+//   }
+
+//   if (!hero) return null;
+
+//   const imageUrl = getStorageUrl(hero.media_id);
+
+//   const containerVariants = {
+//     visible: { transition: { staggerChildren: 0.1 } },
+//   };
+
+//   const itemVariants = {
+//     hidden: { opacity: 0, y: 20 },
+//     visible: {
+//       opacity: 1,
+//       y: 0,
+//       transition: { type: 'spring', stiffness: 100 },
+//     },
+//   };
+
+//   return (
+//     <div className="relative bg-gray-50 pt-32 pb-24">
+//       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+//         <motion.div
+//           className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center"
+//           variants={containerVariants}
+//           initial="hidden"
+//           animate="visible"
+//         >
+//           {/* Text Content */}
+//           <div className="text-left">
+//             <motion.p
+//               className="text-sm font-bold text-blue-600 uppercase"
+//               variants={itemVariants}
+//             >
+//               {hero.subtitle}
+//             </motion.p>
+            
+//             {/* Use the AnimatedTextWord component here */}
+//             <AnimatedTextWord
+//               text={hero.title}
+//               el="h1"
+//               className="text-4xl sm:text-5xl font-extrabold text-gray-900 mt-4 mb-6"
+//             />
+            
+//             <motion.p
+//               className="text-lg text-gray-600 max-w-xl"
+//               variants={itemVariants}
+//             >
+//               {hero.description}
+//             </motion.p>
+
+//             {/* Stats */}
+//             {stats && stats.length > 0 && (
+//               <motion.div
+//                 className="flex space-x-8 mt-10"
+//                 variants={containerVariants}
+//               >
+//                 {stats.map((stat) => (
+//                   <motion.div key={stat.id} variants={itemVariants}>
+//                     <p className="text-4xl font-bold text-blue-600">
+//                       {stat.value}
+//                     </p>
+//                     <p className="text-sm text-gray-500">{stat.label}</p>
+//                   </motion.div>
+//                 ))}
+//               </motion.div>
+//             )}
+//           </div>
+
+//           {/* Image */}
+//           {imageUrl && (
+//             <motion.div
+//               className="flex justify-center"
+//               variants={itemVariants}
+//             >
+//               <img
+//                 src={imageUrl}
+//                 alt={hero.media_id?.alt_text || 'About Me'}
+//                 className="rounded-3xl shadow-2xl w-full max-w-md object-cover aspect-[4/5]"
+//               />
+//             </motion.div>
+//           )}
+//         </motion.div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default AboutHero;
 
 
 
 
 
 
+
+
+// import React, { useRef } from 'react';
+// import { motion, useScroll, useTransform } from 'framer-motion';
+// import { Loader2 } from 'lucide-react';
+// import { fetchAboutTimeline } from '../../api/aboutpage';
+// import { useHomepageData } from '../../hooks/useHomepageData';
+// import AnimateOnScroll from '../common/AnimateOnScroll';
+
+// const TimelineItem = ({ item }) => (
+//   <div className="relative w-80 h-full flex-shrink-0 mr-8 p-8 bg-white rounded-2xl shadow-xl">
+//     <div className="absolute -top-4 left-8 bg-blue-600 text-white px-4 py-1 rounded-full text-sm font-bold">
+//       {item.year}
+//     </div>
+//     <h3 className="text-2xl font-bold text-gray-900 mt-8 mb-3">{item.title}</h3>
+//     <p className="text-gray-600">{item.description}</p>
+//   </div>
+// );
+
+// const AboutTimeline = () => {
+//   const { data: timeline, loading } = useHomepageData(
+//     fetchAboutTimeline,
+//     'about_timeline'
+//   );
+  
+//   const timelineRef = useRef(null);
+  
+//   // Create a scroll animation for the horizontal track
+//   const { scrollYProgress } = useScroll({
+//     target: timelineRef,
+//     offset: ['start end', 'end start'],
+//   });
+  
+//   // This will move the timeline from 0% to -100% (plus some padding)
+//   // We check timeline.length to avoid dividing by zero
+//   const x = useTransform(
+//     scrollYProgress,
+//     [0.1, 0.9], // Start animation at 10% scroll, end at 90%
+//     ['0%', `-${100 - 100 / (timeline?.length || 1)}%`]
+//   );
+
+//   if (loading || !timeline) {
+//     return <div className="py-24 bg-gray-50" />;
+//   }
+
+//   return (
+//     <div className="py-24 bg-gray-50">
+//       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+//         <AnimateOnScroll className="text-center max-w-2xl mx-auto mb-16">
+//           <h2 className="text-4xl font-extrabold text-gray-900">
+//             My Journey
+//           </h2>
+//           <p className="text-lg text-gray-600 mt-4">
+//             A look back at the key milestones in my career.
+//           </p>
+//         </AnimateOnScroll>
+//       </div>
+
+//       {/* This is the "sticky scroll" container.
+//         The outer div is tall to create scrolling room.
+//         The inner div becomes sticky.
+//       */}
+//       <div
+//         ref={timelineRef}
+//         className="h-[300vh] md:h-[150vh] w-full"
+//       >
+//         <div className="sticky top-0 h-screen flex items-center overflow-hidden">
+//           {/* This is the horizontally-moving "track" */}
+//           <motion.div
+//             className="flex h-96 items-center"
+//             style={{ x, paddingLeft: '5vw', paddingRight: '5vw' }} // Use viewport width for padding
+//           >
+//             {timeline.map((item) => (
+//               <TimelineItem key={item.id} item={item} />
+//             ))}
+//           </motion.div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default AboutTimeline;

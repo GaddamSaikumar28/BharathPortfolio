@@ -22,6 +22,7 @@ import FAQ from './components/homepage/FAQ';
 import CallToAction from './components/homepage/CallToAction';
 import PhotoMarquee from './components/homepage/PhotoMarquee';
 import PortfolioBanner from './components/homepage/PortfolioBanner.jsx';
+import IphoneShowcase from './components/homepage/IphoneShowcase.jsx';
 // 1. Create a map that links the 'section_key' from your database
 //    to the actual React component.
 const componentMap = {
@@ -30,6 +31,7 @@ const componentMap = {
   // services: Services,
   photo_marquee: PhotoMarquee,
   feature_showcase: FeatureShowcase,
+  iphone_showcase: IphoneShowcase,
   portfolio_banner: PortfolioBanner,
   parallax_project: ParallaxProject, 
   // toolkit: Toolkit,

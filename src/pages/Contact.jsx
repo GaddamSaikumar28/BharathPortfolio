@@ -279,7 +279,7 @@ export default function Contact() {
                   }}
                   placeholder="jane.doe@example.com"
                 />
-                <FormSelect
+                {/* <FormSelect
                   label="Service of Interest"
                   name="service_id"
                   register={register}
@@ -320,7 +320,7 @@ export default function Contact() {
                   errors={errors}
                   rules={{ required: 'Message is required' }}
                   placeholder="Tell me about your project..."
-                />
+                /> */}
                 <motion.div
                   className="sm:col-span-2 flex justify-start"
                   layout

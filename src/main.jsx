@@ -111,6 +111,7 @@ import AdminPhotoMarqueeEditor from './pages/admin/editors/AdminPhotoMarqueeEdit
 import AdminPortfolioBannerEditor from './pages/admin/editors/AdminPortfolioBannerEditor';
 import AdminHeaderEditor from './pages/admin/editors/AdminHeaderEditor';
 import AdminFooterEditor from './pages/admin/editors/AdminFooterEditor';
+import IphoneShowcaseAdmin from './pages/admin/editors/IphoneShowcaseAdmin';
 const router = createBrowserRouter([
   {
     // --- Public Routes ---
@@ -155,6 +156,8 @@ const router = createBrowserRouter([
           { path: 'homepage-config/blog', element: <AdminBlogEditor /> },
           { path: 'homepage-config/faq', element: <AdminFAQEditor /> },
           { path: 'homepage-config/call-to-action', element: <AdminCTAEditor /> },
+          
+           { path: 'homepage-config/iphone-showcase', element: <IphoneShowcaseAdmin /> },
           
           // --- Other Admin Routes ---
           { path: 'about-config', element: <AdminAboutPage /> },
