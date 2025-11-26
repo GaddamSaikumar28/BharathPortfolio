@@ -1,150 +1,7 @@
 
-// import { supabase } from "../lib/supabaseClient";
-// /**
-//  * Fetches all project categories.
-//  */
-// export const fetchProjectCategories = async () => {
-//   const { data, error } = await supabase
-//     .from('project_categories')
-//     .select('name, slug')
-//     .order('name', { ascending: true });
-
-//   if (error) {
-//     console.error('Error fetching categories:', error);
-//     return [];
-//   }
-//   return data;
-// };
-
-// /**
-//  * Fetches projects with server-side filtering, search, and pagination.
-//  */
-// export const fetchProjects = async ({
-//   page = 1,
-//   limit = 9,
-//   categorySlug = 'all',
-//   searchQuery = '',
-// }) => {
-//   const from = (page - 1) * limit;
-//   const to = from + limit - 1;
-
-//   let query = supabase
-//     .from('projects')
-//     .select(
-//       `
-//       id,
-//       title,
-//       slug,
-//       description,
-//       hero_media_id,
-//       hero_media:media_assets!projects_hero_media_id_fkey ( file_path, alt_text ),
-//       project_category_links!inner (
-//         project_categories!inner ( name, slug )
-//       )
-//     `,
-//       { count: 'exact' } // Request the total count for pagination
-//     )
-//     .order('created_at', { ascending: false })
-//     .range(from, to);
-
-//   // Apply search filter
-//   if (searchQuery) {
-//     query = query.ilike('title', `%${searchQuery}%`);
-//   }
-
-//   // Apply category filter
-//   // This requires a join filter
-//   if (categorySlug && categorySlug !== 'all') {
-//     // This will now work because of the "!inner" join in the select
-//     query = query.eq('project_category_links.project_categories.slug', categorySlug);
-//   }
-
-//   const { data, error, count } = await query;
-
-//   if (error) {
-//     console.error('Error fetching projects:', error);
-//     return { data: [], count: 0 };
-//   }
-  
-//   // Supabase returns a nested structure for joins, let's simplify it
-//   const processedData = data.map(project => ({
-//     ...project,
-//     // This line safely handles projects with no categories
-//     category: project.project_category_links?.[0]?.project_categories?.name || 'Uncategorized',
-//     heroImage: project.hero_media?.file_path || `https://placehold.co/800x800/EEE/333?text=${project.title.replace(' ','+')}`,
-//     heroAlt: project.hero_media?.alt_text || project.title,
-//   }));
-
-//   return { data: processedData, count: count || 0 };
-// };
-
-// /**
-//  * Fetches all details for a single project by its slug.
-//  */
-// export const fetchProjectDetail = async (slug) => {
-// // ... (this function is correct from your file) ...
-//   const { data, error } = await supabase
-//     .from('projects')
-//     .select(
-//       `
-//       *,
-//       hero_media:media_assets!projects_hero_media_id_fkey ( file_path, alt_text ),
-//       detail_hero_media:media_assets!projects_detail_hero_media_id_fkey ( file_path, alt_text ),
-//       tools:project_tool_links ( tools ( name, icon_name ) ),
-//       categories:project_category_links ( project_categories ( name, slug ) ),
-//       content:project_content_blocks ( "type", "order", content ),
-//       gallery:project_gallery (
-//         "order",
-//         media:media_assets ( file_path, alt_text )
-//       )
-//     `
-//     )
-//     .eq('slug', slug)
-//     .order('order', { referencedTable: 'project_content_blocks', ascending: true })
-//     .order('order', { referencedTable: 'project_gallery', ascending: true })
-//     .single();
-
-//   // This block handles the 'PGRST116' (0 rows) error
-//   if (error) {
-//     if (error.code === 'PGRST116') {
-//       // PGRST116: "The result contains 0 rows"
-//       console.warn(`Project not found for slug: ${slug}`);
-//       return null; // Return null to show "Not Found" page
-//     }
-//     // For other errors, still throw
-//     console.error('Error fetching project detail:', error);
-//     throw error;
-//   }
-  
-//   // Clean up the nested data
-// // ... (rest of file is correct) ...
-//   return data;
-// };
-
-// /**
-//  * Fetches the next project in the list (simplified for now).
-//  */
-// // ... (rest of file is correct) ...
-// export const fetchNextProject = async (currentSlug) => {
-//    const { data, error } = await supabase
-//     .from('projects')
-//     .select('title, slug, hero_media:media_assets!projects_hero_media_id_fkey ( file_path, alt_text )')
-//     .neq('slug', currentSlug) // Not the current one
-//     .limit(1); // Just get one
-
-//    if (error) {
-//      console.error('Error fetching next project:', error);
-//      return null;
-//    }
-   
-//    return data[0];
-// };
-
 import { supabase } from "../lib/supabaseClient";
 
-/**
- * Fetches all project categories. (Existing)
- */
+
 export const fetchProjectCategories = async () => {
   const { data, error } = await supabase
     .from('project_categories')
@@ -191,83 +48,7 @@ export const fetchProjectTiers = async () => {
   return data;
 };
 
-/**
- * Fetches projects with server-side filtering, search, and pagination.
- */
-// export const fetchProjects = async ({
-//   page = 1,
-//   limit = 9,
-//   categorySlug = 'all',
-//   searchQuery = '',
-//   toolId = null,
-//   tierId = null, // <<< NEW FILTER PARAMETER
-// }) => {
-//   const from = (page - 1) * limit;
-//   const to = from + limit - 1;
 
-//   let query = supabase
-//     .from('projects')
-//     .select(
-//       `
-//       id,
-//       title,
-//       slug,
-//       description,
-//       hero_media_id,
-//       hero_media:media_assets!projects_hero_media_id_fkey ( file_path, alt_text ),
-//       project_category_links!inner (
-//         project_categories!inner ( name, slug )
-//       ),
-//       tiers:project_tiers ( name, color_hex ),  
-//       tools:project_tool_links ( tools ( id ) ) 
-//     `,
-//       { count: 'exact' } // Request the total count for pagination
-//     )
-//     .order('created_at', { ascending: false })
-//     .range(from, to);
-
-//   // Apply search filter
-//   if (searchQuery) {
-//     query = query.ilike('title', `%${searchQuery}%`);
-//   }
-
-//   // Apply category filter
-//   if (categorySlug && categorySlug !== 'all') {
-//     query = query.eq('project_category_links.project_categories.slug', categorySlug);
-//   }
-
-//   // Apply Tool filter
-//   if (toolId) {
-//     query = query.eq('project_tool_links.tools.id', toolId);
-//   }
-
-//   // <<< Apply NEW Tier filter
-//   if (tierId) {
-//     query = query.eq('tier_id', tierId);
-//   }
-
-//   const { data, error, count } = await query;
-
-//   if (error) {
-//     console.error('Error fetching projects:', error);
-//     return { data: [], count: 0 };
-//   }
-  
-//   // Simplify the nested structure
-//   const processedData = data.map(project => ({
-//     ...project,
-//     category: project.project_category_links?.[0]?.project_categories?.name || 'Uncategorized',
-//     heroImage: project.hero_media?.file_path || `https://placehold.co/800x800/EEE/333?text=${project.title.replace(' ','+')}`,
-//     heroAlt: project.hero_media?.alt_text || project.title,
-//     // Extract Tier Data
-//     tierName: project.tiers?.name || 'Standard',
-//     tierColor: project.tiers?.color_hex || '#aaaaaa',
-//   }));
-
-//   return { data: processedData, count: count || 0 };
-// };
-
-// ... (fetchProjectDetail and fetchNextProject functions remain the same)
 export const fetchNextProject = async (currentSlug) => {
    const { data, error } = await supabase
     .from('projects')
@@ -282,46 +63,6 @@ export const fetchNextProject = async (currentSlug) => {
    
    return data[0];
 };
-
-// export const fetchProjectDetail = async (slug) => {
-// // // ... (this function is correct from your file) ...
-// const { data, error } = await supabase
-//     .from('projects')
-//     .select(
-//       `
-//       *,
-//       hero_media:media_assets!projects_hero_media_id_fkey ( file_path, alt_text ),
-//       detail_hero_media:media_assets!projects_detail_hero_media_id_fkey ( file_path, alt_text ),
-//       tools:project_tool_links ( tools ( name, icon_name ) ),
-//       categories:project_category_links ( project_categories ( name, slug ) ),
-//       content:project_content_blocks ( "type", "order", content ),
-//       gallery:project_gallery (
-//         "order",
-//         media:media_assets ( file_path, alt_text )
-//       )
-//     `
-//     )
-//     .eq('slug', slug)
-//     .order('order', { referencedTable: 'project_content_blocks', ascending: true })
-//     .order('order', { referencedTable: 'project_gallery', ascending: true })
-//     .single();
-
-//   // This block handles the 'PGRST116' (0 rows) error
-//   if (error) {
-//     if (error.code === 'PGRST116') {
-//       // PGRST116: "The result contains 0 rows"
-//       console.warn(`Project not found for slug: ${slug}`);
-//       return null; // Return null to show "Not Found" page
-//     }
-//     // For other errors, still throw
-//     console.error('Error fetching project detail:', error);
-//     throw error;
-//   }
-  
-//   // Clean up the nested data
-// // ... (rest of file is correct) ...
-//   return data;
-// };
 
 export const fetchProjects = async ({
   page = 1,
@@ -404,6 +145,7 @@ export const fetchProjects = async ({
   // --- Execution ---
   const { data, error, count } = await query;
 
+  console.log('all projects list',data);
   if (error) {
     console.error('Error fetching projects:', error);
     return { data: [], count: 0 };
@@ -421,205 +163,90 @@ export const fetchProjects = async ({
 
   return { data: processedData, count: count || 0 };
 };
-export const fetchProjectDetail = async (slug) => {
-  const { data, error } = await supabase
-    .from('projects')
-    .select(
-      `
-      *,
-      tiers:project_tiers ( name, color_hex ),
-      hero_media:media_assets!projects_hero_media_id_fkey ( file_path, alt_text ),
-      detail_hero_media:media_assets!projects_detail_hero_media_id_fkey ( file_path, alt_text ),
-      
-   
-      tools:project_tool_links ( tools ( name, icon_name ) ),
-      categories:project_category_links ( project_categories ( name, slug ) ),
-      
-   
-      project_case_study_modules ( 
-        module_type, "order", title, content 
-      ),
-      
-     
-      gallery:project_gallery (
-        "order",
-        media:media_assets ( file_path, alt_text )
-      ),
-      
-    
-      highlights:project_media_highlights (
-        "order", context, caption, media:media_assets ( file_path, alt_text )
-      ),
-      
-      
-      project_related_links ( id, label, url, icon_name, "order" )
-    `
-    )
-    .eq('slug', slug)
-    .order('order', { referencedTable: 'project_case_study_modules', ascending: true })
-    .order('order', { referencedTable: 'project_gallery', ascending: true })
-    .single();
+export const fetchProjectBySlug = async (slug) => {
+    try {
+        // 1. Fetch Main Project Data & Direct Relations
+        const { data: project, error } = await supabase
+            .from('projects')
+            .select(`
+                *,
+                hero_media:media_assets!projects_hero_media_id_fkey ( file_path, alt_text ),
+                project_tool_links ( tools ( id, name, icon_name ) ),
+                project_stats ( title, value, trend, icon_name, color, description, order ),
+                project_sections ( id, heading, body_text, media_asset_ids, layout_type, bg_color, order ),
+                project_content_blocks ( block_type, content, order ),
+                project_gallery ( order, media_assets ( file_path, alt_text ) )
+            `)
+            .eq('slug', slug)
+            .single();
 
-  if (error) {
-    // ... error handling block remains the same ...
-    return null;
-  }
-  
-  // Note: Data flattening logic can be applied here if needed.
-  return data;
-};
+        if (error) throw error;
+        if (!project) return null;
 
-// export const fetchProjectDetail = async (slug) => {
-//     const { data, error } = await supabase
-//         .from('projects')
-//         .select(
-//             `
-//             *,
-//             hero_media:media_assets!projects_hero_media_id_fkey ( file_path, alt_text ),
-//             detail_hero_media:media_assets!projects_detail_hero_media_id_fkey ( file_path, alt_text ),
-//             tiers:project_tiers ( name, color_hex ),
-            
-//             tools:project_tool_links ( tools ( name, icon_name ) ),
-//             categories:project_category_links ( project_categories ( name, slug ) ),
-            
-//             testimonial:testimonials!projects_client_testimonial_id_fkey ( 
-//                 quote, 
-//                 name, 
-//                 role, 
-//                 media:media_assets ( file_path ) 
-//             ),
-            
-//             highlights:project_media_highlights ( 
-//                 "order", 
-//                 context, 
-//                 caption, 
-//                 media:media_assets ( file_path, alt_text ) 
-//             ),
-            
-//             modules:project_case_study_modules ( 
-//                 "order", 
-//                 module_type, 
-//                 title, 
-//                 content 
-//             ),
-            
-//             links:project_related_links ( 
-//                 "order", 
-//                 label, 
-//                 url, 
-//                 icon_name 
-//             )
-//         `
-//         )
-//         .eq('slug', slug)
-//         // Ensure sub-sections are ordered correctly
-//         .order('order', { referencedTable: 'project_case_study_modules', ascending: true })
-//         .order('order', { referencedTable: 'project_media_highlights', ascending: true })
-//         .order('order', { referencedTable: 'project_related_links', ascending: true })
-//         .single();
-
-//     // Handle 'PGRST116' (0 rows) or other fetch errors
-//     if (error) {
-//         if (error.code === 'PGRST116') {
-//             console.warn(`Project not found for slug: ${slug}`);
-//             return null;
-//         }
-//         console.error('Error fetching project detail:', error);
-//         throw error;
-//     }
-
-//     if (!data) return null;
-
-//     // Post-processing to flatten the testimonial and highlight media structures
-//     const processedData = {
-//         ...data,
-//         // Simplify testimonial structure
-//         testimonial: data.testimonial ? {
-//             quote: data.testimonial.quote,
-//             name: data.testimonial.name,
-//             role: data.testimonial.role,
-//             // Access the file path from the nested media asset
-//             mediaPath: data.testimonial.media?.file_path || null, 
-//         } : null,
+        // 2. Aggregate all Media IDs to fetch URLs in one batch
+        //    (Banners, Sliders, and Images inside Sections are stored as UUID arrays)
+        const bannerIds = project.banner_media_ids || [];
+        const sliderIds = project.slider_media_ids || [];
+        const sectionImageIds = project.project_sections?.flatMap(s => s.media_asset_ids || []) || [];
         
-//         // Enhance highlights by promoting media path/alt text
-//         highlights: data.highlights.map(h => ({
-//             ...h,
-//             mediaPath: h.media?.file_path || null,
-//             mediaAlt: h.media?.alt_text || h.caption,
-//         })),
+        // Combine distinct IDs
+        const allMediaIds = [...new Set([...bannerIds, ...sliderIds, ...sectionImageIds])];
 
-//         // Add simplified category/tool lists
-//         categoryNames: data.categories.map(c => c.project_categories.name),
-//         toolNames: data.tools.map(t => t.tools.name),
-//     };
-    
-//     // Clean up unnecessary nested object keys before returning
-//     delete processedData.media; 
-//     delete processedData.tools;
-//     delete processedData.categories;
+        let mediaMap = {};
+        if (allMediaIds.length > 0) {
+            const { data: mediaFiles } = await supabase
+                .from('media_assets')
+                .select('id, file_path, alt_text')
+                .in('id', allMediaIds);
+            
+            // Create a lookup map: ID -> { path, alt }
+            mediaFiles?.forEach(file => {
+                mediaMap[file.id] = { path: file.file_path, alt: file.alt_text };
+            });
+        }
 
-//     return processedData;
-// };
+        // 3. Helper to resolve an array of IDs to Media Objects
+        const resolveMedia = (ids) => ids?.map(id => mediaMap[id]).filter(Boolean) || [];
 
-// export const fetchProjects = async ({
-//   page = 1,
-//   limit = 20, // Increased limit for continuous scroll
-//   categorySlug = 'all',
-//   searchQuery = '',
-//   toolId = null,
-//   tierId = null, 
-// }) => {
-//   const from = (page - 1) * limit;
-//   const to = from + limit - 1;
+        // 4. Construct the final object matching the UI's expected structure
+        const formattedProject = {
+            ...project,
+            // Main Fields
+            hero_image: project.hero_media ? { path: project.hero_media.file_path, alt: project.hero_media.alt_text } : null,
+            tools_used: project.project_tool_links?.map(link => link.tools) || [],
+            key_metrics: project.project_stats?.sort((a,b) => a.order - b.order) || [],
+            
+            // Resolve Media Arrays
+            banner_images: resolveMedia(bannerIds),
+            slider_images: resolveMedia(sliderIds),
+            
+            // Resolve Sections & inject their images
+            image_text_sections: project.project_sections?.sort((a,b) => a.order - b.order).map(section => ({
+                ...section,
+                images: resolveMedia(section.media_asset_ids)
+            })) || [],
 
-//   let query = supabase
-//     .from('projects')
-//     .select(
-//       `
-//       id,
-//       title,
-//       slug,
-//       description,
-//       hero_media_id,
-//       hero_media:media_assets!projects_hero_media_id_fkey ( file_path, alt_text ),
-//       project_category_links!inner (
-//         project_categories!inner ( name, slug )
-//       ),
-//       tiers:project_tiers ( name, color_hex ),  
-//       tools:project_tool_links ( tools ( id ) ),
-//       status,
-//       completion_percentage,
-//       metadata_label,
-//       metadata_value,
-//       publisher_name,
-//       details_1,
-//       details_2
-//     `,
-//       { count: 'exact' }
-//     )
-//     .order('created_at', { ascending: false })
-//     .range(from, to);
+            // Content Blocks (Parsed from JSONB)
+            flip_card_principles: project.project_content_blocks.find(b => b.block_type === 'flip_cards')?.content || [],
+            process_steps: project.project_content_blocks.find(b => b.block_type === 'process')?.content || [],
+            challenges_solutions: project.project_content_blocks.find(b => b.block_type === 'challenges')?.content || [],
 
-//   // ... (Filtering logic for search, category, toolId, tierId remains the same) ...
+            // Visual Gallery (Relation was joined directly)
+            visual_gallery: project.project_gallery?.sort((a,b) => a.order - b.order).map(g => ({
+                file_path: g.media_assets?.file_path,
+                alt_text: g.media_assets?.alt_text
+            })) || [],
+            
+            // JSONB Columns (Direct mapping)
+            accessibility_insights: project.accessibility_data || [],
+            quote_data: project.quote_data || null,
+            call_to_action: project.call_to_action_data || null,
+        };
 
-//   const { data, error, count } = await query;
+        return formattedProject;
 
-//   console.log(data);
-//   if (error) {
-//     console.error('Error fetching projects:', error);
-//     return { data: [], count: 0 };
-//   }
-  
-//   // Simplify the nested structure and include new fields
-//   const processedData = data.map(project => ({
-//     ...project,
-//     category: project.project_category_links?.[0]?.project_categories?.name || 'Uncategorized',
-//     heroImage: project.hero_media?.file_path || `https://placehold.co/800x800/EEE/333?text=${project.title.replace(/ /g,'+')}`,
-//     heroAlt: project.hero_media?.alt_text || project.title,
-//     tierName: project.tiers?.name || 'Standard',
-//     tierColor: project.tiers?.color_hex || '#aaaaaa',
-//   }));
-
-//   return { data: processedData, count: count || 0 };
-// };
+    } catch (error) {
+        console.error("Error fetching project detail:", error);
+        return null;
+    }
+};

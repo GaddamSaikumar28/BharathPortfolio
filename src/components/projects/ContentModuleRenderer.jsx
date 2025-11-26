@@ -3,7 +3,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 // import ImageBlock from './modules/ImageBlock';
 // import RichTextBlock from './modules/RichTextBlock'; 
-// import QuoteBlock from './modules/QuoteBlock'; 
+import QuoteBlock from '../projects/QuoteBlock'; 
 // import SplitContent from './modules/SplitContent'; 
 
 // Fallback for missing content/component
