@@ -27,16 +27,16 @@ import PortfolioBanner from './components/homepage/PortfolioBanner.jsx';
 const componentMap = {
   hero: Hero,
   logo_cloud: LogoCloud,
-  services: Services,
+  // services: Services,
   photo_marquee: PhotoMarquee,
   feature_showcase: FeatureShowcase,
   portfolio_banner: PortfolioBanner,
   parallax_project: ParallaxProject, 
-  toolkit: Toolkit,
+  // toolkit: Toolkit,
   testimonials: Testimonials,
   bento_showcase: BentoShowcase,
-  blog: Blog,
-  faq: FAQ,
+  // blog: Blog,
+  // faq: FAQ,
   call_to_action: CallToAction,
 };
 
