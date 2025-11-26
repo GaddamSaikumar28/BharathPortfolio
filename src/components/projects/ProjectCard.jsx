@@ -1,241 +1,8 @@
 
-// // import React from 'react';
-// // import { motion } from 'framer-motion';
-// // import { useNavigate } from 'react-router-dom';
-// // import { Clock, Layers, Briefcase, Code } from 'lucide-react';
-
-// // // NOTE: CardStyle definitions and external router dependency (useNavigate) 
-// // // are retained for compatibility with your existing environment.
-// // export const CardStyle = {
-// //   UNIFIED_DESIGN: 'UNIFIED_DESIGN',
-// //   DECK_STACKED: 'DECK_STACKED' 
-// // };
-// // // --- Helper for Media Placeholder (Futuristic Image Block) ---
-// // const MediaPlaceholder = ({ project, className = 'h-32' }) => {
-// //     // Check for a real image URL or file path (based on API structure)
-// //     const imageUrl = project.hero_media?.file_path;
-
-// //     if (imageUrl) {
-// //         // Fallback placeholder image URL structure (since we don't have a file server)
-// //         const placeholderUrl = `https://placehold.co/400x256/374151/E5E7EB?text=IMG+Placeholder`;
-
-// //         return (
-// //             <div className={`relative ${className} rounded-lg overflow-hidden shadow-md mb-4 border border-gray-200 bg-gray-100`}>
-// //                 {/* Using a placeholder URL since actual file paths are not loadable in this environment */}
-// //                 <img 
-// //                     src={placeholderUrl} 
-// //                     alt={project.hero_media?.alt_text || `Image for ${project.title}`} 
-// //                     className="w-full h-full object-cover" 
-// //                     onError={(e) => { e.target.onerror = null; e.target.src = placeholderUrl; }}
-// //                 />
-// //                 <div className="absolute inset-0 ring-2 ring-inset ring-gray-100 rounded-lg pointer-events-none opacity-20"></div>
-// //             </div>
-// //         );
-// //     }
-
-// //     // Fallback: Generate a consistent gradient based on the project ID
-// //     const hash = project.id.charCodeAt(project.id.length - 1) % 6;
-// //     const vibrantGradients = [
-// //         'from-blue-500 to-purple-600', 'from-red-500 to-orange-500',
-// //         'from-green-500 to-teal-600', 'from-yellow-500 to-pink-500',
-// //         'from-indigo-500 to-cyan-500', 'from-fuchsia-500 to-rose-500'
-// //     ];
-// //     const gradient = vibrantGradients[hash];
-
-// //     return (
-// //         <div className={`relative ${className} bg-gradient-to-br ${gradient} rounded-lg flex items-center justify-center overflow-hidden shadow-md mb-4 border border-gray-200`}>
-// //             <Code className="w-1/4 h-1/4 text-white/90 opacity-80" />
-// //             <div className="absolute inset-0 ring-2 ring-inset ring-white/10 rounded-lg pointer-events-none opacity-20"></div>
-// //         </div>
-// //     );
-// // };
-
-// // // --- Full Card Content (Shared UI for both views) ---
-// // const FullCardContent = ({ project }) => {
-// //     // --- Data Mapping from API Response ---
-// //     const primaryCategory = project.project_category_links?.[0]?.project_categories?.name;
-// //     const completionPercentage = project.completion_percentage || 0;
-// //     const status = project.status || 'Unknown';
-    
-// //     // Determine status styling
-// //     const isOverdue = status === 'Overdue';
-// //     const isCompleted = completionPercentage === 100 && status === 'Completed';
-// //     const isInProgress = status === 'In Progress' || status === 'Completed'; // Treat incomplete 'Completed' projects as in progress visual
-
-// //     const statusBg = isOverdue ? 'bg-red-500' : isCompleted ? 'bg-green-500' : isInProgress ? 'bg-blue-500' : 'bg-gray-400';
-// //     const statusText = isOverdue ? 'text-red-600' : isCompleted ? 'text-green-600' : isInProgress ? 'text-blue-600' : 'text-gray-600';
-// //     const statusLabel = isOverdue ? 'URGENT' : isCompleted ? 'COMPLETED' : isInProgress ? 'ACTIVE SPRINT' : 'NOT STARTED';
-
-// //     const tags = [
-// //         { label: primaryCategory || 'General', icon: Briefcase, color: 'text-purple-600' },
-// //         { label: project.metadata_label, icon: Layers, color: 'text-cyan-600' },
-// //     ].filter(tag => tag.label); // Filter out tags with null/empty labels
-
-// //     return (
-// //         <div className="flex flex-col h-full w-full bg-white rounded-xl shadow-xl overflow-hidden p-6 relative border border-gray-100 transition-all duration-300">
-            
-// //             {/* Status Tag */}
-// //             <div className={`absolute top-0 right-0 px-3 py-1 ${statusBg} rounded-bl-xl text-white font-bold text-xs uppercase shadow-md shadow-current/30`}>
-// //                 {statusLabel}
-// //             </div>
-
-// //             {/* IMAGE SPACE: Responsive h-64 on desktop, h-48 on mobile */}
-// //             <MediaPlaceholder project={project} className="h-48 sm:h-64" />
-
-// //             <div className="flex-grow text-gray-900 mb-4">
-// //                 <h3 className="text-xl sm:text-2xl font-extrabold text-gray-900 line-clamp-2 mb-1">{project.title}</h3>
-// //                 {/* Use details_1 and details_2 as an alternative subtitle if no description exists */}
-// //                 <p className="text-sm text-gray-600 line-clamp-3">
-// //                     {project.description || `${project.details_1 || ''} / ${project.details_2 || ''}`}
-// //                 </p>
-// //             </div>
-            
-// //             <div className="mt-auto pt-4 border-t border-gray-200 space-y-3">
-// //                 {/* Tags Section */}
-// //                 <div className="flex flex-wrap gap-2">
-// //                     {tags.map((tag, index) => (
-// //                         <div key={index} className={`flex items-center text-xs font-medium ${tag.color} bg-gray-100 px-3 py-1 rounded-full border border-current/30`}>
-// //                             <tag.icon className="w-3 h-3 mr-1" />
-// //                             {tag.label}
-// //                         </div>
-// //                     ))}
-// //                 </div>
-
-// //                 {/* Progress/Publisher */}
-// //                 <div className="flex justify-between items-center text-sm font-sans text-gray-600">
-// //                     <span className="flex items-center font-bold">
-// //                         <Clock className={`w-4 h-4 mr-2 ${statusText}`} />
-// //                         {completionPercentage}% Done
-// //                     </span>
-// //                     <span className="text-xs text-gray-500 truncate max-w-[50%]">
-// //                         {project.publisher_name || 'Internal'}
-// //                     </span>
-// //                 </div>
-// //             </div>
-// //         </div>
-// //     );
-// // };
-
-// // // --- The Core ProjectCard Component ---
-// // const ProjectCard = ({ project, index, isDeckView }) => {
-// //     // Assuming a parent component provides the useNavigate context
-// //     const navigate = typeof useNavigate === 'function' ? useNavigate() : () => console.log('Mock Navigate'); 
-// //     const slug = project.slug || project.id;
-
-// //     const handleClick = () => {
-// //         if (slug) {
-// //             // In a real application, this would use the router: navigate(`/projects/${slug}`);
-// //             console.log(`Navigating to /projects/${slug}`);
-// //         }
-// //     };
-
-// //     // --- Deck View Logic (Fan/Spread Style) ---
-// //     if (isDeckView) {
-// //         // Reduced max cards for a more stable mobile/small screen fan
-// //         const MAX_VISIBLE_CARDS = 8; 
-// //         if (index >= MAX_VISIBLE_CARDS) return null;
-
-// //         const TOTAL_CARDS = MAX_VISIBLE_CARDS;
-// //         const rotationFactor = 5; // Reduced angle for a tighter, more responsive fan
-// //         const rotation = (index - (TOTAL_CARDS - 1) / 2) * rotationFactor; 
-// //         const xOffset = rotation * 6; // Reduced offset for less horizontal spread
-// //         const zIndex = 100 + index; 
-
-// //         // Generate a base color for the card container
-// //         const hash = project.id.charCodeAt(project.id.length - 1) % 6;
-// //         const baseColors = [
-// //             'bg-blue-100/50', 'bg-red-100/50', 'bg-green-100/50', 
-// //             'bg-yellow-100/50', 'bg-indigo-100/50', 'bg-fuchsia-100/50'
-// //         ];
-// //         const baseBg = baseColors[hash];
-
-
-// //         return (
-// //             <motion.div
-// //                 // Fixed dimensions for the visual effect, using relative units for better fit
-// //                 className="absolute w-[18rem] h-[28rem] max-w-xs cursor-pointer" 
-// //                 key={`${project.id}-${index}`} 
-// //                 onClick={handleClick}
-                
-// //                 style={{ 
-// //                     transformOrigin: 'bottom center',
-// //                     perspective: 1000, 
-// //                 }}
-                
-// //                 // Optimized Spring Animation for smoothness (increased damping)
-// //                 initial={{ 
-// //                     opacity: 0, 
-// //                     rotate: rotation, 
-// //                     x: xOffset, 
-// //                     y: 100, // Start far below
-// //                     zIndex: zIndex 
-// //                 }}
-                
-// //                 animate={{ 
-// //                     opacity: 1, 
-// //                     rotate: rotation, 
-// //                     x: xOffset, 
-// //                     y: 0, 
-// //                     zIndex: zIndex,
-// //                     transition: { 
-// //                         type: 'spring', 
-// //                         stiffness: 100, 
-// //                         damping: 20, // Higher damping prevents overshooting/jiggle
-// //                         delay: index * 0.05 
-// //                     }
-// //                 }}
-
-// //                 // Smoother and more aggressive Hover Effect
-// //                 whileHover={{ 
-// //                     rotate: 0, 
-// //                     x: 0, 
-// //                     y: -60, // Lift higher for focus
-// //                     scale: 1.15, // Increased scale
-// //                     zIndex: 200, 
-// //                     boxShadow: "0 40px 80px -15px rgba(59, 130, 246, 0.6)", 
-// //                     transition: { 
-// //                         type: 'spring', 
-// //                         stiffness: 250, // Fast snap
-// //                         damping: 25,
-// //                     }
-// //                 }}
-// //             >
-// //                 {/* Full Card Content Container */}
-// //                 <div 
-// //                     className={`w-full h-full rounded-xl overflow-hidden shadow-2xl relative ${baseBg}`}
-// //                 >
-// //                     <FullCardContent project={project} />
-// //                 </div>
-// //             </motion.div>
-// //         );
-// //     }
-    
-// //     // --- Grid View Logic (Responsive Masonry item) ---
-// //     return (
-// //         <motion.div
-// //             className="w-full mb-8 break-inside-avoid-column cursor-pointer"
-// //             onClick={handleClick}
-// //             // Use simple duration transitions for smooth Grid entry/exit
-// //             initial={{ opacity: 0, y: 30 }}
-// //             animate={{ opacity: 1, y: 0 }}
-// //             exit={{ opacity: 0, y: -30 }}
-// //             transition={{ duration: 0.4 }}
-// //             whileHover={{ 
-// //                 scale: 1.02,
-// //                 boxShadow: "0 15px 30px -5px rgba(0, 0, 0, 0.1)", 
-// //                 transition: { duration: 0.2 }
-// //             }}
-// //         >
-// //             <FullCardContent project={project} /> 
-// //         </motion.div>
-// //     );
-// // };
-
-// // export default ProjectCard;
 // import React from 'react';
 // import { motion } from 'framer-motion';
 // import { useNavigate } from 'react-router-dom';
-// import { Clock, Layers, Briefcase, Code, ChevronRight } from 'lucide-react';
+// import { ChevronRight } from 'lucide-react';
 
 // export const CardStyle = {
 //   UNIFIED_DESIGN: 'UNIFIED_DESIGN',
@@ -243,107 +10,121 @@
 // };
 
 // // --- Helper for Media Placeholder ---
-// const MediaPlaceholder = ({ project, className = 'h-32' }) => {
-//     const imageUrl = project.hero_media?.file_path;
+// const MediaPlaceholder = ({ project, className = 'h-56' }) => {
+//     const imageUrl = project.hero_image;
 
 //     if (imageUrl) {
-//         // Fallback for demo purposes
-//         const placeholderUrl = `https://placehold.co/600x400/f3f4f6/9ca3af?text=${encodeURIComponent(project.title)}`;
+//         const placeholderUrl = `https://placehold.co/800x600/f3f4f6/9ca3af?text=${encodeURIComponent(project.title)}`;
 
 //         return (
-//             <div className={`relative ${className} overflow-hidden bg-gray-50 group`}>
+//             <div className={`relative ${className} overflow-hidden bg-gray-100 group w-full`}>
 //                 <img 
-//                     src={imageUrl} // Assuming this is a full URL or you have a base URL handler
-//                     alt={project.hero_media?.alt_text || `Image for ${project.title}`} 
-//                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+//                     src={imageUrl} 
+//                     alt={project.hero_alt || `Image for ${project.title}`} 
+//                     className="w-full h-full object-fit object-center transition-transform duration-700 group-hover:scale-105" 
 //                     onError={(e) => { e.target.onerror = null; e.target.src = placeholderUrl; }}
 //                 />
-//                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+//                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-30 group-hover:opacity-20 transition-opacity duration-500" />
 //             </div>
 //         );
 //     }
 
-//     // Fallback Gradient
-//     const hash = project.id.charCodeAt(project.id.length - 1) % 6;
-//     const gradients = [
-//         'from-blue-500 to-indigo-600', 'from-rose-500 to-orange-500',
-//         'from-emerald-500 to-teal-600', 'from-amber-500 to-pink-600',
-//         'from-violet-500 to-fuchsia-600', 'from-cyan-500 to-blue-500'
-//     ];
-//     const gradient = gradients[hash];
-
 //     return (
-//         <div className={`relative ${className} bg-gradient-to-br ${gradient} flex items-center justify-center overflow-hidden`}>
-//             <Code className="w-12 h-12 text-white/50" />
-//             <div className="absolute inset-0 bg-white/10 mix-blend-overlay"></div>
+//         <div className={`${className} bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center text-gray-400`}>
+//             <span className="text-xs font-medium uppercase tracking-wider">No Preview</span>
 //         </div>
 //     );
 // };
 
-// // --- Full Card Content ---
+
 // const FullCardContent = ({ project, isDeck }) => {
-//     const primaryCategory = project.project_category_links?.[0]?.project_categories?.name;
-//     const completionPercentage = project.completion_percentage || 0;
-//     const status = project.status || 'Unknown';
-    
-//     // Status Logic
-//     const isOverdue = status === 'Overdue';
-//     const isCompleted = completionPercentage === 100 && status === 'Completed';
-//     const isInProgress = status === 'In Progress' || status === 'Completed'; 
+//     const navigate = useNavigate();
 
-//     // Updated colors for Light Theme
-//     const statusBg = isOverdue ? 'bg-red-100 text-red-700 border-red-200' 
-//                    : isCompleted ? 'bg-emerald-100 text-emerald-700 border-emerald-200' 
-//                    : isInProgress ? 'bg-indigo-100 text-indigo-700 border-indigo-200' 
-//                    : 'bg-gray-100 text-gray-700 border-gray-200';
-    
-//     const statusLabel = isOverdue ? 'Urgent' : isCompleted ? 'Done' : isInProgress ? 'Active' : 'Planned';
-
-//     const tags = [
-//         { label: primaryCategory || 'General', icon: Briefcase, color: 'text-violet-600 bg-violet-50 border-violet-100' },
-//         { label: project.metadata_label, icon: Layers, color: 'text-cyan-600 bg-cyan-50 border-cyan-100' },
-//     ].filter(tag => tag.label);
+//     const handleNavigate = (e) => {
+//         e.stopPropagation();
+//         navigate(`/projects/${project.slug}`);
+//     };
 
 //     return (
-//         <div className={`flex flex-col h-full w-full bg-white rounded-2xl overflow-hidden transition-all duration-300 ${isDeck ? '' : 'shadow-sm border border-gray-200 hover:shadow-xl hover:-translate-y-1'}`}>
-            
-//             {/* Image Area */}
-//             <div className="relative">
-//                 <MediaPlaceholder project={project} className="h-48" />
-//                 <div className={`absolute top-3 right-3 px-2.5 py-0.5 rounded-full text-xs font-bold uppercase border ${statusBg} shadow-sm`}>
-//                     {statusLabel}
+//         <div className={`h-full flex flex-col bg-white rounded-2xl overflow-hidden transition-all duration-500 group relative ${isDeck ? 'shadow-2xl border border-gray-100' : 'border border-gray-100/80 hover:shadow-xl hover:shadow-indigo-100/40'}`}>
+//             {/* Image Section */}
+//             <div className="relative shrink-0">
+//                 {/* Use a good height to show the image well */}
+//                 <MediaPlaceholder project={project} className={isDeck ? "h-64 md:h-72" : "h-56"} />
+                
+//                 {/* Floating Category Badge */}
+//                 <div className="absolute top-4 left-4">
+//                     <span className="px-3 py-1 text-[11px] font-semibold bg-white/95 backdrop-blur-md text-indigo-600 rounded-full shadow-sm border border-indigo-50/50">
+//                         {project.category || "Project"}
+//                     </span>
 //                 </div>
+
+//                 {/* Status Badge */}
+//                 {project.status && (
+//                     <div className="absolute top-4 right-4">
+//                         <span className={`px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider rounded-md shadow-sm backdrop-blur-md ${
+//                             project.status === 'Completed' ? 'bg-emerald-500/90 text-white' : 
+//                             project.status === 'In Progress' ? 'bg-amber-500/90 text-white' : 
+//                             'bg-gray-500/90 text-white'
+//                         }`}>
+//                             {project.status}
+//                         </span>
+//                     </div>
+//                 )}
 //             </div>
 
-//             <div className="flex-grow p-5 flex flex-col">
-//                 <h3 className="text-xl font-bold text-gray-900 line-clamp-1 mb-2 group-hover:text-indigo-600 transition-colors">
-//                     {project.title}
-//                 </h3>
-//                 <p className="text-sm text-gray-500 line-clamp-3 leading-relaxed mb-4">
-//                     {project.description || `${project.details_1 || ''} ${project.details_2 || ''}` || 'No description available.'}
-//                 </p>
+//             {/* Content Section */}
+//             <div className="flex-1 p-6 flex flex-col">
+//                 <div className="flex justify-between items-start mb-2 gap-4">
+//                     <h3 className={`font-bold text-gray-900 line-clamp-1 group-hover:text-indigo-600 transition-colors ${isDeck ? 'text-xl md:text-2xl' : 'text-lg'}`}>
+//                         {project.title}
+//                     </h3>
+//                     {project.tier && (
+//                          <div className="w-2.5 h-2.5 rounded-full mt-2 shrink-0 ring-2 ring-white" title={project.tier.name} style={{ backgroundColor: project.tier.color_hex }}></div>
+//                     )}
+//                 </div>
                 
-//                 <div className="mt-auto space-y-4">
-//                     {/* Tags */}
-//                     <div className="flex flex-wrap gap-2">
-//                         {tags.map((tag, index) => (
-//                             <div key={index} className={`flex items-center text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-md border ${tag.color}`}>
-//                                 {tag.label}
+//                 <p className="text-sm text-gray-500 line-clamp-3 mb-5 flex-1 leading-relaxed">
+//                     {project.description || "No description available."}
+//                 </p>
+
+//                 {/* Metadata Footer */}
+//                 <div className="pt-4 border-t border-gray-50 mt-auto space-y-3">
+//                     {/* Tools Row */}
+//                     {project.tools && project.tools.length > 0 && (
+//                         <div className="flex flex-wrap gap-2 mb-1">
+//                             {project.tools.slice(0, 3).map((tool, i) => (
+//                                 <span key={i} className="text-[10px] px-2 py-1 bg-gray-50 text-gray-600 rounded-md border border-gray-100 font-medium">
+//                                     {tool.name}
+//                                 </span>
+//                             ))}
+//                             {project.tools.length > 3 && (
+//                                 <span className="text-[10px] px-2 py-1 bg-gray-50 text-gray-400 rounded-md border border-gray-100">
+//                                     +{project.tools.length - 3}
+//                                 </span>
+//                             )}
+//                         </div>
+//                     )}
+
+//                     <div className="flex items-center justify-between mt-2">
+//                         <div className="flex items-center gap-3 text-xs text-gray-400 font-medium">
+//                             <div className="flex items-center gap-2" title="Completion">
+//                                 <div className="w-16 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+//                                     <div 
+//                                         className="h-full bg-indigo-500 rounded-full" 
+//                                         style={{ width: `${project.completion_percentage || 0}%` }}
+//                                     />
+//                                 </div>
+//                                 <span>{project.completion_percentage}%</span>
 //                             </div>
-//                         ))}
-//                     </div>
+//                         </div>
 
-//                     <div className="h-px bg-gray-100 w-full"></div>
-
-//                     {/* Footer Info */}
-//                     <div className="flex justify-between items-center text-xs text-gray-500 font-medium">
-//                         <span className="flex items-center">
-//                             <Clock className="w-3.5 h-3.5 mr-1.5 text-gray-400" />
-//                             {completionPercentage}% Complete
-//                         </span>
-//                         <span className="flex items-center hover:text-indigo-600 transition-colors">
-//                             Details <ChevronRight className="w-3 h-3 ml-1" />
-//                         </span>
+//                         <button 
+//                             onClick={handleNavigate}
+//                             className={`flex items-center justify-center rounded-full transition-all duration-300 z-10 ${isDeck ? 'w-10 h-10 bg-indigo-600 text-white shadow-lg hover:bg-indigo-700' : 'p-2 bg-gray-50 text-gray-400 hover:bg-indigo-600 hover:text-white'}`}
+//                         >
+//                             <ChevronRight className={isDeck ? "w-5 h-5" : "w-4 h-4"} />
+//                         </button>
 //                     </div>
 //                 </div>
 //             </div>
@@ -351,72 +132,93 @@
 //     );
 // };
 
-// // --- The Core ProjectCard Component ---
-// const ProjectCard = ({ project, index, isDeckView }) => {
-//     const navigate = typeof useNavigate === 'function' ? useNavigate() : () => {}; 
-//     const slug = project.slug || project.id;
+// const ProjectCard = ({ 
+//     project, 
+//     index, 
+//     style = CardStyle.UNIFIED_DESIGN, 
+//     // New prop for 3-card carousel position
+//     deckPosition, // 'center', 'left', 'right', 'hiddenLeft', 'hiddenRight'
+//     onClick
+// }) => {
+//     const navigate = useNavigate();
 
 //     const handleClick = () => {
-//         if (slug) {
-//             console.log(`Navigating to /projects/${slug}`);
-//             // navigate(`/projects/${slug}`);
+//         if (onClick) {
+//             onClick();
+//         } else {
+//             navigate(`/projects/${project.slug}`);
 //         }
 //     };
 
-//     // --- Deck View Logic ---
-//     if (isDeckView) {
-//         const MAX_VISIBLE_CARDS = 8; 
-//         if (index >= MAX_VISIBLE_CARDS) return null;
+//     // --- Carousel Deck Logic ---
+//     if (style === CardStyle.DECK_STACKED) {
+        
+//         const variants = {
+//             center: {
+//                 x: '0%',
+//                 scale: 1,
+//                 zIndex: 30,
+//                 opacity: 1,
+//                 filter: 'blur(0px)',
+//                 rotateY: 0,
+//             },
+//             left: {
+//                 x: '-55%', // Push to left
+//                 scale: 0.85, // Smaller
+//                 zIndex: 20,
+//                 opacity: 0.6, // Faded
+//                 filter: 'blur(1px)', // Slight blur
+//                 rotateY: 10, // Slight turn inward
+//             },
+//             right: {
+//                 x: '55%', // Push to right
+//                 scale: 0.85, // Smaller
+//                 zIndex: 20,
+//                 opacity: 0.6, // Faded
+//                 filter: 'blur(1px)', // Slight blur
+//                 rotateY: -10, // Slight turn inward
+//             },
+//             hiddenLeft: {
+//                 x: '-100%',
+//                 scale: 0.5,
+//                 zIndex: 10,
+//                 opacity: 0,
+//                 filter: 'blur(5px)',
+//             },
+//             hiddenRight: {
+//                 x: '100%',
+//                 scale: 0.5,
+//                 zIndex: 10,
+//                 opacity: 0,
+//                 filter: 'blur(5px)',
+//             }
+//         };
 
-//         const TOTAL_CARDS = MAX_VISIBLE_CARDS;
-//         const rotationFactor = 4; 
-//         // Center the rotation calculation around the middle of the stack
-//         const rotation = (index - (TOTAL_CARDS - 1) / 2) * rotationFactor; 
-//         const xOffset = rotation * 8; 
-//         const zIndex = 50 - Math.abs(index - 3); // Stack z-index to prioritize middle cards visually if needed, or simple layering
+//         // Determine variant string safely
+//         const animateState = deckPosition || 'center';
 
 //         return (
 //             <motion.div
-//                 // RESPONSIVE WIDTH: w-[85vw] for mobile, w-[20rem] for desktop
-//                 className="absolute w-[85vw] sm:w-[20rem] h-[28rem] cursor-pointer touch-none" 
-//                 key={`${project.id}-${index}`} 
+//                 className="absolute top-0 left-0 right-0 mx-auto w-full max-w-md cursor-pointer perspective-1000"
+//                 initial={false}
+//                 animate={animateState}
+//                 variants={variants}
+//                 transition={{
+//                     type: "spring",
+//                     stiffness: 120,
+//                     damping: 20,
+//                     mass: 1
+//                 }}
 //                 onClick={handleClick}
-//                 style={{ 
-//                     transformOrigin: 'bottom center',
-//                     perspective: 1000, 
-//                 }}
-//                 initial={{ 
-//                     opacity: 0, 
-//                     rotate: rotation, 
-//                     x: xOffset, 
-//                     y: 200, 
-//                     scale: 0.9
-//                 }}
-//                 animate={{ 
-//                     opacity: 1, 
-//                     rotate: rotation, 
-//                     x: xOffset, 
-//                     y: 0, 
-//                     scale: 1,
-//                     zIndex: index, // Ensure order is preserved for the fan look
-//                     transition: { 
-//                         type: 'spring', 
-//                         stiffness: 120, 
-//                         damping: 15, 
-//                         delay: index * 0.05 
-//                     }
-//                 }}
-//                 whileHover={{ 
-//                     y: -40, 
-//                     scale: 1.05,
-//                     rotate: 0, // Straighten up on hover
-//                     zIndex: 100, 
-//                     transition: { type: 'spring', stiffness: 300, damping: 20 }
+//                 style={{
+//                     transformOrigin: 'center center',
+//                     height: 'auto',
+//                     perspective: 1000
 //                 }}
 //             >
-//                 <div className="w-full h-full rounded-2xl shadow-2xl shadow-indigo-900/10 bg-white ring-1 ring-gray-900/5">
-//                     <FullCardContent project={project} isDeck={true} />
-//                 </div>
+//                 <FullCardContent project={project} isDeck={true} />
+//                 {/* Overlay to dim non-center cards */}
+//                 <div className={`absolute inset-0 bg-white/50 transition-opacity duration-300 rounded-2xl pointer-events-none ${deckPosition === 'center' ? 'opacity-0' : 'opacity-100'}`} />
 //             </motion.div>
 //         );
 //     }
@@ -438,203 +240,247 @@
 // };
 
 // export default ProjectCard;
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useRef } from 'react';
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { Clock, Layers, Briefcase, Code, ChevronRight } from 'lucide-react';
-import { Navigate } from 'react-router-dom';
+import { ChevronRight, ExternalLink, Layers } from 'lucide-react';
+
 export const CardStyle = {
   UNIFIED_DESIGN: 'UNIFIED_DESIGN',
   DECK_STACKED: 'DECK_STACKED' 
 };
 
-// --- Helper for Media Placeholder ---
-const MediaPlaceholder = ({ project, className = 'h-32' }) => {
-    const imageUrl = project.hero_media?.file_path;
+// --- Helper: Parallax Tilt Card Container ---
+const TiltContainer = ({ children, className, disabled }) => {
+    const x = useMotionValue(0);
+    const y = useMotionValue(0);
 
-    if (imageUrl) {
-        // Fallback for demo purposes
-        const placeholderUrl = `https://placehold.co/600x400/f3f4f6/9ca3af?text=${encodeURIComponent(project.title)}`;
+    const mouseX = useSpring(x, { stiffness: 500, damping: 100 });
+    const mouseY = useSpring(y, { stiffness: 500, damping: 100 });
 
-        return (
-            <div className={`relative ${className} overflow-hidden bg-gray-50 group`}>
-                <img 
-                    src={imageUrl} // Assuming this is a full URL or you have a base URL handler
-                    alt={project.hero_media?.alt_text || `Image for ${project.title}`} 
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
-                    onError={(e) => { e.target.onerror = null; e.target.src = placeholderUrl; }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            </div>
-        );
-    }
+    const rotateX = useTransform(mouseY, [-0.5, 0.5], ["7deg", "-7deg"]);
+    const rotateY = useTransform(mouseX, [-0.5, 0.5], ["-7deg", "7deg"]);
 
-    // Fallback Gradient
-    const hash = project.id.charCodeAt(project.id.length - 1) % 6;
-    const gradients = [
-        'from-blue-500 to-indigo-600', 'from-rose-500 to-orange-500',
-        'from-emerald-500 to-teal-600', 'from-amber-500 to-pink-600',
-        'from-violet-500 to-fuchsia-600', 'from-cyan-500 to-blue-500'
-    ];
-    const gradient = gradients[hash];
+    const handleMouseMove = (e) => {
+        if (disabled) return;
+        const rect = e.currentTarget.getBoundingClientRect();
+        const width = rect.width;
+        const height = rect.height;
+        const mouseXFromCenter = e.clientX - rect.left - width / 2;
+        const mouseYFromCenter = e.clientY - rect.top - height / 2;
+        x.set(mouseXFromCenter / width);
+        y.set(mouseYFromCenter / height);
+    };
+
+    const handleMouseLeave = () => {
+        if (disabled) return;
+        x.set(0);
+        y.set(0);
+    };
+
+    if (disabled) return <div className={className}>{children}</div>;
 
     return (
-        <div className={`relative ${className} bg-gradient-to-br ${gradient} flex items-center justify-center overflow-hidden`}>
-            <Code className="w-12 h-12 text-white/50" />
-            <div className="absolute inset-0 bg-white/10 mix-blend-overlay"></div>
+        <motion.div
+            style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+            className={className}
+        >
+            {children}
+        </motion.div>
+    );
+};
+
+// --- Helper: Media Placeholder ---
+const MediaPlaceholder = ({ project, className = 'h-56' }) => {
+    const imageUrl = project.hero_image;
+    
+    // Fallback logic
+    const placeholderUrl = `https://placehold.co/800x600/f3f4f6/9ca3af?text=${encodeURIComponent(project.title || 'Project')}`;
+
+    return (
+        <div className={`relative ${className} overflow-hidden bg-gray-100 group w-full`}>
+            {imageUrl ? (
+                <img 
+                    src={imageUrl} 
+                    alt={project.hero_alt || `Preview of ${project.title}`} 
+                    className="w-full h-full object-fit object-center transition-transform duration-700 group-hover:scale-105" 
+                    onError={(e) => { e.target.onerror = null; e.target.src = placeholderUrl; }}
+                />
+            ) : (
+                <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center text-gray-400">
+                    <Layers className="w-10 h-10 opacity-20" />
+                </div>
+            )}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60 transition-opacity duration-500" />
         </div>
     );
 };
 
-// --- Full Card Content ---
 const FullCardContent = ({ project, isDeck }) => {
-    const primaryCategory = project.project_category_links?.[0]?.project_categories?.name;
-    const completionPercentage = project.completion_percentage || 0;
-    const status = project.status || 'Unknown';
     const navigate = useNavigate();
-    // Status Logic
-    const isOverdue = status === 'Overdue';
-    const isCompleted = completionPercentage === 100 && status === 'Completed';
-    const isInProgress = status === 'In Progress' || status === 'Completed'; 
 
-    // Updated colors for Light Theme
-    const statusBg = isOverdue ? 'bg-red-100 text-red-700 border-red-200' 
-                   : isCompleted ? 'bg-emerald-100 text-emerald-700 border-emerald-200' 
-                   : isInProgress ? 'bg-indigo-100 text-indigo-700 border-indigo-200' 
-                   : 'bg-gray-100 text-gray-700 border-gray-200';
-    
-    const statusLabel = isOverdue ? 'Urgent' : isCompleted ? 'Done' : isInProgress ? 'Active' : 'Planned';
+    const handleNavigate = (e) => {
+        e.stopPropagation();
+        navigate(`/projects/${project.slug}`);
+    };
 
-    const tags = [
-        { label: primaryCategory || 'General', icon: Briefcase, color: 'text-violet-600 bg-violet-50 border-violet-100' },
-        { label: project.metadata_label, icon: Layers, color: 'text-cyan-600 bg-cyan-50 border-cyan-100' },
-    ].filter(tag => tag.label);
+    return (
+        <div className={`h-full flex flex-col bg-white rounded-3xl overflow-hidden backface-hidden ${isDeck ? 'shadow-2xl' : 'shadow-lg hover:shadow-xl border border-gray-100'}`}>
+            {/* Image Section */}
+            <div className="relative shrink-0">
+                <MediaPlaceholder project={project} className={isDeck ? "h-64 md:h-80" : "h-56"} />
+                
+                {/* Floating Category Badge */}
+                <div className="absolute top-4 left-4 z-10">
+                    <span className="px-3 py-1 text-[11px] font-bold bg-white/90 backdrop-blur-md text-gray-900 rounded-full shadow-sm border border-white/50">
+                        {project.category || "Development"}
+                    </span>
+                </div>
 
-    const handleDetailsClick = (e) => {
-        e.stopPropagation(); // Prevent triggering parent onClick if needed
-        if (project.slug) {
+                {/* Status Badge */}
+                {project.status && (
+                    <div className="absolute top-4 right-4 z-10">
+                        <span className={`px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider rounded-md shadow-sm backdrop-blur-md border border-white/20 ${
+                            project.status === 'Completed' ? 'bg-emerald-500/90 text-white' : 
+                            project.status === 'In Progress' ? 'bg-amber-500/90 text-white' : 
+                            'bg-gray-800/90 text-white'
+                        }`}>
+                            {project.status}
+                        </span>
+                    </div>
+                )}
+            </div>
+
+            {/* Content Section */}
+            <div className="flex-1 p-6 flex flex-col relative bg-white">
+                <div className="flex justify-between items-start mb-2 gap-4">
+                    <h3 className={`font-bold text-gray-900 line-clamp-1 group-hover:text-indigo-600 transition-colors ${isDeck ? 'text-2xl' : 'text-lg'}`}>
+                        {project.title}
+                    </h3>
+                    {project.tier && (
+                        <div className="w-3 h-3 rounded-full mt-2 shrink-0 ring-2 ring-gray-100" title={project.tier.name} style={{ backgroundColor: project.tier.color_hex }}></div>
+                    )}
+                </div>
+                
+                <p className="text-sm text-gray-500 line-clamp-2 mb-4 leading-relaxed">
+                    {project.description || "A showcase of technical expertise and creative problem solving."}
+                </p>
+
+                {/* Metadata Footer */}
+                <div className="mt-auto pt-4 border-t border-gray-50">
+                    {/* Tools Row */}
+                    <div className="flex flex-wrap gap-2 mb-4 h-6 overflow-hidden">
+                        {project.tools?.slice(0, 3).map((tool, i) => (
+                            <span key={i} className="text-[10px] px-2 py-0.5 bg-gray-50 text-gray-600 rounded border border-gray-200 font-medium">
+                                {tool.name}
+                            </span>
+                        ))}
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                             <div className="w-20 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                                <div 
+                                    className="h-full bg-indigo-500 rounded-full" 
+                                    style={{ width: `${project.completion_percentage || 0}%` }}
+                                />
+                            </div>
+                            <span className="text-[10px] font-semibold text-gray-400">{project.completion_percentage}%</span>
+                        </div>
+
+                        <button 
+                            onClick={handleNavigate}
+                            className={`flex items-center gap-2 text-xs font-bold transition-colors ${isDeck ? 'text-indigo-600 hover:text-indigo-800' : 'text-gray-400 hover:text-indigo-600'}`}
+                        >
+                            View Details <ChevronRight className="w-3 h-3" />
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+const ProjectCard = ({ 
+    project, 
+    style = CardStyle.UNIFIED_DESIGN, 
+    deckPosition, 
+    onClick
+}) => {
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        if (onClick) {
+            onClick();
+        } else {
             navigate(`/projects/${project.slug}`);
         }
     };
 
-    return (
-        <div className={`flex flex-col h-full w-full bg-white rounded-2xl overflow-hidden transition-all duration-300 ${isDeck ? '' : 'shadow-sm border border-gray-200 hover:shadow-xl hover:-translate-y-1'}`}>
-            
-            {/* Image Area */}
-            <div className="relative">
-                <MediaPlaceholder project={project} className="h-48" />
-                <div className={`absolute top-3 right-3 px-2.5 py-0.5 rounded-full text-xs font-bold uppercase border ${statusBg} shadow-sm`}>
-                    {statusLabel}
-                </div>
-            </div>
+    // --- Carousel Deck Logic ---
+    if (style === CardStyle.DECK_STACKED) {
+        const variants = {
+            center: {
+                x: 0,
+                scale: 1,
+                zIndex: 50,
+                opacity: 1,
+                rotateY: 0,
+                filter: 'brightness(1)',
+                transition: { type: "spring", stiffness: 300, damping: 30 }
+            },
+            left: {
+                x: -280, // Absolute pixel value ensures consistent overlap
+                scale: 0.85,
+                zIndex: 40,
+                opacity: 0.7,
+                rotateY: 15,
+                filter: 'brightness(0.9)',
+                transition: { type: "spring", stiffness: 300, damping: 30 }
+            },
+            right: {
+                x: 280,
+                scale: 0.85,
+                zIndex: 40,
+                opacity: 0.7,
+                rotateY: -15,
+                filter: 'brightness(0.9)',
+                transition: { type: "spring", stiffness: 300, damping: 30 }
+            },
+            hiddenLeft: {
+                x: -500,
+                scale: 0.6,
+                zIndex: 10,
+                opacity: 0,
+                transition: { duration: 0.4 }
+            },
+            hiddenRight: {
+                x: 500,
+                scale: 0.6,
+                zIndex: 10,
+                opacity: 0,
+                transition: { duration: 0.4 }
+            }
+        };
 
-            <div className="flex-grow p-5 flex flex-col">
-                <h3 className="text-xl font-bold text-gray-900 line-clamp-1 mb-2 group-hover:text-indigo-600 transition-colors">
-                    {project.title}
-                </h3>
-                <p className="text-sm text-gray-500 line-clamp-3 leading-relaxed mb-4">
-                    {project.description || `${project.details_1 || ''} ${project.details_2 || ''}` || 'No description available.'}
-                </p>
-                
-                <div className="mt-auto space-y-4">
-                    {/* Tags */}
-                    <div className="flex flex-wrap gap-2">
-                        {tags.map((tag, index) => (
-                            <div key={index} className={`flex items-center text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-md border ${tag.color}`}>
-                                {tag.label}
-                            </div>
-                        ))}
-                    </div>
-
-                    <div className="h-px bg-gray-100 w-full"></div>
-
-                    {/* Footer Info */}
-                  <div className="flex justify-between items-center text-xs text-gray-500 font-medium">
-                        <span className="flex items-center">
-                            <Clock className="w-3.5 h-3.5 mr-1.5 text-gray-400" />
-                            {completionPercentage}% Complete
-                        </span>
-                        
-                        {/* Navigation Trigger */}
-                        <span 
-                            onClick={handleDetailsClick}
-                            className="flex items-center hover:text-indigo-600 transition-colors cursor-pointer"
-                        >
-                            Details <ChevronRight className="w-3 h-3 ml-1" />
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
-};
-
-// --- The Core ProjectCard Component ---
-const ProjectCard = ({ project, index, isDeckView }) => {
-    const navigate = typeof useNavigate === 'function' ? useNavigate() : () => {}; 
-    const slug = project.slug || project.id;
-
-    const handleClick = () => {
-        if (slug) {
-            console.log(`Navigating to /projects/${slug}`);
-            // navigate(`/projects/${slug}`);
-        }
-    };
-
-    // --- Deck View Logic ---
-    if (isDeckView) {
-        const MAX_VISIBLE_CARDS = 8; 
-        if (index >= MAX_VISIBLE_CARDS) return null;
-
-        const TOTAL_CARDS = MAX_VISIBLE_CARDS;
-        const rotationFactor = 4; 
-        // Center the rotation calculation around the middle of the stack
-        const rotation = (index - (TOTAL_CARDS - 1) / 2) * rotationFactor; 
-        const xOffset = rotation * 8; 
-        const zIndex = 50 - Math.abs(index - 3); // Stack z-index to prioritize middle cards visually if needed, or simple layering
+        const animateState = deckPosition || 'center';
 
         return (
             <motion.div
-                // RESPONSIVE WIDTH: w-[85vw] for mobile, w-[20rem] for desktop
-                className="absolute w-[85vw] sm:w-[20rem] h-[28rem] cursor-pointer touch-none" 
-                key={`${project.id}-${index}`} 
+                className="absolute top-0 left-0 right-0 mx-auto w-[350px] md:w-[400px] cursor-pointer"
+                animate={animateState}
+                variants={variants}
                 onClick={handleClick}
-                style={{ 
-                    transformOrigin: 'bottom center',
-                    perspective: 1000, 
-                }}
-                initial={{ 
-                    opacity: 0, 
-                    rotate: rotation, 
-                    x: xOffset, 
-                    y: 200, 
-                    scale: 0.9
-                }}
-                animate={{ 
-                    opacity: 1, 
-                    rotate: rotation, 
-                    x: xOffset, 
-                    y: 0, 
-                    scale: 1,
-                    zIndex: index, // Ensure order is preserved for the fan look
-                    transition: { 
-                        type: 'spring', 
-                        stiffness: 120, 
-                        damping: 15, 
-                        delay: index * 0.05 
-                    }
-                }}
-                whileHover={{ 
-                    y: -40, 
-                    scale: 1.05,
-                    rotate: 0, // Straighten up on hover
-                    zIndex: 100, 
-                    transition: { type: 'spring', stiffness: 300, damping: 20 }
+                style={{
+                    transformOrigin: 'center bottom',
+                    perspective: 1000
                 }}
             >
-                <div className="w-full h-full rounded-2xl shadow-2xl shadow-indigo-900/10 bg-white ring-1 ring-gray-900/5">
+                <TiltContainer disabled={deckPosition !== 'center'} className="w-full h-full">
                     <FullCardContent project={project} isDeck={true} />
-                </div>
+                </TiltContainer>
             </motion.div>
         );
     }
@@ -645,7 +491,7 @@ const ProjectCard = ({ project, index, isDeckView }) => {
             layout
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
+            whileHover={{ y: -5 }}
             transition={{ duration: 0.3 }}
             onClick={handleClick}
             className="cursor-pointer h-full"

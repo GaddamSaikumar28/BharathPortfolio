@@ -19391,6 +19391,5058 @@ export default ProfessionalProjectDetail;
 //   return mediaIdsToDelete;
 // }
 
+// // import React from 'react';
+// // import { motion } from 'framer-motion';
+// // import { useNavigate } from 'react-router-dom';
+// // import { Clock, Layers, Briefcase, Code } from 'lucide-react';
+
+// // // NOTE: CardStyle definitions and external router dependency (useNavigate) 
+// // // are retained for compatibility with your existing environment.
+// // export const CardStyle = {
+// //   UNIFIED_DESIGN: 'UNIFIED_DESIGN',
+// //   DECK_STACKED: 'DECK_STACKED' 
+// // };
+// // // --- Helper for Media Placeholder (Futuristic Image Block) ---
+// // const MediaPlaceholder = ({ project, className = 'h-32' }) => {
+// //     // Check for a real image URL or file path (based on API structure)
+// //     const imageUrl = project.hero_media?.file_path;
+
+// //     if (imageUrl) {
+// //         // Fallback placeholder image URL structure (since we don't have a file server)
+// //         const placeholderUrl = `https://placehold.co/400x256/374151/E5E7EB?text=IMG+Placeholder`;
+
+// //         return (
+// //             <div className={`relative ${className} rounded-lg overflow-hidden shadow-md mb-4 border border-gray-200 bg-gray-100`}>
+// //                 {/* Using a placeholder URL since actual file paths are not loadable in this environment */}
+// //                 <img 
+// //                     src={placeholderUrl} 
+// //                     alt={project.hero_media?.alt_text || `Image for ${project.title}`} 
+// //                     className="w-full h-full object-cover" 
+// //                     onError={(e) => { e.target.onerror = null; e.target.src = placeholderUrl; }}
+// //                 />
+// //                 <div className="absolute inset-0 ring-2 ring-inset ring-gray-100 rounded-lg pointer-events-none opacity-20"></div>
+// //             </div>
+// //         );
+// //     }
+
+// //     // Fallback: Generate a consistent gradient based on the project ID
+// //     const hash = project.id.charCodeAt(project.id.length - 1) % 6;
+// //     const vibrantGradients = [
+// //         'from-blue-500 to-purple-600', 'from-red-500 to-orange-500',
+// //         'from-green-500 to-teal-600', 'from-yellow-500 to-pink-500',
+// //         'from-indigo-500 to-cyan-500', 'from-fuchsia-500 to-rose-500'
+// //     ];
+// //     const gradient = vibrantGradients[hash];
+
+// //     return (
+// //         <div className={`relative ${className} bg-gradient-to-br ${gradient} rounded-lg flex items-center justify-center overflow-hidden shadow-md mb-4 border border-gray-200`}>
+// //             <Code className="w-1/4 h-1/4 text-white/90 opacity-80" />
+// //             <div className="absolute inset-0 ring-2 ring-inset ring-white/10 rounded-lg pointer-events-none opacity-20"></div>
+// //         </div>
+// //     );
+// // };
+
+// // // --- Full Card Content (Shared UI for both views) ---
+// // const FullCardContent = ({ project }) => {
+// //     // --- Data Mapping from API Response ---
+// //     const primaryCategory = project.project_category_links?.[0]?.project_categories?.name;
+// //     const completionPercentage = project.completion_percentage || 0;
+// //     const status = project.status || 'Unknown';
+    
+// //     // Determine status styling
+// //     const isOverdue = status === 'Overdue';
+// //     const isCompleted = completionPercentage === 100 && status === 'Completed';
+// //     const isInProgress = status === 'In Progress' || status === 'Completed'; // Treat incomplete 'Completed' projects as in progress visual
+
+// //     const statusBg = isOverdue ? 'bg-red-500' : isCompleted ? 'bg-green-500' : isInProgress ? 'bg-blue-500' : 'bg-gray-400';
+// //     const statusText = isOverdue ? 'text-red-600' : isCompleted ? 'text-green-600' : isInProgress ? 'text-blue-600' : 'text-gray-600';
+// //     const statusLabel = isOverdue ? 'URGENT' : isCompleted ? 'COMPLETED' : isInProgress ? 'ACTIVE SPRINT' : 'NOT STARTED';
+
+// //     const tags = [
+// //         { label: primaryCategory || 'General', icon: Briefcase, color: 'text-purple-600' },
+// //         { label: project.metadata_label, icon: Layers, color: 'text-cyan-600' },
+// //     ].filter(tag => tag.label); // Filter out tags with null/empty labels
+
+// //     return (
+// //         <div className="flex flex-col h-full w-full bg-white rounded-xl shadow-xl overflow-hidden p-6 relative border border-gray-100 transition-all duration-300">
+            
+// //             {/* Status Tag */}
+// //             <div className={`absolute top-0 right-0 px-3 py-1 ${statusBg} rounded-bl-xl text-white font-bold text-xs uppercase shadow-md shadow-current/30`}>
+// //                 {statusLabel}
+// //             </div>
+
+// //             {/* IMAGE SPACE: Responsive h-64 on desktop, h-48 on mobile */}
+// //             <MediaPlaceholder project={project} className="h-48 sm:h-64" />
+
+// //             <div className="flex-grow text-gray-900 mb-4">
+// //                 <h3 className="text-xl sm:text-2xl font-extrabold text-gray-900 line-clamp-2 mb-1">{project.title}</h3>
+// //                 {/* Use details_1 and details_2 as an alternative subtitle if no description exists */}
+// //                 <p className="text-sm text-gray-600 line-clamp-3">
+// //                     {project.description || `${project.details_1 || ''} / ${project.details_2 || ''}`}
+// //                 </p>
+// //             </div>
+            
+// //             <div className="mt-auto pt-4 border-t border-gray-200 space-y-3">
+// //                 {/* Tags Section */}
+// //                 <div className="flex flex-wrap gap-2">
+// //                     {tags.map((tag, index) => (
+// //                         <div key={index} className={`flex items-center text-xs font-medium ${tag.color} bg-gray-100 px-3 py-1 rounded-full border border-current/30`}>
+// //                             <tag.icon className="w-3 h-3 mr-1" />
+// //                             {tag.label}
+// //                         </div>
+// //                     ))}
+// //                 </div>
+
+// //                 {/* Progress/Publisher */}
+// //                 <div className="flex justify-between items-center text-sm font-sans text-gray-600">
+// //                     <span className="flex items-center font-bold">
+// //                         <Clock className={`w-4 h-4 mr-2 ${statusText}`} />
+// //                         {completionPercentage}% Done
+// //                     </span>
+// //                     <span className="text-xs text-gray-500 truncate max-w-[50%]">
+// //                         {project.publisher_name || 'Internal'}
+// //                     </span>
+// //                 </div>
+// //             </div>
+// //         </div>
+// //     );
+// // };
+
+// // // --- The Core ProjectCard Component ---
+// // const ProjectCard = ({ project, index, isDeckView }) => {
+// //     // Assuming a parent component provides the useNavigate context
+// //     const navigate = typeof useNavigate === 'function' ? useNavigate() : () => console.log('Mock Navigate'); 
+// //     const slug = project.slug || project.id;
+
+// //     const handleClick = () => {
+// //         if (slug) {
+// //             // In a real application, this would use the router: navigate(`/projects/${slug}`);
+// //             console.log(`Navigating to /projects/${slug}`);
+// //         }
+// //     };
+
+// //     // --- Deck View Logic (Fan/Spread Style) ---
+// //     if (isDeckView) {
+// //         // Reduced max cards for a more stable mobile/small screen fan
+// //         const MAX_VISIBLE_CARDS = 8; 
+// //         if (index >= MAX_VISIBLE_CARDS) return null;
+
+// //         const TOTAL_CARDS = MAX_VISIBLE_CARDS;
+// //         const rotationFactor = 5; // Reduced angle for a tighter, more responsive fan
+// //         const rotation = (index - (TOTAL_CARDS - 1) / 2) * rotationFactor; 
+// //         const xOffset = rotation * 6; // Reduced offset for less horizontal spread
+// //         const zIndex = 100 + index; 
+
+// //         // Generate a base color for the card container
+// //         const hash = project.id.charCodeAt(project.id.length - 1) % 6;
+// //         const baseColors = [
+// //             'bg-blue-100/50', 'bg-red-100/50', 'bg-green-100/50', 
+// //             'bg-yellow-100/50', 'bg-indigo-100/50', 'bg-fuchsia-100/50'
+// //         ];
+// //         const baseBg = baseColors[hash];
+
+
+// //         return (
+// //             <motion.div
+// //                 // Fixed dimensions for the visual effect, using relative units for better fit
+// //                 className="absolute w-[18rem] h-[28rem] max-w-xs cursor-pointer" 
+// //                 key={`${project.id}-${index}`} 
+// //                 onClick={handleClick}
+                
+// //                 style={{ 
+// //                     transformOrigin: 'bottom center',
+// //                     perspective: 1000, 
+// //                 }}
+                
+// //                 // Optimized Spring Animation for smoothness (increased damping)
+// //                 initial={{ 
+// //                     opacity: 0, 
+// //                     rotate: rotation, 
+// //                     x: xOffset, 
+// //                     y: 100, // Start far below
+// //                     zIndex: zIndex 
+// //                 }}
+                
+// //                 animate={{ 
+// //                     opacity: 1, 
+// //                     rotate: rotation, 
+// //                     x: xOffset, 
+// //                     y: 0, 
+// //                     zIndex: zIndex,
+// //                     transition: { 
+// //                         type: 'spring', 
+// //                         stiffness: 100, 
+// //                         damping: 20, // Higher damping prevents overshooting/jiggle
+// //                         delay: index * 0.05 
+// //                     }
+// //                 }}
+
+// //                 // Smoother and more aggressive Hover Effect
+// //                 whileHover={{ 
+// //                     rotate: 0, 
+// //                     x: 0, 
+// //                     y: -60, // Lift higher for focus
+// //                     scale: 1.15, // Increased scale
+// //                     zIndex: 200, 
+// //                     boxShadow: "0 40px 80px -15px rgba(59, 130, 246, 0.6)", 
+// //                     transition: { 
+// //                         type: 'spring', 
+// //                         stiffness: 250, // Fast snap
+// //                         damping: 25,
+// //                     }
+// //                 }}
+// //             >
+// //                 {/* Full Card Content Container */}
+// //                 <div 
+// //                     className={`w-full h-full rounded-xl overflow-hidden shadow-2xl relative ${baseBg}`}
+// //                 >
+// //                     <FullCardContent project={project} />
+// //                 </div>
+// //             </motion.div>
+// //         );
+// //     }
+    
+// //     // --- Grid View Logic (Responsive Masonry item) ---
+// //     return (
+// //         <motion.div
+// //             className="w-full mb-8 break-inside-avoid-column cursor-pointer"
+// //             onClick={handleClick}
+// //             // Use simple duration transitions for smooth Grid entry/exit
+// //             initial={{ opacity: 0, y: 30 }}
+// //             animate={{ opacity: 1, y: 0 }}
+// //             exit={{ opacity: 0, y: -30 }}
+// //             transition={{ duration: 0.4 }}
+// //             whileHover={{ 
+// //                 scale: 1.02,
+// //                 boxShadow: "0 15px 30px -5px rgba(0, 0, 0, 0.1)", 
+// //                 transition: { duration: 0.2 }
+// //             }}
+// //         >
+// //             <FullCardContent project={project} /> 
+// //         </motion.div>
+// //     );
+// // };
+
+// // export default ProjectCard;
+// import React from 'react';
+// import { motion } from 'framer-motion';
+// import { useNavigate } from 'react-router-dom';
+// import { Clock, Layers, Briefcase, Code, ChevronRight } from 'lucide-react';
+
+// export const CardStyle = {
+//   UNIFIED_DESIGN: 'UNIFIED_DESIGN',
+//   DECK_STACKED: 'DECK_STACKED' 
+// };
+
+// // --- Helper for Media Placeholder ---
+// const MediaPlaceholder = ({ project, className = 'h-32' }) => {
+//     const imageUrl = project.hero_media?.file_path;
+
+//     if (imageUrl) {
+//         // Fallback for demo purposes
+//         const placeholderUrl = `https://placehold.co/600x400/f3f4f6/9ca3af?text=${encodeURIComponent(project.title)}`;
+
+//         return (
+//             <div className={`relative ${className} overflow-hidden bg-gray-50 group`}>
+//                 <img 
+//                     src={imageUrl} // Assuming this is a full URL or you have a base URL handler
+//                     alt={project.hero_media?.alt_text || `Image for ${project.title}`} 
+//                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+//                     onError={(e) => { e.target.onerror = null; e.target.src = placeholderUrl; }}
+//                 />
+//                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+//             </div>
+//         );
+//     }
+
+//     // Fallback Gradient
+//     const hash = project.id.charCodeAt(project.id.length - 1) % 6;
+//     const gradients = [
+//         'from-blue-500 to-indigo-600', 'from-rose-500 to-orange-500',
+//         'from-emerald-500 to-teal-600', 'from-amber-500 to-pink-600',
+//         'from-violet-500 to-fuchsia-600', 'from-cyan-500 to-blue-500'
+//     ];
+//     const gradient = gradients[hash];
+
+//     return (
+//         <div className={`relative ${className} bg-gradient-to-br ${gradient} flex items-center justify-center overflow-hidden`}>
+//             <Code className="w-12 h-12 text-white/50" />
+//             <div className="absolute inset-0 bg-white/10 mix-blend-overlay"></div>
+//         </div>
+//     );
+// };
+
+// // --- Full Card Content ---
+// const FullCardContent = ({ project, isDeck }) => {
+//     const primaryCategory = project.project_category_links?.[0]?.project_categories?.name;
+//     const completionPercentage = project.completion_percentage || 0;
+//     const status = project.status || 'Unknown';
+    
+//     // Status Logic
+//     const isOverdue = status === 'Overdue';
+//     const isCompleted = completionPercentage === 100 && status === 'Completed';
+//     const isInProgress = status === 'In Progress' || status === 'Completed'; 
+
+//     // Updated colors for Light Theme
+//     const statusBg = isOverdue ? 'bg-red-100 text-red-700 border-red-200' 
+//                    : isCompleted ? 'bg-emerald-100 text-emerald-700 border-emerald-200' 
+//                    : isInProgress ? 'bg-indigo-100 text-indigo-700 border-indigo-200' 
+//                    : 'bg-gray-100 text-gray-700 border-gray-200';
+    
+//     const statusLabel = isOverdue ? 'Urgent' : isCompleted ? 'Done' : isInProgress ? 'Active' : 'Planned';
+
+//     const tags = [
+//         { label: primaryCategory || 'General', icon: Briefcase, color: 'text-violet-600 bg-violet-50 border-violet-100' },
+//         { label: project.metadata_label, icon: Layers, color: 'text-cyan-600 bg-cyan-50 border-cyan-100' },
+//     ].filter(tag => tag.label);
+
+//     return (
+//         <div className={`flex flex-col h-full w-full bg-white rounded-2xl overflow-hidden transition-all duration-300 ${isDeck ? '' : 'shadow-sm border border-gray-200 hover:shadow-xl hover:-translate-y-1'}`}>
+            
+//             {/* Image Area */}
+//             <div className="relative">
+//                 <MediaPlaceholder project={project} className="h-48" />
+//                 <div className={`absolute top-3 right-3 px-2.5 py-0.5 rounded-full text-xs font-bold uppercase border ${statusBg} shadow-sm`}>
+//                     {statusLabel}
+//                 </div>
+//             </div>
+
+//             <div className="flex-grow p-5 flex flex-col">
+//                 <h3 className="text-xl font-bold text-gray-900 line-clamp-1 mb-2 group-hover:text-indigo-600 transition-colors">
+//                     {project.title}
+//                 </h3>
+//                 <p className="text-sm text-gray-500 line-clamp-3 leading-relaxed mb-4">
+//                     {project.description || `${project.details_1 || ''} ${project.details_2 || ''}` || 'No description available.'}
+//                 </p>
+                
+//                 <div className="mt-auto space-y-4">
+//                     {/* Tags */}
+//                     <div className="flex flex-wrap gap-2">
+//                         {tags.map((tag, index) => (
+//                             <div key={index} className={`flex items-center text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-md border ${tag.color}`}>
+//                                 {tag.label}
+//                             </div>
+//                         ))}
+//                     </div>
+
+//                     <div className="h-px bg-gray-100 w-full"></div>
+
+//                     {/* Footer Info */}
+//                     <div className="flex justify-between items-center text-xs text-gray-500 font-medium">
+//                         <span className="flex items-center">
+//                             <Clock className="w-3.5 h-3.5 mr-1.5 text-gray-400" />
+//                             {completionPercentage}% Complete
+//                         </span>
+//                         <span className="flex items-center hover:text-indigo-600 transition-colors">
+//                             Details <ChevronRight className="w-3 h-3 ml-1" />
+//                         </span>
+//                     </div>
+//                 </div>
+//             </div>
+//         </div>
+//     );
+// };
+
+// // --- The Core ProjectCard Component ---
+// const ProjectCard = ({ project, index, isDeckView }) => {
+//     const navigate = typeof useNavigate === 'function' ? useNavigate() : () => {}; 
+//     const slug = project.slug || project.id;
+
+//     const handleClick = () => {
+//         if (slug) {
+//             console.log(`Navigating to /projects/${slug}`);
+//             // navigate(`/projects/${slug}`);
+//         }
+//     };
+
+//     // --- Deck View Logic ---
+//     if (isDeckView) {
+//         const MAX_VISIBLE_CARDS = 8; 
+//         if (index >= MAX_VISIBLE_CARDS) return null;
+
+//         const TOTAL_CARDS = MAX_VISIBLE_CARDS;
+//         const rotationFactor = 4; 
+//         // Center the rotation calculation around the middle of the stack
+//         const rotation = (index - (TOTAL_CARDS - 1) / 2) * rotationFactor; 
+//         const xOffset = rotation * 8; 
+//         const zIndex = 50 - Math.abs(index - 3); // Stack z-index to prioritize middle cards visually if needed, or simple layering
+
+//         return (
+//             <motion.div
+//                 // RESPONSIVE WIDTH: w-[85vw] for mobile, w-[20rem] for desktop
+//                 className="absolute w-[85vw] sm:w-[20rem] h-[28rem] cursor-pointer touch-none" 
+//                 key={`${project.id}-${index}`} 
+//                 onClick={handleClick}
+//                 style={{ 
+//                     transformOrigin: 'bottom center',
+//                     perspective: 1000, 
+//                 }}
+//                 initial={{ 
+//                     opacity: 0, 
+//                     rotate: rotation, 
+//                     x: xOffset, 
+//                     y: 200, 
+//                     scale: 0.9
+//                 }}
+//                 animate={{ 
+//                     opacity: 1, 
+//                     rotate: rotation, 
+//                     x: xOffset, 
+//                     y: 0, 
+//                     scale: 1,
+//                     zIndex: index, // Ensure order is preserved for the fan look
+//                     transition: { 
+//                         type: 'spring', 
+//                         stiffness: 120, 
+//                         damping: 15, 
+//                         delay: index * 0.05 
+//                     }
+//                 }}
+//                 whileHover={{ 
+//                     y: -40, 
+//                     scale: 1.05,
+//                     rotate: 0, // Straighten up on hover
+//                     zIndex: 100, 
+//                     transition: { type: 'spring', stiffness: 300, damping: 20 }
+//                 }}
+//             >
+//                 <div className="w-full h-full rounded-2xl shadow-2xl shadow-indigo-900/10 bg-white ring-1 ring-gray-900/5">
+//                     <FullCardContent project={project} isDeck={true} />
+//                 </div>
+//             </motion.div>
+//         );
+//     }
+    
+//     // --- Grid View Logic ---
+//     return (
+//         <motion.div
+//             layout
+//             initial={{ opacity: 0, scale: 0.95 }}
+//             animate={{ opacity: 1, scale: 1 }}
+//             exit={{ opacity: 0, scale: 0.95 }}
+//             transition={{ duration: 0.3 }}
+//             onClick={handleClick}
+//             className="cursor-pointer h-full"
+//         >
+//             <FullCardContent project={project} isDeck={false} /> 
+//         </motion.div>
+//     );
+// };
+
+// export default ProjectCard;
+
+// // // // // import React from 'react';
+// // // // // import { motion } from 'framer-motion';
+// // // // // import { useNavigate } from 'react-router-dom';
+// // // // // import { Clock, Layers, Briefcase, Code, ChevronRight } from 'lucide-react';
+// // // // // import { Navigate } from 'react-router-dom';
+// // // // // export const CardStyle = {
+// // // // //   UNIFIED_DESIGN: 'UNIFIED_DESIGN',
+// // // // //   DECK_STACKED: 'DECK_STACKED' 
+// // // // // };
+
+// // // // // // --- Helper for Media Placeholder ---
+// // // // // const MediaPlaceholder = ({ project, className = 'h-32' }) => {
+// // // // //     const imageUrl = project.hero_media?.file_path;
+
+// // // // //     if (imageUrl) {
+// // // // //         // Fallback for demo purposes
+// // // // //         const placeholderUrl = `https://placehold.co/600x400/f3f4f6/9ca3af?text=${encodeURIComponent(project.title)}`;
+
+// // // // //         return (
+// // // // //             <div className={`relative ${className} overflow-hidden bg-gray-50 group`}>
+// // // // //                 <img 
+// // // // //                     src={imageUrl} // Assuming this is a full URL or you have a base URL handler
+// // // // //                     alt={project.hero_media?.alt_text || `Image for ${project.title}`} 
+// // // // //                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+// // // // //                     onError={(e) => { e.target.onerror = null; e.target.src = placeholderUrl; }}
+// // // // //                 />
+// // // // //                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+// // // // //             </div>
+// // // // //         );
+// // // // //     }
+
+// // // // //     // Fallback Gradient
+// // // // //     const hash = project.id.charCodeAt(project.id.length - 1) % 6;
+// // // // //     const gradients = [
+// // // // //         'from-blue-500 to-indigo-600', 'from-rose-500 to-orange-500',
+// // // // //         'from-emerald-500 to-teal-600', 'from-amber-500 to-pink-600',
+// // // // //         'from-violet-500 to-fuchsia-600', 'from-cyan-500 to-blue-500'
+// // // // //     ];
+// // // // //     const gradient = gradients[hash];
+
+// // // // //     return (
+// // // // //         <div className={`relative ${className} bg-gradient-to-br ${gradient} flex items-center justify-center overflow-hidden`}>
+// // // // //             <Code className="w-12 h-12 text-white/50" />
+// // // // //             <div className="absolute inset-0 bg-white/10 mix-blend-overlay"></div>
+// // // // //         </div>
+// // // // //     );
+// // // // // };
+
+// // // // // // --- Full Card Content ---
+// // // // // const FullCardContent = ({ project, isDeck }) => {
+// // // // //     const primaryCategory = project.project_category_links?.[0]?.project_categories?.name;
+// // // // //     const completionPercentage = project.completion_percentage || 0;
+// // // // //     const status = project.status || 'Unknown';
+// // // // //     const navigate = useNavigate();
+// // // // //     // Status Logic
+// // // // //     const isOverdue = status === 'Overdue';
+// // // // //     const isCompleted = completionPercentage === 100 && status === 'Completed';
+// // // // //     const isInProgress = status === 'In Progress' || status === 'Completed'; 
+
+// // // // //     // Updated colors for Light Theme
+// // // // //     const statusBg = isOverdue ? 'bg-red-100 text-red-700 border-red-200' 
+// // // // //                    : isCompleted ? 'bg-emerald-100 text-emerald-700 border-emerald-200' 
+// // // // //                    : isInProgress ? 'bg-indigo-100 text-indigo-700 border-indigo-200' 
+// // // // //                    : 'bg-gray-100 text-gray-700 border-gray-200';
+    
+// // // // //     const statusLabel = isOverdue ? 'Urgent' : isCompleted ? 'Done' : isInProgress ? 'Active' : 'Planned';
+
+// // // // //     const tags = [
+// // // // //         { label: primaryCategory || 'General', icon: Briefcase, color: 'text-violet-600 bg-violet-50 border-violet-100' },
+// // // // //         { label: project.metadata_label, icon: Layers, color: 'text-cyan-600 bg-cyan-50 border-cyan-100' },
+// // // // //     ].filter(tag => tag.label);
+
+// // // // //     const handleDetailsClick = (e) => {
+// // // // //         e.stopPropagation(); // Prevent triggering parent onClick if needed
+// // // // //         if (project.slug) {
+// // // // //             navigate(`/projects/${project.slug}`);
+// // // // //         }
+// // // // //     };
+
+// // // // //     return (
+// // // // //         <div className={`flex flex-col h-full w-full bg-white rounded-2xl overflow-hidden transition-all duration-300 ${isDeck ? '' : 'shadow-sm border border-gray-200 hover:shadow-xl hover:-translate-y-1'}`}>
+            
+// // // // //             {/* Image Area */}
+// // // // //             <div className="relative">
+// // // // //                 <MediaPlaceholder project={project} className="h-48" />
+// // // // //                 <div className={`absolute top-3 right-3 px-2.5 py-0.5 rounded-full text-xs font-bold uppercase border ${statusBg} shadow-sm`}>
+// // // // //                     {statusLabel}
+// // // // //                 </div>
+// // // // //             </div>
+
+// // // // //             <div className="flex-grow p-5 flex flex-col">
+// // // // //                 <h3 className="text-xl font-bold text-gray-900 line-clamp-1 mb-2 group-hover:text-indigo-600 transition-colors">
+// // // // //                     {project.title}
+// // // // //                 </h3>
+// // // // //                 <p className="text-sm text-gray-500 line-clamp-3 leading-relaxed mb-4">
+// // // // //                     {project.description || `${project.details_1 || ''} ${project.details_2 || ''}` || 'No description available.'}
+// // // // //                 </p>
+                
+// // // // //                 <div className="mt-auto space-y-4">
+// // // // //                     {/* Tags */}
+// // // // //                     <div className="flex flex-wrap gap-2">
+// // // // //                         {tags.map((tag, index) => (
+// // // // //                             <div key={index} className={`flex items-center text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-md border ${tag.color}`}>
+// // // // //                                 {tag.label}
+// // // // //                             </div>
+// // // // //                         ))}
+// // // // //                     </div>
+
+// // // // //                     <div className="h-px bg-gray-100 w-full"></div>
+
+// // // // //                     {/* Footer Info */}
+// // // // //                   <div className="flex justify-between items-center text-xs text-gray-500 font-medium">
+// // // // //                         <span className="flex items-center">
+// // // // //                             <Clock className="w-3.5 h-3.5 mr-1.5 text-gray-400" />
+// // // // //                             {completionPercentage}% Complete
+// // // // //                         </span>
+                        
+// // // // //                         {/* Navigation Trigger */}
+// // // // //                         <span 
+// // // // //                             onClick={handleDetailsClick}
+// // // // //                             className="flex items-center hover:text-indigo-600 transition-colors cursor-pointer"
+// // // // //                         >
+// // // // //                             Details <ChevronRight className="w-3 h-3 ml-1" />
+// // // // //                         </span>
+// // // // //                     </div>
+// // // // //                 </div>
+// // // // //             </div>
+// // // // //         </div>
+// // // // //     );
+// // // // // };
+
+// // // // // // --- The Core ProjectCard Component ---
+// // // // // const ProjectCard = ({ project, index, isDeckView }) => {
+// // // // //     const navigate = typeof useNavigate === 'function' ? useNavigate() : () => {}; 
+// // // // //     const slug = project.slug || project.id;
+
+// // // // //     const handleClick = () => {
+// // // // //         if (slug) {
+// // // // //             console.log(`Navigating to /projects/${slug}`);
+// // // // //             // navigate(`/projects/${slug}`);
+// // // // //         }
+// // // // //     };
+
+// // // // //     // --- Deck View Logic ---
+// // // // //     if (isDeckView) {
+// // // // //         const MAX_VISIBLE_CARDS = 8; 
+// // // // //         if (index >= MAX_VISIBLE_CARDS) return null;
+
+// // // // //         const TOTAL_CARDS = MAX_VISIBLE_CARDS;
+// // // // //         const rotationFactor = 4; 
+// // // // //         // Center the rotation calculation around the middle of the stack
+// // // // //         const rotation = (index - (TOTAL_CARDS - 1) / 2) * rotationFactor; 
+// // // // //         const xOffset = rotation * 8; 
+// // // // //         const zIndex = 50 - Math.abs(index - 3); // Stack z-index to prioritize middle cards visually if needed, or simple layering
+
+// // // // //         return (
+// // // // //             <motion.div
+// // // // //                 // RESPONSIVE WIDTH: w-[85vw] for mobile, w-[20rem] for desktop
+// // // // //                 className="absolute w-[85vw] sm:w-[20rem] h-[28rem] cursor-pointer touch-none" 
+// // // // //                 key={`${project.id}-${index}`} 
+// // // // //                 onClick={handleClick}
+// // // // //                 style={{ 
+// // // // //                     transformOrigin: 'bottom center',
+// // // // //                     perspective: 1000, 
+// // // // //                 }}
+// // // // //                 initial={{ 
+// // // // //                     opacity: 0, 
+// // // // //                     rotate: rotation, 
+// // // // //                     x: xOffset, 
+// // // // //                     y: 200, 
+// // // // //                     scale: 0.9
+// // // // //                 }}
+// // // // //                 animate={{ 
+// // // // //                     opacity: 1, 
+// // // // //                     rotate: rotation, 
+// // // // //                     x: xOffset, 
+// // // // //                     y: 0, 
+// // // // //                     scale: 1,
+// // // // //                     zIndex: index, // Ensure order is preserved for the fan look
+// // // // //                     transition: { 
+// // // // //                         type: 'spring', 
+// // // // //                         stiffness: 120, 
+// // // // //                         damping: 15, 
+// // // // //                         delay: index * 0.05 
+// // // // //                     }
+// // // // //                 }}
+// // // // //                 whileHover={{ 
+// // // // //                     y: -40, 
+// // // // //                     scale: 1.05,
+// // // // //                     rotate: 0, // Straighten up on hover
+// // // // //                     zIndex: 100, 
+// // // // //                     transition: { type: 'spring', stiffness: 300, damping: 20 }
+// // // // //                 }}
+// // // // //             >
+// // // // //                 <div className="w-full h-full rounded-2xl shadow-2xl shadow-indigo-900/10 bg-white ring-1 ring-gray-900/5">
+// // // // //                     <FullCardContent project={project} isDeck={true} />
+// // // // //                 </div>
+// // // // //             </motion.div>
+// // // // //         );
+// // // // //     }
+    
+// // // // //     // --- Grid View Logic ---
+// // // // //     return (
+// // // // //         <motion.div
+// // // // //             layout
+// // // // //             initial={{ opacity: 0, scale: 0.95 }}
+// // // // //             animate={{ opacity: 1, scale: 1 }}
+// // // // //             exit={{ opacity: 0, scale: 0.95 }}
+// // // // //             transition={{ duration: 0.3 }}
+// // // // //             onClick={handleClick}
+// // // // //             className="cursor-pointer h-full"
+// // // // //         >
+// // // // //             <FullCardContent project={project} isDeck={false} /> 
+// // // // //         </motion.div>
+// // // // //     );
+// // // // // };
+
+// // // // // export default ProjectCard;
+
+// // // // import React from 'react';
+// // // // import { motion } from 'framer-motion';
+// // // // import { useNavigate } from 'react-router-dom';
+// // // // import { Clock, Layers, Briefcase, Code, ChevronRight } from 'lucide-react';
+// // // // import { Navigate } from 'react-router-dom';
+
+// // // // export const CardStyle = {
+// // // //   UNIFIED_DESIGN: 'UNIFIED_DESIGN',
+// // // //   DECK_STACKED: 'DECK_STACKED' 
+// // // // };
+
+// // // // // --- Helper for Media Placeholder ---
+// // // // const MediaPlaceholder = ({ project, className = 'h-32' }) => {
+// // // //     // FIX: Use the processed URL from the API, not the raw file path
+// // // //     const imageUrl = project.hero_image;
+
+// // // //     if (imageUrl) {
+// // // //         // Fallback for demo purposes
+// // // //         const placeholderUrl = `https://placehold.co/600x400/f3f4f6/9ca3af?text=${encodeURIComponent(project.title)}`;
+
+// // // //         return (
+// // // //             <div className={`relative ${className} overflow-hidden bg-gray-50 group`}>
+// // // //                 <img 
+// // // //                     src={imageUrl} 
+// // // //                     alt={project.hero_alt || `Image for ${project.title}`} 
+// // // //                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+// // // //                     onError={(e) => { e.target.onerror = null; e.target.src = placeholderUrl; }}
+// // // //                 />
+// // // //                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+// // // //             </div>
+// // // //         );
+// // // //     }
+
+// // // //     // Fallback if no image
+// // // //     return (
+// // // //         <div className={`${className} bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center text-gray-400`}>
+// // // //             <span className="text-xs font-medium uppercase tracking-wider">No Preview</span>
+// // // //         </div>
+// // // //     );
+// // // // };
+
+
+// // // // const FullCardContent = ({ project, isDeck }) => {
+// // // //     const navigate = useNavigate();
+
+// // // //     const handleNavigate = (e) => {
+// // // //         e.stopPropagation();
+// // // //         navigate(`/projects/${project.slug}`);
+// // // //     };
+
+// // // //     return (
+// // // //         <div className="h-full flex flex-col bg-white border border-gray-100/80 rounded-2xl overflow-hidden hover:shadow-xl hover:shadow-indigo-100/40 transition-all duration-300 group">
+// // // //             {/* Image Section */}
+// // // //             <div className="relative">
+// // // //                 <MediaPlaceholder project={project} className={isDeck ? "h-48" : "h-56"} />
+                
+// // // //                 {/* Floating Category Badge */}
+// // // //                 <div className="absolute top-4 left-4">
+// // // //                     <span className="px-3 py-1 text-xs font-semibold bg-white/90 backdrop-blur-md text-indigo-600 rounded-full shadow-sm border border-indigo-50">
+// // // //                         {project.category || "Project"}
+// // // //                     </span>
+// // // //                 </div>
+
+// // // //                 {/* Status Badge (if present) */}
+// // // //                 {project.status && (
+// // // //                     <div className="absolute top-4 right-4">
+// // // //                         <span className={`px-2 py-1 text-[10px] font-bold uppercase tracking-wider rounded-md shadow-sm backdrop-blur-md ${
+// // // //                             project.status === 'Completed' ? 'bg-emerald-500/90 text-white' : 
+// // // //                             project.status === 'In Progress' ? 'bg-amber-500/90 text-white' : 
+// // // //                             'bg-gray-500/90 text-white'
+// // // //                         }`}>
+// // // //                             {project.status}
+// // // //                         </span>
+// // // //                     </div>
+// // // //                 )}
+// // // //             </div>
+
+// // // //             {/* Content Section */}
+// // // //             <div className="flex-1 p-5 flex flex-col">
+// // // //                 <div className="flex justify-between items-start mb-2">
+// // // //                     <h3 className="text-lg font-bold text-gray-900 line-clamp-1 group-hover:text-indigo-600 transition-colors">
+// // // //                         {project.title}
+// // // //                     </h3>
+// // // //                     {/* Tier Indicator */}
+// // // //                     {project.tier && (
+// // // //                          <div className="w-2 h-2 rounded-full mt-2" title={project.tier.name} style={{ backgroundColor: project.tier.color_hex }}></div>
+// // // //                     )}
+// // // //                 </div>
+                
+// // // //                 <p className="text-sm text-gray-500 line-clamp-2 mb-4 flex-1 leading-relaxed">
+// // // //                     {project.description || "No description available."}
+// // // //                 </p>
+
+// // // //                 {/* Metadata Footer */}
+// // // //                 <div className="pt-4 border-t border-gray-50 mt-auto space-y-3">
+// // // //                     {/* Tools Row */}
+// // // //                     {project.tools && project.tools.length > 0 && (
+// // // //                         <div className="flex flex-wrap gap-2">
+// // // //                             {project.tools.slice(0, 3).map((tool, i) => (
+// // // //                                 <span key={i} className="text-[10px] px-2 py-1 bg-gray-50 text-gray-600 rounded-md border border-gray-100 font-medium">
+// // // //                                     {tool.name}
+// // // //                                 </span>
+// // // //                             ))}
+// // // //                             {project.tools.length > 3 && (
+// // // //                                 <span className="text-[10px] px-2 py-1 bg-gray-50 text-gray-400 rounded-md border border-gray-100">
+// // // //                                     +{project.tools.length - 3}
+// // // //                                 </span>
+// // // //                             )}
+// // // //                         </div>
+// // // //                     )}
+
+// // // //                     <div className="flex items-center justify-between">
+// // // //                         <div className="flex items-center gap-4 text-xs text-gray-400 font-medium">
+// // // //                             {/* Completion */}
+// // // //                             <div className="flex items-center gap-1.5" title="Completion">
+// // // //                                 <div className="w-16 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+// // // //                                     <div 
+// // // //                                         className="h-full bg-indigo-500 rounded-full" 
+// // // //                                         style={{ width: `${project.completion_percentage || 0}%` }}
+// // // //                                     />
+// // // //                                 </div>
+// // // //                                 <span>{project.completion_percentage}%</span>
+// // // //                             </div>
+// // // //                         </div>
+
+// // // //                         <button 
+// // // //                             onClick={handleNavigate}
+// // // //                             className="p-2 rounded-full bg-gray-50 text-gray-400 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-300"
+// // // //                         >
+// // // //                             <ChevronRight className="w-4 h-4" />
+// // // //                         </button>
+// // // //                     </div>
+// // // //                 </div>
+// // // //             </div>
+// // // //         </div>
+// // // //     );
+// // // // };
+
+// // // // const ProjectCard = ({ project, index, style = CardStyle.UNIFIED_DESIGN }) => {
+// // // //     const navigate = useNavigate();
+
+// // // //     const handleClick = () => {
+// // // //        navigate(`/projects/${project.slug}`);
+// // // //     };
+
+// // // //     // --- Deck Stack Logic ---
+// // // //     if (style === CardStyle.DECK_STACKED) {
+// // // //         const xOffset = index * 4; // Slight horizontal offset
+// // // //         const rotation = index % 2 === 0 ? index * 1 : index * -1; // Alternating rotation
+
+// // // //         return (
+// // // //             <motion.div
+// // // //                 className="absolute top-0 left-0 w-full h-full origin-bottom"
+// // // //                 initial={{ rotate: rotation * 2, y: 100, opacity: 0 }}
+// // // //                 animate={{ 
+// // // //                     rotate: rotation, 
+// // // //                     x: xOffset, 
+// // // //                     y: 0, 
+// // // //                     scale: 1,
+// // // //                     opacity: 1,
+// // // //                     zIndex: index, // Ensure order is preserved for the fan look
+// // // //                     transition: { 
+// // // //                         type: 'spring', 
+// // // //                         stiffness: 120, 
+// // // //                         damping: 15, 
+// // // //                         delay: index * 0.05 
+// // // //                     }
+// // // //                 }}
+// // // //                 whileHover={{ 
+// // // //                     y: -40, 
+// // // //                     scale: 1.05,
+// // // //                     rotate: 0, // Straighten up on hover
+// // // //                     zIndex: 100, 
+// // // //                     transition: { type: 'spring', stiffness: 300, damping: 20 }
+// // // //                 }}
+// // // //                 style={{ 
+// // // //                     zIndex: index // Fallback for initial render
+// // // //                 }}
+// // // //             >
+// // // //                 <div className="w-full h-full rounded-2xl shadow-2xl shadow-indigo-900/10 bg-white ring-1 ring-gray-900/5 cursor-pointer" onClick={handleClick}>
+// // // //                     <FullCardContent project={project} isDeck={true} />
+// // // //                 </div>
+// // // //             </motion.div>
+// // // //         );
+// // // //     }
+    
+// // // //     // --- Grid View Logic ---
+// // // //     return (
+// // // //         <motion.div
+// // // //             layout
+// // // //             initial={{ opacity: 0, scale: 0.95 }}
+// // // //             animate={{ opacity: 1, scale: 1 }}
+// // // //             exit={{ opacity: 0, scale: 0.95 }}
+// // // //             transition={{ duration: 0.3 }}
+// // // //             onClick={handleClick}
+// // // //             className="cursor-pointer h-full"
+// // // //         >
+// // // //             <FullCardContent project={project} isDeck={false} /> 
+// // // //         </motion.div>
+// // // //     );
+// // // // };
+
+// // // // export default ProjectCard;
+
+// // // import React from 'react';
+// // // import { motion } from 'framer-motion';
+// // // import { useNavigate } from 'react-router-dom';
+// // // import { Clock, Layers, Briefcase, Code, ChevronRight } from 'lucide-react';
+// // // import { Navigate } from 'react-router-dom';
+
+// // // export const CardStyle = {
+// // //   UNIFIED_DESIGN: 'UNIFIED_DESIGN',
+// // //   DECK_STACKED: 'DECK_STACKED' 
+// // // };
+
+// // // // --- Helper for Media Placeholder ---
+// // // const MediaPlaceholder = ({ project, className = 'h-32' }) => {
+// // //     // FIX: Use the processed URL from the API, not the raw file path
+// // //     const imageUrl = project.hero_image;
+
+// // //     if (imageUrl) {
+// // //         // Fallback for demo purposes
+// // //         const placeholderUrl = `https://placehold.co/600x400/f3f4f6/9ca3af?text=${encodeURIComponent(project.title)}`;
+
+// // //         return (
+// // //             <div className={`relative ${className} overflow-hidden bg-gray-50 group`}>
+// // //                 <img 
+// // //                     src={imageUrl} 
+// // //                     alt={project.hero_alt || `Image for ${project.title}`} 
+// // //                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+// // //                     onError={(e) => { e.target.onerror = null; e.target.src = placeholderUrl; }}
+// // //                 />
+// // //                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+// // //             </div>
+// // //         );
+// // //     }
+
+// // //     // Fallback if no image
+// // //     return (
+// // //         <div className={`${className} bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center text-gray-400`}>
+// // //             <span className="text-xs font-medium uppercase tracking-wider">No Preview</span>
+// // //         </div>
+// // //     );
+// // // };
+
+
+// // // const FullCardContent = ({ project, isDeck }) => {
+// // //     const navigate = useNavigate();
+
+// // //     const handleNavigate = (e) => {
+// // //         e.stopPropagation();
+// // //         navigate(`/projects/${project.slug}`);
+// // //     };
+
+// // //     return (
+// // //         <div className="h-full flex flex-col bg-white border border-gray-100/80 rounded-2xl overflow-hidden hover:shadow-xl hover:shadow-indigo-100/40 transition-all duration-300 group relative">
+// // //             {/* Image Section */}
+// // //             <div className="relative">
+// // //                 <MediaPlaceholder project={project} className={isDeck ? "h-48 md:h-56" : "h-56"} />
+                
+// // //                 {/* Floating Category Badge */}
+// // //                 <div className="absolute top-4 left-4">
+// // //                     <span className="px-3 py-1 text-xs font-semibold bg-white/90 backdrop-blur-md text-indigo-600 rounded-full shadow-sm border border-indigo-50">
+// // //                         {project.category || "Project"}
+// // //                     </span>
+// // //                 </div>
+
+// // //                 {/* Status Badge (if present) */}
+// // //                 {project.status && (
+// // //                     <div className="absolute top-4 right-4">
+// // //                         <span className={`px-2 py-1 text-[10px] font-bold uppercase tracking-wider rounded-md shadow-sm backdrop-blur-md ${
+// // //                             project.status === 'Completed' ? 'bg-emerald-500/90 text-white' : 
+// // //                             project.status === 'In Progress' ? 'bg-amber-500/90 text-white' : 
+// // //                             'bg-gray-500/90 text-white'
+// // //                         }`}>
+// // //                             {project.status}
+// // //                         </span>
+// // //                     </div>
+// // //                 )}
+// // //             </div>
+
+// // //             {/* Content Section */}
+// // //             <div className="flex-1 p-5 flex flex-col">
+// // //                 <div className="flex justify-between items-start mb-2">
+// // //                     <h3 className="text-lg font-bold text-gray-900 line-clamp-1 group-hover:text-indigo-600 transition-colors">
+// // //                         {project.title}
+// // //                     </h3>
+// // //                     {/* Tier Indicator */}
+// // //                     {project.tier && (
+// // //                          <div className="w-2 h-2 rounded-full mt-2 shrink-0" title={project.tier.name} style={{ backgroundColor: project.tier.color_hex }}></div>
+// // //                     )}
+// // //                 </div>
+                
+// // //                 <p className="text-sm text-gray-500 line-clamp-2 mb-4 flex-1 leading-relaxed">
+// // //                     {project.description || "No description available."}
+// // //                 </p>
+
+// // //                 {/* Metadata Footer */}
+// // //                 <div className="pt-4 border-t border-gray-50 mt-auto space-y-3">
+// // //                     {/* Tools Row */}
+// // //                     {project.tools && project.tools.length > 0 && (
+// // //                         <div className="flex flex-wrap gap-2 mb-2">
+// // //                             {project.tools.slice(0, 3).map((tool, i) => (
+// // //                                 <span key={i} className="text-[10px] px-2 py-1 bg-gray-50 text-gray-600 rounded-md border border-gray-100 font-medium">
+// // //                                     {tool.name}
+// // //                                 </span>
+// // //                             ))}
+// // //                             {project.tools.length > 3 && (
+// // //                                 <span className="text-[10px] px-2 py-1 bg-gray-50 text-gray-400 rounded-md border border-gray-100">
+// // //                                     +{project.tools.length - 3}
+// // //                                 </span>
+// // //                             )}
+// // //                         </div>
+// // //                     )}
+
+// // //                     <div className="flex items-center justify-between">
+// // //                         <div className="flex items-center gap-4 text-xs text-gray-400 font-medium">
+// // //                             {/* Completion */}
+// // //                             <div className="flex items-center gap-1.5" title="Completion">
+// // //                                 <div className="w-16 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+// // //                                     <div 
+// // //                                         className="h-full bg-indigo-500 rounded-full" 
+// // //                                         style={{ width: `${project.completion_percentage || 0}%` }}
+// // //                                     />
+// // //                                 </div>
+// // //                                 <span>{project.completion_percentage}%</span>
+// // //                             </div>
+// // //                         </div>
+
+// // //                         <button 
+// // //                             onClick={handleNavigate}
+// // //                             className="p-2 rounded-full bg-gray-50 text-gray-400 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-300 z-10"
+// // //                         >
+// // //                             <ChevronRight className="w-4 h-4" />
+// // //                         </button>
+// // //                     </div>
+// // //                 </div>
+// // //             </div>
+// // //         </div>
+// // //     );
+// // // };
+
+// // // const ProjectCard = ({ project, index, style = CardStyle.UNIFIED_DESIGN, totalCards = 1 }) => {
+// // //     const navigate = useNavigate();
+
+// // //     const handleClick = () => {
+// // //        navigate(`/projects/${project.slug}`);
+// // //     };
+
+// // //     // --- Deck Stack Logic ---
+// // //     if (style === CardStyle.DECK_STACKED) {
+// // //         // Calculate rotation and offset based on index
+// // //         // For a nice fan effect, we fan out from the center or one side
+// // //         // Let's fan out slightly
+// // //         const rotation = index * 3 - (totalCards * 1.5); // Spread rotation: -4.5, -1.5, 1.5, 4.5 etc.
+// // //         const yOffset = index * 2; // Slight vertical stack
+        
+// // //         return (
+// // //             <motion.div
+// // //                 className="absolute top-0 left-0 w-full h-full origin-bottom-left md:origin-center"
+// // //                 initial={{ 
+// // //                     rotate: rotation * 2, 
+// // //                     y: 100 + (index * 20), 
+// // //                     opacity: 0 
+// // //                 }}
+// // //                 animate={{ 
+// // //                     rotate: rotation, 
+// // //                     x: index * 15, // Horizontal fan
+// // //                     y: yOffset,
+// // //                     scale: 1 - (index * 0.02), // Slight scale down for back cards
+// // //                     opacity: 1,
+// // //                     zIndex: totalCards - index, // First card on top usually, or reverse if needed. Let's try reverse for stack.
+// // //                     // Actually for a fan, usually first item is front or back. Let's assume first item (index 0) is front.
+// // //                     // If index 0 is front, zIndex should be high.
+// // //                     zIndex: totalCards - index,
+// // //                     transition: { 
+// // //                         type: 'spring', 
+// // //                         stiffness: 120, 
+// // //                         damping: 15, 
+// // //                         delay: index * 0.1 
+// // //                     }
+// // //                 }}
+// // //                 whileHover={{ 
+// // //                     y: -30, 
+// // //                     scale: 1.05,
+// // //                     rotate: 0, // Straighten up
+// // //                     zIndex: 100, // Bring to front
+// // //                     transition: { type: 'spring', stiffness: 300, damping: 20 }
+// // //                 }}
+// // //                 style={{ 
+// // //                     zIndex: totalCards - index,
+// // //                     // Add a slight tilt perspective
+// // //                     perspective: 1000
+// // //                 }}
+// // //                 onClick={handleClick}
+// // //             >
+// // //                 <div className="w-full h-full rounded-2xl shadow-xl shadow-indigo-900/10 bg-white ring-1 ring-gray-900/5 cursor-pointer transform transition-transform duration-300 hover:shadow-2xl">
+// // //                     <FullCardContent project={project} isDeck={true} />
+// // //                 </div>
+// // //             </motion.div>
+// // //         );
+// // //     }
+    
+// // //     // --- Grid View Logic ---
+// // //     return (
+// // //         <motion.div
+// // //             layout
+// // //             initial={{ opacity: 0, scale: 0.95 }}
+// // //             animate={{ opacity: 1, scale: 1 }}
+// // //             exit={{ opacity: 0, scale: 0.95 }}
+// // //             transition={{ duration: 0.3 }}
+// // //             onClick={handleClick}
+// // //             className="cursor-pointer h-full"
+// // //         >
+// // //             <FullCardContent project={project} isDeck={false} /> 
+// // //         </motion.div>
+// // //     );
+// // // };
+
+// // // export default ProjectCard;
+
+// // import React from 'react';
+// // import { motion } from 'framer-motion';
+// // import { useNavigate } from 'react-router-dom';
+// // import { ChevronRight } from 'lucide-react';
+
+// // export const CardStyle = {
+// //   UNIFIED_DESIGN: 'UNIFIED_DESIGN',
+// //   DECK_STACKED: 'DECK_STACKED' 
+// // };
+
+// // // --- Helper for Media Placeholder ---
+// // const MediaPlaceholder = ({ project, className = 'h-32' }) => {
+// //     const imageUrl = project.hero_image;
+
+// //     if (imageUrl) {
+// //         const placeholderUrl = `https://placehold.co/600x400/f3f4f6/9ca3af?text=${encodeURIComponent(project.title)}`;
+
+// //         return (
+// //             <div className={`relative ${className} overflow-hidden bg-gray-50 group`}>
+// //                 <img 
+// //                     src={imageUrl} 
+// //                     alt={project.hero_alt || `Image for ${project.title}`} 
+// //                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+// //                     onError={(e) => { e.target.onerror = null; e.target.src = placeholderUrl; }}
+// //                 />
+// //                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+// //             </div>
+// //         );
+// //     }
+
+// //     return (
+// //         <div className={`${className} bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center text-gray-400`}>
+// //             <span className="text-xs font-medium uppercase tracking-wider">No Preview</span>
+// //         </div>
+// //     );
+// // };
+
+
+// // const FullCardContent = ({ project, isDeck }) => {
+// //     const navigate = useNavigate();
+
+// //     const handleNavigate = (e) => {
+// //         e.stopPropagation();
+// //         navigate(`/projects/${project.slug}`);
+// //     };
+
+// //     return (
+// //         <div className={`h-full flex flex-col bg-white border border-gray-100/80 rounded-2xl overflow-hidden transition-all duration-300 group relative ${isDeck ? 'shadow-sm' : 'hover:shadow-xl hover:shadow-indigo-100/40'}`}>
+// //             {/* Image Section */}
+// //             <div className="relative shrink-0">
+// //                 <MediaPlaceholder project={project} className={isDeck ? "h-40" : "h-56"} />
+                
+// //                 {/* Floating Category Badge */}
+// //                 <div className="absolute top-3 left-3">
+// //                     <span className="px-2.5 py-0.5 text-[10px] font-semibold bg-white/90 backdrop-blur-md text-indigo-600 rounded-full shadow-sm border border-indigo-50">
+// //                         {project.category || "Project"}
+// //                     </span>
+// //                 </div>
+
+// //                 {/* Status Badge */}
+// //                 {project.status && (
+// //                     <div className="absolute top-3 right-3">
+// //                         <span className={`px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider rounded-md shadow-sm backdrop-blur-md ${
+// //                             project.status === 'Completed' ? 'bg-emerald-500/90 text-white' : 
+// //                             project.status === 'In Progress' ? 'bg-amber-500/90 text-white' : 
+// //                             'bg-gray-500/90 text-white'
+// //                         }`}>
+// //                             {project.status}
+// //                         </span>
+// //                     </div>
+// //                 )}
+// //             </div>
+
+// //             {/* Content Section */}
+// //             <div className="flex-1 p-4 flex flex-col">
+// //                 <div className="flex justify-between items-start mb-1">
+// //                     <h3 className="text-base font-bold text-gray-900 line-clamp-1 group-hover:text-indigo-600 transition-colors">
+// //                         {project.title}
+// //                     </h3>
+// //                     {project.tier && (
+// //                          <div className="w-2 h-2 rounded-full mt-1.5 shrink-0" title={project.tier.name} style={{ backgroundColor: project.tier.color_hex }}></div>
+// //                     )}
+// //                 </div>
+                
+// //                 <p className="text-xs text-gray-500 line-clamp-2 mb-3 flex-1 leading-relaxed">
+// //                     {project.description || "No description available."}
+// //                 </p>
+
+// //                 {/* Metadata Footer */}
+// //                 <div className="pt-3 border-t border-gray-50 mt-auto space-y-2">
+// //                     {/* Tools Row */}
+// //                     {project.tools && project.tools.length > 0 && (
+// //                         <div className="flex flex-wrap gap-1.5 mb-1">
+// //                             {project.tools.slice(0, 3).map((tool, i) => (
+// //                                 <span key={i} className="text-[9px] px-1.5 py-0.5 bg-gray-50 text-gray-600 rounded-md border border-gray-100 font-medium">
+// //                                     {tool.name}
+// //                                 </span>
+// //                             ))}
+// //                             {project.tools.length > 3 && (
+// //                                 <span className="text-[9px] px-1.5 py-0.5 bg-gray-50 text-gray-400 rounded-md border border-gray-100">
+// //                                     +{project.tools.length - 3}
+// //                                 </span>
+// //                             )}
+// //                         </div>
+// //                     )}
+
+// //                     <div className="flex items-center justify-between">
+// //                         <div className="flex items-center gap-3 text-[10px] text-gray-400 font-medium">
+// //                             <div className="flex items-center gap-1.5" title="Completion">
+// //                                 <div className="w-12 h-1 bg-gray-100 rounded-full overflow-hidden">
+// //                                     <div 
+// //                                         className="h-full bg-indigo-500 rounded-full" 
+// //                                         style={{ width: `${project.completion_percentage || 0}%` }}
+// //                                     />
+// //                                 </div>
+// //                                 <span>{project.completion_percentage}%</span>
+// //                             </div>
+// //                         </div>
+
+// //                         <button 
+// //                             onClick={handleNavigate}
+// //                             className="p-1.5 rounded-full bg-gray-50 text-gray-400 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-300 z-10"
+// //                         >
+// //                             <ChevronRight className="w-3 h-3" />
+// //                         </button>
+// //                     </div>
+// //                 </div>
+// //             </div>
+// //         </div>
+// //     );
+// // };
+
+// // const ProjectCard = ({ project, index, style = CardStyle.UNIFIED_DESIGN, totalCards = 1 }) => {
+// //     const navigate = useNavigate();
+
+// //     const handleClick = () => {
+// //        navigate(`/projects/${project.slug}`);
+// //     };
+
+// //     // --- Deck Stack Logic ---
+// //     if (style === CardStyle.DECK_STACKED) {
+// //         // Calculate center-based index for symmetrical fanning
+// //         // e.g., if 5 cards: -2, -1, 0, 1, 2
+// //         const centerOffset = index - ((totalCards - 1) / 2);
+        
+// //         // Dynamic values for "Arch" Effect
+// //         const rotation = centerOffset * 4; // Degrees of rotation
+// //         const xOffset = centerOffset * 25; // Horizontal spread px
+// //         const yOffset = Math.abs(centerOffset) * 8; // Arch effect (sides lower)
+// //         const scale = 1 - (Math.abs(centerOffset) * 0.03); // Sides smaller
+
+// //         return (
+// //             <motion.div
+// //                 className="absolute top-0 left-0 right-0 mx-auto w-full max-w-xs h-[380px] cursor-pointer perspective-1000"
+// //                 initial={{ 
+// //                     y: 500, 
+// //                     opacity: 0,
+// //                     scale: 0.8,
+// //                     rotate: 0
+// //                 }}
+// //                 animate={{ 
+// //                     y: yOffset + 20, 
+// //                     x: xOffset,
+// //                     rotate: rotation,
+// //                     scale: scale,
+// //                     opacity: 1,
+// //                     // Higher z-index for center cards to sit on top
+// //                     zIndex: totalCards - Math.abs(centerOffset), 
+// //                     transition: { 
+// //                         type: 'spring', 
+// //                         stiffness: 150, 
+// //                         damping: 20, 
+// //                         delay: index * 0.05 
+// //                     }
+// //                 }}
+// //                 whileHover={{ 
+// //                     y: -100, // Lift up card
+// //                     scale: 1.1, // Enlarge
+// //                     rotate: 0, // Straighten
+// //                     zIndex: 100, // Bring to very front
+// //                     transition: { type: 'spring', stiffness: 300, damping: 15 }
+// //                 }}
+// //                 onClick={handleClick}
+// //                 style={{
+// //                     // Origin at bottom center for natural fanning
+// //                     transformOrigin: 'bottom center'
+// //                 }}
+// //             >
+// //                 <div className="w-full h-full rounded-2xl shadow-2xl shadow-indigo-900/20 bg-white ring-1 ring-black/5">
+// //                     <FullCardContent project={project} isDeck={true} />
+// //                     {/* Subtle dimming overlay for depth on non-hovered side cards */}
+// //                     <div className="absolute inset-0 bg-indigo-900/5 rounded-2xl pointer-events-none transition-opacity duration-300 group-hover:opacity-0" />
+// //                 </div>
+// //             </motion.div>
+// //         );
+// //     }
+    
+// //     // --- Grid View Logic ---
+// //     return (
+// //         <motion.div
+// //             layout
+// //             initial={{ opacity: 0, scale: 0.95 }}
+// //             animate={{ opacity: 1, scale: 1 }}
+// //             exit={{ opacity: 0, scale: 0.95 }}
+// //             transition={{ duration: 0.3 }}
+// //             onClick={handleClick}
+// //             className="cursor-pointer h-full"
+// //         >
+// //             <FullCardContent project={project} isDeck={false} /> 
+// //         </motion.div>
+// //     );
+// // };
+
+// // export default ProjectCard;
+// import React from 'react';
+// import { motion } from 'framer-motion';
+// import { useNavigate } from 'react-router-dom';
+// import { ChevronRight } from 'lucide-react';
+
+// export const CardStyle = {
+//   UNIFIED_DESIGN: 'UNIFIED_DESIGN',
+//   DECK_STACKED: 'DECK_STACKED' 
+// };
+
+// // --- Helper for Media Placeholder ---
+// const MediaPlaceholder = ({ project, className = 'h-32' }) => {
+//     const imageUrl = project.hero_image;
+
+//     if (imageUrl) {
+//         const placeholderUrl = `https://placehold.co/600x400/f3f4f6/9ca3af?text=${encodeURIComponent(project.title)}`;
+
+//         return (
+//             <div className={`relative ${className} overflow-hidden bg-gray-50 group`}>
+//                 <img 
+//                     src={imageUrl} 
+//                     alt={project.hero_alt || `Image for ${project.title}`} 
+//                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+//                     onError={(e) => { e.target.onerror = null; e.target.src = placeholderUrl; }}
+//                 />
+//                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+//             </div>
+//         );
+//     }
+
+//     return (
+//         <div className={`${className} bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center text-gray-400`}>
+//             <span className="text-xs font-medium uppercase tracking-wider">No Preview</span>
+//         </div>
+//     );
+// };
+
+
+// const FullCardContent = ({ project, isDeck }) => {
+//     const navigate = useNavigate();
+
+//     const handleNavigate = (e) => {
+//         e.stopPropagation();
+//         navigate(`/projects/${project.slug}`);
+//     };
+
+//     return (
+//         <div className={`h-full flex flex-col bg-white border border-gray-100/80 rounded-2xl overflow-hidden transition-all duration-300 group relative ${isDeck ? 'shadow-sm' : 'hover:shadow-xl hover:shadow-indigo-100/40'}`}>
+//             {/* Image Section */}
+//             <div className="relative shrink-0">
+//                 <MediaPlaceholder project={project} className={isDeck ? "h-40" : "h-56"} />
+                
+//                 {/* Floating Category Badge */}
+//                 <div className="absolute top-3 left-3">
+//                     <span className="px-2.5 py-0.5 text-[10px] font-semibold bg-white/90 backdrop-blur-md text-indigo-600 rounded-full shadow-sm border border-indigo-50">
+//                         {project.category || "Project"}
+//                     </span>
+//                 </div>
+
+//                 {/* Status Badge */}
+//                 {project.status && (
+//                     <div className="absolute top-3 right-3">
+//                         <span className={`px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider rounded-md shadow-sm backdrop-blur-md ${
+//                             project.status === 'Completed' ? 'bg-emerald-500/90 text-white' : 
+//                             project.status === 'In Progress' ? 'bg-amber-500/90 text-white' : 
+//                             'bg-gray-500/90 text-white'
+//                         }`}>
+//                             {project.status}
+//                         </span>
+//                     </div>
+//                 )}
+//             </div>
+
+//             {/* Content Section */}
+//             <div className="flex-1 p-4 flex flex-col">
+//                 <div className="flex justify-between items-start mb-1">
+//                     <h3 className="text-base font-bold text-gray-900 line-clamp-1 group-hover:text-indigo-600 transition-colors">
+//                         {project.title}
+//                     </h3>
+//                     {project.tier && (
+//                          <div className="w-2 h-2 rounded-full mt-1.5 shrink-0" title={project.tier.name} style={{ backgroundColor: project.tier.color_hex }}></div>
+//                     )}
+//                 </div>
+                
+//                 <p className="text-xs text-gray-500 line-clamp-2 mb-3 flex-1 leading-relaxed">
+//                     {project.description || "No description available."}
+//                 </p>
+
+//                 {/* Metadata Footer */}
+//                 <div className="pt-3 border-t border-gray-50 mt-auto space-y-2">
+//                     {/* Tools Row */}
+//                     {project.tools && project.tools.length > 0 && (
+//                         <div className="flex flex-wrap gap-1.5 mb-1">
+//                             {project.tools.slice(0, 3).map((tool, i) => (
+//                                 <span key={i} className="text-[9px] px-1.5 py-0.5 bg-gray-50 text-gray-600 rounded-md border border-gray-100 font-medium">
+//                                     {tool.name}
+//                                 </span>
+//                             ))}
+//                             {project.tools.length > 3 && (
+//                                 <span className="text-[9px] px-1.5 py-0.5 bg-gray-50 text-gray-400 rounded-md border border-gray-100">
+//                                     +{project.tools.length - 3}
+//                                 </span>
+//                             )}
+//                         </div>
+//                     )}
+
+//                     <div className="flex items-center justify-between">
+//                         <div className="flex items-center gap-3 text-[10px] text-gray-400 font-medium">
+//                             <div className="flex items-center gap-1.5" title="Completion">
+//                                 <div className="w-12 h-1 bg-gray-100 rounded-full overflow-hidden">
+//                                     <div 
+//                                         className="h-full bg-indigo-500 rounded-full" 
+//                                         style={{ width: `${project.completion_percentage || 0}%` }}
+//                                     />
+//                                 </div>
+//                                 <span>{project.completion_percentage}%</span>
+//                             </div>
+//                         </div>
+
+//                         <button 
+//                             onClick={handleNavigate}
+//                             className="p-1.5 rounded-full bg-gray-50 text-gray-400 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-300 z-10"
+//                         >
+//                             <ChevronRight className="w-3 h-3" />
+//                         </button>
+//                     </div>
+//                 </div>
+//             </div>
+//         </div>
+//     );
+// };
+
+// const ProjectCard = ({ project, index, style = CardStyle.UNIFIED_DESIGN, totalCards = 1 }) => {
+//     const navigate = useNavigate();
+
+//     const handleClick = () => {
+//        navigate(`/projects/${project.slug}`);
+//     };
+
+//     // --- Deck Stack Logic ---
+//     if (style === CardStyle.DECK_STACKED) {
+//         // Calculate center-based index for symmetrical fanning
+//         // e.g., if 5 cards: -2, -1, 0, 1, 2
+//         const centerOffset = index - ((totalCards - 1) / 2);
+        
+//         // Dynamic values for "Arch" Effect
+//         const rotation = centerOffset * 4; // Degrees of rotation
+//         const xOffset = centerOffset * 25; // Horizontal spread px
+//         const yOffset = Math.abs(centerOffset) * 8; // Arch effect (sides lower)
+//         const scale = 1 - (Math.abs(centerOffset) * 0.03); // Sides smaller
+
+//         return (
+//             <motion.div
+//                 className="absolute top-0 left-0 right-0 mx-auto w-full max-w-xs h-[380px] cursor-pointer perspective-1000"
+//                 initial={{ 
+//                     y: 500, 
+//                     opacity: 0,
+//                     scale: 0.8,
+//                     rotate: 0
+//                 }}
+//                 animate={{ 
+//                     y: yOffset + 20, 
+//                     x: xOffset,
+//                     rotate: rotation,
+//                     scale: scale,
+//                     opacity: 1,
+//                     // Higher z-index for center cards to sit on top
+//                     zIndex: totalCards - Math.abs(centerOffset), 
+//                     transition: { 
+//                         type: 'spring', 
+//                         stiffness: 150, 
+//                         damping: 20, 
+//                         delay: index * 0.05 
+//                     }
+//                 }}
+//                 whileHover={{ 
+//                     y: -100, // Lift up card
+//                     scale: 1.1, // Enlarge
+//                     rotate: 0, // Straighten
+//                     zIndex: 100, // Bring to very front
+//                     transition: { type: 'spring', stiffness: 300, damping: 15 }
+//                 }}
+//                 onClick={handleClick}
+//                 style={{
+//                     // Origin at bottom center for natural fanning
+//                     transformOrigin: 'bottom center'
+//                 }}
+//             >
+//                 <div className="w-full h-full rounded-2xl shadow-2xl shadow-indigo-900/20 bg-white ring-1 ring-black/5">
+//                     <FullCardContent project={project} isDeck={true} />
+//                     {/* Subtle dimming overlay for depth on non-hovered side cards */}
+//                     <div className="absolute inset-0 bg-indigo-900/5 rounded-2xl pointer-events-none transition-opacity duration-300 group-hover:opacity-0" />
+//                 </div>
+//             </motion.div>
+//         );
+//     }
+    
+//     // --- Grid View Logic ---
+//     return (
+//         <motion.div
+//             layout
+//             initial={{ opacity: 0, scale: 0.95 }}
+//             animate={{ opacity: 1, scale: 1 }}
+//             exit={{ opacity: 0, scale: 0.95 }}
+//             transition={{ duration: 0.3 }}
+//             onClick={handleClick}
+//             className="cursor-pointer h-full"
+//         >
+//             <FullCardContent project={project} isDeck={false} /> 
+//         </motion.div>
+//     );
+// };
+
+// export default ProjectCard;
+
+// // // // // import React from 'react';
+// // // // // import { motion } from 'framer-motion';
+// // // // // import { useNavigate } from 'react-router-dom';
+// // // // // import { Clock, Layers, Briefcase, Code, ChevronRight } from 'lucide-react';
+// // // // // import { Navigate } from 'react-router-dom';
+// // // // // export const CardStyle = {
+// // // // //   UNIFIED_DESIGN: 'UNIFIED_DESIGN',
+// // // // //   DECK_STACKED: 'DECK_STACKED' 
+// // // // // };
+
+// // // // // // --- Helper for Media Placeholder ---
+// // // // // const MediaPlaceholder = ({ project, className = 'h-32' }) => {
+// // // // //     const imageUrl = project.hero_media?.file_path;
+
+// // // // //     if (imageUrl) {
+// // // // //         // Fallback for demo purposes
+// // // // //         const placeholderUrl = `https://placehold.co/600x400/f3f4f6/9ca3af?text=${encodeURIComponent(project.title)}`;
+
+// // // // //         return (
+// // // // //             <div className={`relative ${className} overflow-hidden bg-gray-50 group`}>
+// // // // //                 <img 
+// // // // //                     src={imageUrl} // Assuming this is a full URL or you have a base URL handler
+// // // // //                     alt={project.hero_media?.alt_text || `Image for ${project.title}`} 
+// // // // //                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+// // // // //                     onError={(e) => { e.target.onerror = null; e.target.src = placeholderUrl; }}
+// // // // //                 />
+// // // // //                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+// // // // //             </div>
+// // // // //         );
+// // // // //     }
+
+// // // // //     // Fallback Gradient
+// // // // //     const hash = project.id.charCodeAt(project.id.length - 1) % 6;
+// // // // //     const gradients = [
+// // // // //         'from-blue-500 to-indigo-600', 'from-rose-500 to-orange-500',
+// // // // //         'from-emerald-500 to-teal-600', 'from-amber-500 to-pink-600',
+// // // // //         'from-violet-500 to-fuchsia-600', 'from-cyan-500 to-blue-500'
+// // // // //     ];
+// // // // //     const gradient = gradients[hash];
+
+// // // // //     return (
+// // // // //         <div className={`relative ${className} bg-gradient-to-br ${gradient} flex items-center justify-center overflow-hidden`}>
+// // // // //             <Code className="w-12 h-12 text-white/50" />
+// // // // //             <div className="absolute inset-0 bg-white/10 mix-blend-overlay"></div>
+// // // // //         </div>
+// // // // //     );
+// // // // // };
+
+// // // // // // --- Full Card Content ---
+// // // // // const FullCardContent = ({ project, isDeck }) => {
+// // // // //     const primaryCategory = project.project_category_links?.[0]?.project_categories?.name;
+// // // // //     const completionPercentage = project.completion_percentage || 0;
+// // // // //     const status = project.status || 'Unknown';
+// // // // //     const navigate = useNavigate();
+// // // // //     // Status Logic
+// // // // //     const isOverdue = status === 'Overdue';
+// // // // //     const isCompleted = completionPercentage === 100 && status === 'Completed';
+// // // // //     const isInProgress = status === 'In Progress' || status === 'Completed'; 
+
+// // // // //     // Updated colors for Light Theme
+// // // // //     const statusBg = isOverdue ? 'bg-red-100 text-red-700 border-red-200' 
+// // // // //                    : isCompleted ? 'bg-emerald-100 text-emerald-700 border-emerald-200' 
+// // // // //                    : isInProgress ? 'bg-indigo-100 text-indigo-700 border-indigo-200' 
+// // // // //                    : 'bg-gray-100 text-gray-700 border-gray-200';
+    
+// // // // //     const statusLabel = isOverdue ? 'Urgent' : isCompleted ? 'Done' : isInProgress ? 'Active' : 'Planned';
+
+// // // // //     const tags = [
+// // // // //         { label: primaryCategory || 'General', icon: Briefcase, color: 'text-violet-600 bg-violet-50 border-violet-100' },
+// // // // //         { label: project.metadata_label, icon: Layers, color: 'text-cyan-600 bg-cyan-50 border-cyan-100' },
+// // // // //     ].filter(tag => tag.label);
+
+// // // // //     const handleDetailsClick = (e) => {
+// // // // //         e.stopPropagation(); // Prevent triggering parent onClick if needed
+// // // // //         if (project.slug) {
+// // // // //             navigate(`/projects/${project.slug}`);
+// // // // //         }
+// // // // //     };
+
+// // // // //     return (
+// // // // //         <div className={`flex flex-col h-full w-full bg-white rounded-2xl overflow-hidden transition-all duration-300 ${isDeck ? '' : 'shadow-sm border border-gray-200 hover:shadow-xl hover:-translate-y-1'}`}>
+            
+// // // // //             {/* Image Area */}
+// // // // //             <div className="relative">
+// // // // //                 <MediaPlaceholder project={project} className="h-48" />
+// // // // //                 <div className={`absolute top-3 right-3 px-2.5 py-0.5 rounded-full text-xs font-bold uppercase border ${statusBg} shadow-sm`}>
+// // // // //                     {statusLabel}
+// // // // //                 </div>
+// // // // //             </div>
+
+// // // // //             <div className="flex-grow p-5 flex flex-col">
+// // // // //                 <h3 className="text-xl font-bold text-gray-900 line-clamp-1 mb-2 group-hover:text-indigo-600 transition-colors">
+// // // // //                     {project.title}
+// // // // //                 </h3>
+// // // // //                 <p className="text-sm text-gray-500 line-clamp-3 leading-relaxed mb-4">
+// // // // //                     {project.description || `${project.details_1 || ''} ${project.details_2 || ''}` || 'No description available.'}
+// // // // //                 </p>
+                
+// // // // //                 <div className="mt-auto space-y-4">
+// // // // //                     {/* Tags */}
+// // // // //                     <div className="flex flex-wrap gap-2">
+// // // // //                         {tags.map((tag, index) => (
+// // // // //                             <div key={index} className={`flex items-center text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-md border ${tag.color}`}>
+// // // // //                                 {tag.label}
+// // // // //                             </div>
+// // // // //                         ))}
+// // // // //                     </div>
+
+// // // // //                     <div className="h-px bg-gray-100 w-full"></div>
+
+// // // // //                     {/* Footer Info */}
+// // // // //                   <div className="flex justify-between items-center text-xs text-gray-500 font-medium">
+// // // // //                         <span className="flex items-center">
+// // // // //                             <Clock className="w-3.5 h-3.5 mr-1.5 text-gray-400" />
+// // // // //                             {completionPercentage}% Complete
+// // // // //                         </span>
+                        
+// // // // //                         {/* Navigation Trigger */}
+// // // // //                         <span 
+// // // // //                             onClick={handleDetailsClick}
+// // // // //                             className="flex items-center hover:text-indigo-600 transition-colors cursor-pointer"
+// // // // //                         >
+// // // // //                             Details <ChevronRight className="w-3 h-3 ml-1" />
+// // // // //                         </span>
+// // // // //                     </div>
+// // // // //                 </div>
+// // // // //             </div>
+// // // // //         </div>
+// // // // //     );
+// // // // // };
+
+// // // // // // --- The Core ProjectCard Component ---
+// // // // // const ProjectCard = ({ project, index, isDeckView }) => {
+// // // // //     const navigate = typeof useNavigate === 'function' ? useNavigate() : () => {}; 
+// // // // //     const slug = project.slug || project.id;
+
+// // // // //     const handleClick = () => {
+// // // // //         if (slug) {
+// // // // //             console.log(`Navigating to /projects/${slug}`);
+// // // // //             // navigate(`/projects/${slug}`);
+// // // // //         }
+// // // // //     };
+
+// // // // //     // --- Deck View Logic ---
+// // // // //     if (isDeckView) {
+// // // // //         const MAX_VISIBLE_CARDS = 8; 
+// // // // //         if (index >= MAX_VISIBLE_CARDS) return null;
+
+// // // // //         const TOTAL_CARDS = MAX_VISIBLE_CARDS;
+// // // // //         const rotationFactor = 4; 
+// // // // //         // Center the rotation calculation around the middle of the stack
+// // // // //         const rotation = (index - (TOTAL_CARDS - 1) / 2) * rotationFactor; 
+// // // // //         const xOffset = rotation * 8; 
+// // // // //         const zIndex = 50 - Math.abs(index - 3); // Stack z-index to prioritize middle cards visually if needed, or simple layering
+
+// // // // //         return (
+// // // // //             <motion.div
+// // // // //                 // RESPONSIVE WIDTH: w-[85vw] for mobile, w-[20rem] for desktop
+// // // // //                 className="absolute w-[85vw] sm:w-[20rem] h-[28rem] cursor-pointer touch-none" 
+// // // // //                 key={`${project.id}-${index}`} 
+// // // // //                 onClick={handleClick}
+// // // // //                 style={{ 
+// // // // //                     transformOrigin: 'bottom center',
+// // // // //                     perspective: 1000, 
+// // // // //                 }}
+// // // // //                 initial={{ 
+// // // // //                     opacity: 0, 
+// // // // //                     rotate: rotation, 
+// // // // //                     x: xOffset, 
+// // // // //                     y: 200, 
+// // // // //                     scale: 0.9
+// // // // //                 }}
+// // // // //                 animate={{ 
+// // // // //                     opacity: 1, 
+// // // // //                     rotate: rotation, 
+// // // // //                     x: xOffset, 
+// // // // //                     y: 0, 
+// // // // //                     scale: 1,
+// // // // //                     zIndex: index, // Ensure order is preserved for the fan look
+// // // // //                     transition: { 
+// // // // //                         type: 'spring', 
+// // // // //                         stiffness: 120, 
+// // // // //                         damping: 15, 
+// // // // //                         delay: index * 0.05 
+// // // // //                     }
+// // // // //                 }}
+// // // // //                 whileHover={{ 
+// // // // //                     y: -40, 
+// // // // //                     scale: 1.05,
+// // // // //                     rotate: 0, // Straighten up on hover
+// // // // //                     zIndex: 100, 
+// // // // //                     transition: { type: 'spring', stiffness: 300, damping: 20 }
+// // // // //                 }}
+// // // // //             >
+// // // // //                 <div className="w-full h-full rounded-2xl shadow-2xl shadow-indigo-900/10 bg-white ring-1 ring-gray-900/5">
+// // // // //                     <FullCardContent project={project} isDeck={true} />
+// // // // //                 </div>
+// // // // //             </motion.div>
+// // // // //         );
+// // // // //     }
+    
+// // // // //     // --- Grid View Logic ---
+// // // // //     return (
+// // // // //         <motion.div
+// // // // //             layout
+// // // // //             initial={{ opacity: 0, scale: 0.95 }}
+// // // // //             animate={{ opacity: 1, scale: 1 }}
+// // // // //             exit={{ opacity: 0, scale: 0.95 }}
+// // // // //             transition={{ duration: 0.3 }}
+// // // // //             onClick={handleClick}
+// // // // //             className="cursor-pointer h-full"
+// // // // //         >
+// // // // //             <FullCardContent project={project} isDeck={false} /> 
+// // // // //         </motion.div>
+// // // // //     );
+// // // // // };
+
+// // // // // export default ProjectCard;
+
+// // // // import React from 'react';
+// // // // import { motion } from 'framer-motion';
+// // // // import { useNavigate } from 'react-router-dom';
+// // // // import { Clock, Layers, Briefcase, Code, ChevronRight } from 'lucide-react';
+// // // // import { Navigate } from 'react-router-dom';
+
+// // // // export const CardStyle = {
+// // // //   UNIFIED_DESIGN: 'UNIFIED_DESIGN',
+// // // //   DECK_STACKED: 'DECK_STACKED' 
+// // // // };
+
+// // // // // --- Helper for Media Placeholder ---
+// // // // const MediaPlaceholder = ({ project, className = 'h-32' }) => {
+// // // //     // FIX: Use the processed URL from the API, not the raw file path
+// // // //     const imageUrl = project.hero_image;
+
+// // // //     if (imageUrl) {
+// // // //         // Fallback for demo purposes
+// // // //         const placeholderUrl = `https://placehold.co/600x400/f3f4f6/9ca3af?text=${encodeURIComponent(project.title)}`;
+
+// // // //         return (
+// // // //             <div className={`relative ${className} overflow-hidden bg-gray-50 group`}>
+// // // //                 <img 
+// // // //                     src={imageUrl} 
+// // // //                     alt={project.hero_alt || `Image for ${project.title}`} 
+// // // //                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+// // // //                     onError={(e) => { e.target.onerror = null; e.target.src = placeholderUrl; }}
+// // // //                 />
+// // // //                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+// // // //             </div>
+// // // //         );
+// // // //     }
+
+// // // //     // Fallback if no image
+// // // //     return (
+// // // //         <div className={`${className} bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center text-gray-400`}>
+// // // //             <span className="text-xs font-medium uppercase tracking-wider">No Preview</span>
+// // // //         </div>
+// // // //     );
+// // // // };
+
+
+// // // // const FullCardContent = ({ project, isDeck }) => {
+// // // //     const navigate = useNavigate();
+
+// // // //     const handleNavigate = (e) => {
+// // // //         e.stopPropagation();
+// // // //         navigate(`/projects/${project.slug}`);
+// // // //     };
+
+// // // //     return (
+// // // //         <div className="h-full flex flex-col bg-white border border-gray-100/80 rounded-2xl overflow-hidden hover:shadow-xl hover:shadow-indigo-100/40 transition-all duration-300 group">
+// // // //             {/* Image Section */}
+// // // //             <div className="relative">
+// // // //                 <MediaPlaceholder project={project} className={isDeck ? "h-48" : "h-56"} />
+                
+// // // //                 {/* Floating Category Badge */}
+// // // //                 <div className="absolute top-4 left-4">
+// // // //                     <span className="px-3 py-1 text-xs font-semibold bg-white/90 backdrop-blur-md text-indigo-600 rounded-full shadow-sm border border-indigo-50">
+// // // //                         {project.category || "Project"}
+// // // //                     </span>
+// // // //                 </div>
+
+// // // //                 {/* Status Badge (if present) */}
+// // // //                 {project.status && (
+// // // //                     <div className="absolute top-4 right-4">
+// // // //                         <span className={`px-2 py-1 text-[10px] font-bold uppercase tracking-wider rounded-md shadow-sm backdrop-blur-md ${
+// // // //                             project.status === 'Completed' ? 'bg-emerald-500/90 text-white' : 
+// // // //                             project.status === 'In Progress' ? 'bg-amber-500/90 text-white' : 
+// // // //                             'bg-gray-500/90 text-white'
+// // // //                         }`}>
+// // // //                             {project.status}
+// // // //                         </span>
+// // // //                     </div>
+// // // //                 )}
+// // // //             </div>
+
+// // // //             {/* Content Section */}
+// // // //             <div className="flex-1 p-5 flex flex-col">
+// // // //                 <div className="flex justify-between items-start mb-2">
+// // // //                     <h3 className="text-lg font-bold text-gray-900 line-clamp-1 group-hover:text-indigo-600 transition-colors">
+// // // //                         {project.title}
+// // // //                     </h3>
+// // // //                     {/* Tier Indicator */}
+// // // //                     {project.tier && (
+// // // //                          <div className="w-2 h-2 rounded-full mt-2" title={project.tier.name} style={{ backgroundColor: project.tier.color_hex }}></div>
+// // // //                     )}
+// // // //                 </div>
+                
+// // // //                 <p className="text-sm text-gray-500 line-clamp-2 mb-4 flex-1 leading-relaxed">
+// // // //                     {project.description || "No description available."}
+// // // //                 </p>
+
+// // // //                 {/* Metadata Footer */}
+// // // //                 <div className="pt-4 border-t border-gray-50 mt-auto space-y-3">
+// // // //                     {/* Tools Row */}
+// // // //                     {project.tools && project.tools.length > 0 && (
+// // // //                         <div className="flex flex-wrap gap-2">
+// // // //                             {project.tools.slice(0, 3).map((tool, i) => (
+// // // //                                 <span key={i} className="text-[10px] px-2 py-1 bg-gray-50 text-gray-600 rounded-md border border-gray-100 font-medium">
+// // // //                                     {tool.name}
+// // // //                                 </span>
+// // // //                             ))}
+// // // //                             {project.tools.length > 3 && (
+// // // //                                 <span className="text-[10px] px-2 py-1 bg-gray-50 text-gray-400 rounded-md border border-gray-100">
+// // // //                                     +{project.tools.length - 3}
+// // // //                                 </span>
+// // // //                             )}
+// // // //                         </div>
+// // // //                     )}
+
+// // // //                     <div className="flex items-center justify-between">
+// // // //                         <div className="flex items-center gap-4 text-xs text-gray-400 font-medium">
+// // // //                             {/* Completion */}
+// // // //                             <div className="flex items-center gap-1.5" title="Completion">
+// // // //                                 <div className="w-16 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+// // // //                                     <div 
+// // // //                                         className="h-full bg-indigo-500 rounded-full" 
+// // // //                                         style={{ width: `${project.completion_percentage || 0}%` }}
+// // // //                                     />
+// // // //                                 </div>
+// // // //                                 <span>{project.completion_percentage}%</span>
+// // // //                             </div>
+// // // //                         </div>
+
+// // // //                         <button 
+// // // //                             onClick={handleNavigate}
+// // // //                             className="p-2 rounded-full bg-gray-50 text-gray-400 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-300"
+// // // //                         >
+// // // //                             <ChevronRight className="w-4 h-4" />
+// // // //                         </button>
+// // // //                     </div>
+// // // //                 </div>
+// // // //             </div>
+// // // //         </div>
+// // // //     );
+// // // // };
+
+// // // // const ProjectCard = ({ project, index, style = CardStyle.UNIFIED_DESIGN }) => {
+// // // //     const navigate = useNavigate();
+
+// // // //     const handleClick = () => {
+// // // //        navigate(`/projects/${project.slug}`);
+// // // //     };
+
+// // // //     // --- Deck Stack Logic ---
+// // // //     if (style === CardStyle.DECK_STACKED) {
+// // // //         const xOffset = index * 4; // Slight horizontal offset
+// // // //         const rotation = index % 2 === 0 ? index * 1 : index * -1; // Alternating rotation
+
+// // // //         return (
+// // // //             <motion.div
+// // // //                 className="absolute top-0 left-0 w-full h-full origin-bottom"
+// // // //                 initial={{ rotate: rotation * 2, y: 100, opacity: 0 }}
+// // // //                 animate={{ 
+// // // //                     rotate: rotation, 
+// // // //                     x: xOffset, 
+// // // //                     y: 0, 
+// // // //                     scale: 1,
+// // // //                     opacity: 1,
+// // // //                     zIndex: index, // Ensure order is preserved for the fan look
+// // // //                     transition: { 
+// // // //                         type: 'spring', 
+// // // //                         stiffness: 120, 
+// // // //                         damping: 15, 
+// // // //                         delay: index * 0.05 
+// // // //                     }
+// // // //                 }}
+// // // //                 whileHover={{ 
+// // // //                     y: -40, 
+// // // //                     scale: 1.05,
+// // // //                     rotate: 0, // Straighten up on hover
+// // // //                     zIndex: 100, 
+// // // //                     transition: { type: 'spring', stiffness: 300, damping: 20 }
+// // // //                 }}
+// // // //                 style={{ 
+// // // //                     zIndex: index // Fallback for initial render
+// // // //                 }}
+// // // //             >
+// // // //                 <div className="w-full h-full rounded-2xl shadow-2xl shadow-indigo-900/10 bg-white ring-1 ring-gray-900/5 cursor-pointer" onClick={handleClick}>
+// // // //                     <FullCardContent project={project} isDeck={true} />
+// // // //                 </div>
+// // // //             </motion.div>
+// // // //         );
+// // // //     }
+    
+// // // //     // --- Grid View Logic ---
+// // // //     return (
+// // // //         <motion.div
+// // // //             layout
+// // // //             initial={{ opacity: 0, scale: 0.95 }}
+// // // //             animate={{ opacity: 1, scale: 1 }}
+// // // //             exit={{ opacity: 0, scale: 0.95 }}
+// // // //             transition={{ duration: 0.3 }}
+// // // //             onClick={handleClick}
+// // // //             className="cursor-pointer h-full"
+// // // //         >
+// // // //             <FullCardContent project={project} isDeck={false} /> 
+// // // //         </motion.div>
+// // // //     );
+// // // // };
+
+// // // // export default ProjectCard;
+
+// // // import React from 'react';
+// // // import { motion } from 'framer-motion';
+// // // import { useNavigate } from 'react-router-dom';
+// // // import { Clock, Layers, Briefcase, Code, ChevronRight } from 'lucide-react';
+// // // import { Navigate } from 'react-router-dom';
+
+// // // export const CardStyle = {
+// // //   UNIFIED_DESIGN: 'UNIFIED_DESIGN',
+// // //   DECK_STACKED: 'DECK_STACKED' 
+// // // };
+
+// // // // --- Helper for Media Placeholder ---
+// // // const MediaPlaceholder = ({ project, className = 'h-32' }) => {
+// // //     // FIX: Use the processed URL from the API, not the raw file path
+// // //     const imageUrl = project.hero_image;
+
+// // //     if (imageUrl) {
+// // //         // Fallback for demo purposes
+// // //         const placeholderUrl = `https://placehold.co/600x400/f3f4f6/9ca3af?text=${encodeURIComponent(project.title)}`;
+
+// // //         return (
+// // //             <div className={`relative ${className} overflow-hidden bg-gray-50 group`}>
+// // //                 <img 
+// // //                     src={imageUrl} 
+// // //                     alt={project.hero_alt || `Image for ${project.title}`} 
+// // //                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+// // //                     onError={(e) => { e.target.onerror = null; e.target.src = placeholderUrl; }}
+// // //                 />
+// // //                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+// // //             </div>
+// // //         );
+// // //     }
+
+// // //     // Fallback if no image
+// // //     return (
+// // //         <div className={`${className} bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center text-gray-400`}>
+// // //             <span className="text-xs font-medium uppercase tracking-wider">No Preview</span>
+// // //         </div>
+// // //     );
+// // // };
+
+
+// // // const FullCardContent = ({ project, isDeck }) => {
+// // //     const navigate = useNavigate();
+
+// // //     const handleNavigate = (e) => {
+// // //         e.stopPropagation();
+// // //         navigate(`/projects/${project.slug}`);
+// // //     };
+
+// // //     return (
+// // //         <div className="h-full flex flex-col bg-white border border-gray-100/80 rounded-2xl overflow-hidden hover:shadow-xl hover:shadow-indigo-100/40 transition-all duration-300 group relative">
+// // //             {/* Image Section */}
+// // //             <div className="relative">
+// // //                 <MediaPlaceholder project={project} className={isDeck ? "h-48 md:h-56" : "h-56"} />
+                
+// // //                 {/* Floating Category Badge */}
+// // //                 <div className="absolute top-4 left-4">
+// // //                     <span className="px-3 py-1 text-xs font-semibold bg-white/90 backdrop-blur-md text-indigo-600 rounded-full shadow-sm border border-indigo-50">
+// // //                         {project.category || "Project"}
+// // //                     </span>
+// // //                 </div>
+
+// // //                 {/* Status Badge (if present) */}
+// // //                 {project.status && (
+// // //                     <div className="absolute top-4 right-4">
+// // //                         <span className={`px-2 py-1 text-[10px] font-bold uppercase tracking-wider rounded-md shadow-sm backdrop-blur-md ${
+// // //                             project.status === 'Completed' ? 'bg-emerald-500/90 text-white' : 
+// // //                             project.status === 'In Progress' ? 'bg-amber-500/90 text-white' : 
+// // //                             'bg-gray-500/90 text-white'
+// // //                         }`}>
+// // //                             {project.status}
+// // //                         </span>
+// // //                     </div>
+// // //                 )}
+// // //             </div>
+
+// // //             {/* Content Section */}
+// // //             <div className="flex-1 p-5 flex flex-col">
+// // //                 <div className="flex justify-between items-start mb-2">
+// // //                     <h3 className="text-lg font-bold text-gray-900 line-clamp-1 group-hover:text-indigo-600 transition-colors">
+// // //                         {project.title}
+// // //                     </h3>
+// // //                     {/* Tier Indicator */}
+// // //                     {project.tier && (
+// // //                          <div className="w-2 h-2 rounded-full mt-2 shrink-0" title={project.tier.name} style={{ backgroundColor: project.tier.color_hex }}></div>
+// // //                     )}
+// // //                 </div>
+                
+// // //                 <p className="text-sm text-gray-500 line-clamp-2 mb-4 flex-1 leading-relaxed">
+// // //                     {project.description || "No description available."}
+// // //                 </p>
+
+// // //                 {/* Metadata Footer */}
+// // //                 <div className="pt-4 border-t border-gray-50 mt-auto space-y-3">
+// // //                     {/* Tools Row */}
+// // //                     {project.tools && project.tools.length > 0 && (
+// // //                         <div className="flex flex-wrap gap-2 mb-2">
+// // //                             {project.tools.slice(0, 3).map((tool, i) => (
+// // //                                 <span key={i} className="text-[10px] px-2 py-1 bg-gray-50 text-gray-600 rounded-md border border-gray-100 font-medium">
+// // //                                     {tool.name}
+// // //                                 </span>
+// // //                             ))}
+// // //                             {project.tools.length > 3 && (
+// // //                                 <span className="text-[10px] px-2 py-1 bg-gray-50 text-gray-400 rounded-md border border-gray-100">
+// // //                                     +{project.tools.length - 3}
+// // //                                 </span>
+// // //                             )}
+// // //                         </div>
+// // //                     )}
+
+// // //                     <div className="flex items-center justify-between">
+// // //                         <div className="flex items-center gap-4 text-xs text-gray-400 font-medium">
+// // //                             {/* Completion */}
+// // //                             <div className="flex items-center gap-1.5" title="Completion">
+// // //                                 <div className="w-16 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+// // //                                     <div 
+// // //                                         className="h-full bg-indigo-500 rounded-full" 
+// // //                                         style={{ width: `${project.completion_percentage || 0}%` }}
+// // //                                     />
+// // //                                 </div>
+// // //                                 <span>{project.completion_percentage}%</span>
+// // //                             </div>
+// // //                         </div>
+
+// // //                         <button 
+// // //                             onClick={handleNavigate}
+// // //                             className="p-2 rounded-full bg-gray-50 text-gray-400 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-300 z-10"
+// // //                         >
+// // //                             <ChevronRight className="w-4 h-4" />
+// // //                         </button>
+// // //                     </div>
+// // //                 </div>
+// // //             </div>
+// // //         </div>
+// // //     );
+// // // };
+
+// // // const ProjectCard = ({ project, index, style = CardStyle.UNIFIED_DESIGN, totalCards = 1 }) => {
+// // //     const navigate = useNavigate();
+
+// // //     const handleClick = () => {
+// // //        navigate(`/projects/${project.slug}`);
+// // //     };
+
+// // //     // --- Deck Stack Logic ---
+// // //     if (style === CardStyle.DECK_STACKED) {
+// // //         // Calculate rotation and offset based on index
+// // //         // For a nice fan effect, we fan out from the center or one side
+// // //         // Let's fan out slightly
+// // //         const rotation = index * 3 - (totalCards * 1.5); // Spread rotation: -4.5, -1.5, 1.5, 4.5 etc.
+// // //         const yOffset = index * 2; // Slight vertical stack
+        
+// // //         return (
+// // //             <motion.div
+// // //                 className="absolute top-0 left-0 w-full h-full origin-bottom-left md:origin-center"
+// // //                 initial={{ 
+// // //                     rotate: rotation * 2, 
+// // //                     y: 100 + (index * 20), 
+// // //                     opacity: 0 
+// // //                 }}
+// // //                 animate={{ 
+// // //                     rotate: rotation, 
+// // //                     x: index * 15, // Horizontal fan
+// // //                     y: yOffset,
+// // //                     scale: 1 - (index * 0.02), // Slight scale down for back cards
+// // //                     opacity: 1,
+// // //                     zIndex: totalCards - index, // First card on top usually, or reverse if needed. Let's try reverse for stack.
+// // //                     // Actually for a fan, usually first item is front or back. Let's assume first item (index 0) is front.
+// // //                     // If index 0 is front, zIndex should be high.
+// // //                     zIndex: totalCards - index,
+// // //                     transition: { 
+// // //                         type: 'spring', 
+// // //                         stiffness: 120, 
+// // //                         damping: 15, 
+// // //                         delay: index * 0.1 
+// // //                     }
+// // //                 }}
+// // //                 whileHover={{ 
+// // //                     y: -30, 
+// // //                     scale: 1.05,
+// // //                     rotate: 0, // Straighten up
+// // //                     zIndex: 100, // Bring to front
+// // //                     transition: { type: 'spring', stiffness: 300, damping: 20 }
+// // //                 }}
+// // //                 style={{ 
+// // //                     zIndex: totalCards - index,
+// // //                     // Add a slight tilt perspective
+// // //                     perspective: 1000
+// // //                 }}
+// // //                 onClick={handleClick}
+// // //             >
+// // //                 <div className="w-full h-full rounded-2xl shadow-xl shadow-indigo-900/10 bg-white ring-1 ring-gray-900/5 cursor-pointer transform transition-transform duration-300 hover:shadow-2xl">
+// // //                     <FullCardContent project={project} isDeck={true} />
+// // //                 </div>
+// // //             </motion.div>
+// // //         );
+// // //     }
+    
+// // //     // --- Grid View Logic ---
+// // //     return (
+// // //         <motion.div
+// // //             layout
+// // //             initial={{ opacity: 0, scale: 0.95 }}
+// // //             animate={{ opacity: 1, scale: 1 }}
+// // //             exit={{ opacity: 0, scale: 0.95 }}
+// // //             transition={{ duration: 0.3 }}
+// // //             onClick={handleClick}
+// // //             className="cursor-pointer h-full"
+// // //         >
+// // //             <FullCardContent project={project} isDeck={false} /> 
+// // //         </motion.div>
+// // //     );
+// // // };
+
+// // // export default ProjectCard;
+
+// // import React from 'react';
+// // import { motion } from 'framer-motion';
+// // import { useNavigate } from 'react-router-dom';
+// // import { ChevronRight } from 'lucide-react';
+
+// // export const CardStyle = {
+// //   UNIFIED_DESIGN: 'UNIFIED_DESIGN',
+// //   DECK_STACKED: 'DECK_STACKED' 
+// // };
+
+// // // --- Helper for Media Placeholder ---
+// // const MediaPlaceholder = ({ project, className = 'h-32' }) => {
+// //     const imageUrl = project.hero_image;
+
+// //     if (imageUrl) {
+// //         const placeholderUrl = `https://placehold.co/600x400/f3f4f6/9ca3af?text=${encodeURIComponent(project.title)}`;
+
+// //         return (
+// //             <div className={`relative ${className} overflow-hidden bg-gray-50 group`}>
+// //                 <img 
+// //                     src={imageUrl} 
+// //                     alt={project.hero_alt || `Image for ${project.title}`} 
+// //                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+// //                     onError={(e) => { e.target.onerror = null; e.target.src = placeholderUrl; }}
+// //                 />
+// //                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+// //             </div>
+// //         );
+// //     }
+
+// //     return (
+// //         <div className={`${className} bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center text-gray-400`}>
+// //             <span className="text-xs font-medium uppercase tracking-wider">No Preview</span>
+// //         </div>
+// //     );
+// // };
+
+
+// // const FullCardContent = ({ project, isDeck }) => {
+// //     const navigate = useNavigate();
+
+// //     const handleNavigate = (e) => {
+// //         e.stopPropagation();
+// //         navigate(`/projects/${project.slug}`);
+// //     };
+
+// //     return (
+// //         <div className={`h-full flex flex-col bg-white border border-gray-100/80 rounded-2xl overflow-hidden transition-all duration-300 group relative ${isDeck ? 'shadow-sm' : 'hover:shadow-xl hover:shadow-indigo-100/40'}`}>
+// //             {/* Image Section */}
+// //             <div className="relative shrink-0">
+// //                 <MediaPlaceholder project={project} className={isDeck ? "h-40" : "h-56"} />
+                
+// //                 {/* Floating Category Badge */}
+// //                 <div className="absolute top-3 left-3">
+// //                     <span className="px-2.5 py-0.5 text-[10px] font-semibold bg-white/90 backdrop-blur-md text-indigo-600 rounded-full shadow-sm border border-indigo-50">
+// //                         {project.category || "Project"}
+// //                     </span>
+// //                 </div>
+
+// //                 {/* Status Badge */}
+// //                 {project.status && (
+// //                     <div className="absolute top-3 right-3">
+// //                         <span className={`px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider rounded-md shadow-sm backdrop-blur-md ${
+// //                             project.status === 'Completed' ? 'bg-emerald-500/90 text-white' : 
+// //                             project.status === 'In Progress' ? 'bg-amber-500/90 text-white' : 
+// //                             'bg-gray-500/90 text-white'
+// //                         }`}>
+// //                             {project.status}
+// //                         </span>
+// //                     </div>
+// //                 )}
+// //             </div>
+
+// //             {/* Content Section */}
+// //             <div className="flex-1 p-4 flex flex-col">
+// //                 <div className="flex justify-between items-start mb-1">
+// //                     <h3 className="text-base font-bold text-gray-900 line-clamp-1 group-hover:text-indigo-600 transition-colors">
+// //                         {project.title}
+// //                     </h3>
+// //                     {project.tier && (
+// //                          <div className="w-2 h-2 rounded-full mt-1.5 shrink-0" title={project.tier.name} style={{ backgroundColor: project.tier.color_hex }}></div>
+// //                     )}
+// //                 </div>
+                
+// //                 <p className="text-xs text-gray-500 line-clamp-2 mb-3 flex-1 leading-relaxed">
+// //                     {project.description || "No description available."}
+// //                 </p>
+
+// //                 {/* Metadata Footer */}
+// //                 <div className="pt-3 border-t border-gray-50 mt-auto space-y-2">
+// //                     {/* Tools Row */}
+// //                     {project.tools && project.tools.length > 0 && (
+// //                         <div className="flex flex-wrap gap-1.5 mb-1">
+// //                             {project.tools.slice(0, 3).map((tool, i) => (
+// //                                 <span key={i} className="text-[9px] px-1.5 py-0.5 bg-gray-50 text-gray-600 rounded-md border border-gray-100 font-medium">
+// //                                     {tool.name}
+// //                                 </span>
+// //                             ))}
+// //                             {project.tools.length > 3 && (
+// //                                 <span className="text-[9px] px-1.5 py-0.5 bg-gray-50 text-gray-400 rounded-md border border-gray-100">
+// //                                     +{project.tools.length - 3}
+// //                                 </span>
+// //                             )}
+// //                         </div>
+// //                     )}
+
+// //                     <div className="flex items-center justify-between">
+// //                         <div className="flex items-center gap-3 text-[10px] text-gray-400 font-medium">
+// //                             <div className="flex items-center gap-1.5" title="Completion">
+// //                                 <div className="w-12 h-1 bg-gray-100 rounded-full overflow-hidden">
+// //                                     <div 
+// //                                         className="h-full bg-indigo-500 rounded-full" 
+// //                                         style={{ width: `${project.completion_percentage || 0}%` }}
+// //                                     />
+// //                                 </div>
+// //                                 <span>{project.completion_percentage}%</span>
+// //                             </div>
+// //                         </div>
+
+// //                         <button 
+// //                             onClick={handleNavigate}
+// //                             className="p-1.5 rounded-full bg-gray-50 text-gray-400 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-300 z-10"
+// //                         >
+// //                             <ChevronRight className="w-3 h-3" />
+// //                         </button>
+// //                     </div>
+// //                 </div>
+// //             </div>
+// //         </div>
+// //     );
+// // };
+
+// // const ProjectCard = ({ project, index, style = CardStyle.UNIFIED_DESIGN, totalCards = 1 }) => {
+// //     const navigate = useNavigate();
+
+// //     const handleClick = () => {
+// //        navigate(`/projects/${project.slug}`);
+// //     };
+
+// //     // --- Deck Stack Logic ---
+// //     if (style === CardStyle.DECK_STACKED) {
+// //         // Calculate center-based index for symmetrical fanning
+// //         // e.g., if 5 cards: -2, -1, 0, 1, 2
+// //         const centerOffset = index - ((totalCards - 1) / 2);
+        
+// //         // Dynamic values for "Arch" Effect
+// //         const rotation = centerOffset * 4; // Degrees of rotation
+// //         const xOffset = centerOffset * 25; // Horizontal spread px
+// //         const yOffset = Math.abs(centerOffset) * 8; // Arch effect (sides lower)
+// //         const scale = 1 - (Math.abs(centerOffset) * 0.03); // Sides smaller
+
+// //         return (
+// //             <motion.div
+// //                 className="absolute top-0 left-0 right-0 mx-auto w-full max-w-xs h-[380px] cursor-pointer perspective-1000"
+// //                 initial={{ 
+// //                     y: 500, 
+// //                     opacity: 0,
+// //                     scale: 0.8,
+// //                     rotate: 0
+// //                 }}
+// //                 animate={{ 
+// //                     y: yOffset + 20, 
+// //                     x: xOffset,
+// //                     rotate: rotation,
+// //                     scale: scale,
+// //                     opacity: 1,
+// //                     // Higher z-index for center cards to sit on top
+// //                     zIndex: totalCards - Math.abs(centerOffset), 
+// //                     transition: { 
+// //                         type: 'spring', 
+// //                         stiffness: 150, 
+// //                         damping: 20, 
+// //                         delay: index * 0.05 
+// //                     }
+// //                 }}
+// //                 whileHover={{ 
+// //                     y: -100, // Lift up card
+// //                     scale: 1.1, // Enlarge
+// //                     rotate: 0, // Straighten
+// //                     zIndex: 100, // Bring to very front
+// //                     transition: { type: 'spring', stiffness: 300, damping: 15 }
+// //                 }}
+// //                 onClick={handleClick}
+// //                 style={{
+// //                     // Origin at bottom center for natural fanning
+// //                     transformOrigin: 'bottom center'
+// //                 }}
+// //             >
+// //                 <div className="w-full h-full rounded-2xl shadow-2xl shadow-indigo-900/20 bg-white ring-1 ring-black/5">
+// //                     <FullCardContent project={project} isDeck={true} />
+// //                     {/* Subtle dimming overlay for depth on non-hovered side cards */}
+// //                     <div className="absolute inset-0 bg-indigo-900/5 rounded-2xl pointer-events-none transition-opacity duration-300 group-hover:opacity-0" />
+// //                 </div>
+// //             </motion.div>
+// //         );
+// //     }
+    
+// //     // --- Grid View Logic ---
+// //     return (
+// //         <motion.div
+// //             layout
+// //             initial={{ opacity: 0, scale: 0.95 }}
+// //             animate={{ opacity: 1, scale: 1 }}
+// //             exit={{ opacity: 0, scale: 0.95 }}
+// //             transition={{ duration: 0.3 }}
+// //             onClick={handleClick}
+// //             className="cursor-pointer h-full"
+// //         >
+// //             <FullCardContent project={project} isDeck={false} /> 
+// //         </motion.div>
+// //     );
+// // };
+
+// // export default ProjectCard;
+// import React from 'react';
+// import { motion } from 'framer-motion';
+// import { useNavigate } from 'react-router-dom';
+// import { ChevronRight } from 'lucide-react';
+
+// export const CardStyle = {
+//   UNIFIED_DESIGN: 'UNIFIED_DESIGN',
+//   DECK_STACKED: 'DECK_STACKED' 
+// };
+
+// // --- Helper for Media Placeholder ---
+// const MediaPlaceholder = ({ project, className = 'h-32' }) => {
+//     const imageUrl = project.hero_image;
+
+//     if (imageUrl) {
+//         const placeholderUrl = `https://placehold.co/600x400/f3f4f6/9ca3af?text=${encodeURIComponent(project.title)}`;
+
+//         return (
+//             <div className={`relative ${className} overflow-hidden bg-gray-50 group`}>
+//                 <img 
+//                     src={imageUrl} 
+//                     alt={project.hero_alt || `Image for ${project.title}`} 
+//                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+//                     onError={(e) => { e.target.onerror = null; e.target.src = placeholderUrl; }}
+//                 />
+//                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+//             </div>
+//         );
+//     }
+
+//     return (
+//         <div className={`${className} bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center text-gray-400`}>
+//             <span className="text-xs font-medium uppercase tracking-wider">No Preview</span>
+//         </div>
+//     );
+// };
+
+
+// const FullCardContent = ({ project, isDeck }) => {
+//     const navigate = useNavigate();
+
+//     const handleNavigate = (e) => {
+//         e.stopPropagation();
+//         navigate(`/projects/${project.slug}`);
+//     };
+
+//     return (
+//         <div className={`h-full flex flex-col bg-white border border-gray-100/80 rounded-2xl overflow-hidden transition-all duration-300 group relative ${isDeck ? 'shadow-sm' : 'hover:shadow-xl hover:shadow-indigo-100/40'}`}>
+//             {/* Image Section */}
+//             <div className="relative shrink-0">
+//                 <MediaPlaceholder project={project} className={isDeck ? "h-40" : "h-56"} />
+                
+//                 {/* Floating Category Badge */}
+//                 <div className="absolute top-3 left-3">
+//                     <span className="px-2.5 py-0.5 text-[10px] font-semibold bg-white/90 backdrop-blur-md text-indigo-600 rounded-full shadow-sm border border-indigo-50">
+//                         {project.category || "Project"}
+//                     </span>
+//                 </div>
+
+//                 {/* Status Badge */}
+//                 {project.status && (
+//                     <div className="absolute top-3 right-3">
+//                         <span className={`px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider rounded-md shadow-sm backdrop-blur-md ${
+//                             project.status === 'Completed' ? 'bg-emerald-500/90 text-white' : 
+//                             project.status === 'In Progress' ? 'bg-amber-500/90 text-white' : 
+//                             'bg-gray-500/90 text-white'
+//                         }`}>
+//                             {project.status}
+//                         </span>
+//                     </div>
+//                 )}
+//             </div>
+
+//             {/* Content Section */}
+//             <div className="flex-1 p-4 flex flex-col">
+//                 <div className="flex justify-between items-start mb-1">
+//                     <h3 className="text-base font-bold text-gray-900 line-clamp-1 group-hover:text-indigo-600 transition-colors">
+//                         {project.title}
+//                     </h3>
+//                     {project.tier && (
+//                          <div className="w-2 h-2 rounded-full mt-1.5 shrink-0" title={project.tier.name} style={{ backgroundColor: project.tier.color_hex }}></div>
+//                     )}
+//                 </div>
+                
+//                 <p className="text-xs text-gray-500 line-clamp-2 mb-3 flex-1 leading-relaxed">
+//                     {project.description || "No description available."}
+//                 </p>
+
+//                 {/* Metadata Footer */}
+//                 <div className="pt-3 border-t border-gray-50 mt-auto space-y-2">
+//                     {/* Tools Row */}
+//                     {project.tools && project.tools.length > 0 && (
+//                         <div className="flex flex-wrap gap-1.5 mb-1">
+//                             {project.tools.slice(0, 3).map((tool, i) => (
+//                                 <span key={i} className="text-[9px] px-1.5 py-0.5 bg-gray-50 text-gray-600 rounded-md border border-gray-100 font-medium">
+//                                     {tool.name}
+//                                 </span>
+//                             ))}
+//                             {project.tools.length > 3 && (
+//                                 <span className="text-[9px] px-1.5 py-0.5 bg-gray-50 text-gray-400 rounded-md border border-gray-100">
+//                                     +{project.tools.length - 3}
+//                                 </span>
+//                             )}
+//                         </div>
+//                     )}
+
+//                     <div className="flex items-center justify-between">
+//                         <div className="flex items-center gap-3 text-[10px] text-gray-400 font-medium">
+//                             <div className="flex items-center gap-1.5" title="Completion">
+//                                 <div className="w-12 h-1 bg-gray-100 rounded-full overflow-hidden">
+//                                     <div 
+//                                         className="h-full bg-indigo-500 rounded-full" 
+//                                         style={{ width: `${project.completion_percentage || 0}%` }}
+//                                     />
+//                                 </div>
+//                                 <span>{project.completion_percentage}%</span>
+//                             </div>
+//                         </div>
+
+//                         <button 
+//                             onClick={handleNavigate}
+//                             className="p-1.5 rounded-full bg-gray-50 text-gray-400 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-300 z-10"
+//                         >
+//                             <ChevronRight className="w-3 h-3" />
+//                         </button>
+//                     </div>
+//                 </div>
+//             </div>
+//         </div>
+//     );
+// };
+
+// const ProjectCard = ({ project, index, style = CardStyle.UNIFIED_DESIGN, totalCards = 1 }) => {
+//     const navigate = useNavigate();
+
+//     const handleClick = () => {
+//        navigate(`/projects/${project.slug}`);
+//     };
+
+//     // --- Deck Stack Logic ---
+//     if (style === CardStyle.DECK_STACKED) {
+//         // Calculate center-based index for symmetrical fanning
+//         // e.g., if 5 cards: -2, -1, 0, 1, 2
+//         const centerOffset = index - ((totalCards - 1) / 2);
+        
+//         // Dynamic values for "Arch" Effect
+//         const rotation = centerOffset * 4; // Degrees of rotation
+//         const xOffset = centerOffset * 25; // Horizontal spread px
+//         const yOffset = Math.abs(centerOffset) * 8; // Arch effect (sides lower)
+//         const scale = 1 - (Math.abs(centerOffset) * 0.03); // Sides smaller
+
+//         return (
+//             <motion.div
+//                 className="absolute top-0 left-0 right-0 mx-auto w-full max-w-xs h-[380px] cursor-pointer perspective-1000"
+//                 initial={{ 
+//                     y: 500, 
+//                     opacity: 0,
+//                     scale: 0.8,
+//                     rotate: 0
+//                 }}
+//                 animate={{ 
+//                     y: yOffset + 20, 
+//                     x: xOffset,
+//                     rotate: rotation,
+//                     scale: scale,
+//                     opacity: 1,
+//                     // Higher z-index for center cards to sit on top
+//                     zIndex: totalCards - Math.abs(centerOffset), 
+//                     transition: { 
+//                         type: 'spring', 
+//                         stiffness: 150, 
+//                         damping: 20, 
+//                         delay: index * 0.05 
+//                     }
+//                 }}
+//                 whileHover={{ 
+//                     y: -100, // Lift up card
+//                     scale: 1.1, // Enlarge
+//                     rotate: 0, // Straighten
+//                     zIndex: 100, // Bring to very front
+//                     transition: { type: 'spring', stiffness: 300, damping: 15 }
+//                 }}
+//                 onClick={handleClick}
+//                 style={{
+//                     // Origin at bottom center for natural fanning
+//                     transformOrigin: 'bottom center'
+//                 }}
+//             >
+//                 <div className="w-full h-full rounded-2xl shadow-2xl shadow-indigo-900/20 bg-white ring-1 ring-black/5">
+//                     <FullCardContent project={project} isDeck={true} />
+//                     {/* Subtle dimming overlay for depth on non-hovered side cards */}
+//                     <div className="absolute inset-0 bg-indigo-900/5 rounded-2xl pointer-events-none transition-opacity duration-300 group-hover:opacity-0" />
+//                 </div>
+//             </motion.div>
+//         );
+//     }
+    
+//     // --- Grid View Logic ---
+//     return (
+//         <motion.div
+//             layout
+//             initial={{ opacity: 0, scale: 0.95 }}
+//             animate={{ opacity: 1, scale: 1 }}
+//             exit={{ opacity: 0, scale: 0.95 }}
+//             transition={{ duration: 0.3 }}
+//             onClick={handleClick}
+//             className="cursor-pointer h-full"
+//         >
+//             <FullCardContent project={project} isDeck={false} /> 
+//         </motion.div>
+//     );
+// };
+
+// export default ProjectCard;
+
+// // // // import React, { useState, useEffect, useCallback, useMemo } from 'react';
+// // // // import { motion, AnimatePresence } from 'framer-motion';
+// // // // import { Filter, X, Loader2, Search, Layers, ShieldCheck, List, ChevronLeft, ChevronRight, LayoutGrid, Copy } from 'lucide-react';
+// // // // import { fetchProjectCategories, fetchProjects, fetchProjectTools, fetchProjectTiers } from '../api/projectspage'; 
+// // // // import { useHomepageData } from '../hooks/useHomepageData'; 
+// // // // import ProjectCard, { CardStyle } from '../components/projects/ProjectCard'; 
+
+// // // // // --- FilterPanel Component ---
+// // // // const FilterPanel = ({ 
+// // // //   categories, tools, tiers,
+// // // //   activeCategory, activeToolId, activeTierId, searchQuery,
+// // // //   onFilterChange, onToolChange, onTierChange, onSearchChange,
+// // // //   onClose,
+// // // // }) => {
+// // // //   const [localSearch, setLocalSearch] = useState(searchQuery);
+
+// // // //   const handleSearch = (e) => {
+// // // //     e.preventDefault();
+// // // //     onSearchChange(localSearch);
+// // // //   };
+
+// // // //   return (
+// // // //     <motion.div 
+// // // //       className="fixed inset-0 z-[60] bg-white/95 backdrop-blur-md shadow-2xl overflow-y-auto p-6 md:p-10 lg:w-[400px] lg:right-0 lg:left-auto border-l border-gray-200"
+// // // //       initial={{ x: '100%' }}
+// // // //       animate={{ x: 0 }}
+// // // //       exit={{ x: '100%' }}
+// // // //       transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+// // // //     >
+// // // //         <div className="flex justify-between items-center mb-8 border-b border-gray-100 pb-4">
+// // // //             <h2 className="text-2xl font-bold text-gray-900 flex items-center">
+// // // //                 <Filter className="w-5 h-5 mr-2 text-indigo-600" /> Filters
+// // // //             </h2>
+// // // //             <motion.button 
+// // // //                 onClick={onClose} 
+// // // //                 className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600"
+// // // //                 whileHover={{ rotate: 90 }}
+// // // //                 whileTap={{ scale: 0.9 }}
+// // // //             >
+// // // //                 <X className="w-5 h-5" />
+// // // //             </motion.button>
+// // // //         </div>
+
+// // // //         {/* 1. Search Bar */}
+// // // //         <form onSubmit={handleSearch} className="mb-8">
+// // // //             <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Search</label>
+// // // //             <div className="flex shadow-sm rounded-lg overflow-hidden group focus-within:ring-2 focus-within:ring-indigo-500 transition-all">
+// // // //                 <input
+// // // //                     type="search"
+// // // //                     placeholder="Search projects..."
+// // // //                     value={localSearch}
+// // // //                     onChange={(e) => setLocalSearch(e.target.value)}
+// // // //                     className="flex-grow p-3 bg-gray-50 border-y border-l border-gray-200 focus:outline-none text-gray-800 placeholder-gray-400"
+// // // //                 />
+// // // //                 <button type="submit" className="bg-indigo-600 text-white px-4 hover:bg-indigo-700 transition-colors">
+// // // //                     <Search className="w-4 h-4" />
+// // // //                 </button>
+// // // //             </div>
+// // // //         </form>
+
+// // // //         {/* 2. Category Filter */}
+// // // //         <div className="mb-8">
+// // // //             <h3 className="text-sm font-bold text-gray-800 mb-3 flex items-center">
+// // // //                 <Layers className="w-4 h-4 mr-2 text-indigo-500" /> Categories
+// // // //             </h3>
+// // // //             <div className="flex flex-wrap gap-2">
+// // // //             {['all', ...categories.map(c => c.slug)].map((slug) => {
+// // // //                 const name = slug === 'all' ? 'All' : categories.find(c => c.slug === slug)?.name;
+// // // //                 return (
+// // // //                 <motion.button
+// // // //                     key={slug}
+// // // //                     onClick={() => onFilterChange(slug)}
+// // // //                     className={`px-3 py-1.5 rounded-md font-medium text-xs transition-all border ${
+// // // //                     activeCategory === slug
+// // // //                         ? 'bg-indigo-600 border-indigo-600 text-white shadow-md'
+// // // //                         : 'bg-white border-gray-200 text-gray-600 hover:border-indigo-300 hover:text-indigo-600'
+// // // //                     }`}
+// // // //                     whileTap={{ scale: 0.95 }}
+// // // //                 >
+// // // //                     {name}
+// // // //                 </motion.button>
+// // // //                 );
+// // // //             })}
+// // // //             </div>
+// // // //         </div>
+
+// // // //         {/* 3. Tier Filter */}
+// // // //         <div className="mb-8">
+// // // //             <h3 className="text-sm font-bold text-gray-800 mb-3 flex items-center">
+// // // //                 <ShieldCheck className="w-4 h-4 mr-2 text-rose-500" /> Complexity
+// // // //             </h3>
+// // // //             <div className="flex flex-wrap gap-2">
+// // // //                 <motion.button
+// // // //                     onClick={() => onTierChange(null)}
+// // // //                     className={`px-3 py-1.5 rounded-md font-medium text-xs transition-colors border ${
+// // // //                     activeTierId === null ? 'bg-gray-800 border-gray-800 text-white' : 'bg-white border-gray-200 text-gray-600 hover:bg-gray-50'
+// // // //                     }`}
+// // // //                     whileTap={{ scale: 0.95 }}
+// // // //                 >
+// // // //                     All
+// // // //                 </motion.button>
+// // // //                 {tiers.map((tier) => (
+// // // //                     <motion.button
+// // // //                         key={tier.id}
+// // // //                         onClick={() => onTierChange(tier.id)}
+// // // //                         style={{ 
+// // // //                             backgroundColor: activeTierId === tier.id ? tier.color_hex : 'white', 
+// // // //                             borderColor: activeTierId === tier.id ? tier.color_hex : '#e5e7eb',
+// // // //                             color: activeTierId === tier.id ? '#ffffff' : '#4b5563' 
+// // // //                         }} 
+// // // //                         className={`px-3 py-1.5 rounded-md font-medium text-xs border transition-all hover:shadow-sm`}
+// // // //                         whileTap={{ scale: 0.95 }}
+// // // //                     >
+// // // //                         {tier.name}
+// // // //                     </motion.button>
+// // // //                 ))}
+// // // //             </div>
+// // // //         </div>
+
+// // // //         {/* 4. Tool Filter */}
+// // // //         <div>
+// // // //             <h3 className="text-sm font-bold text-gray-800 mb-3 flex items-center">
+// // // //                 <List className="w-4 h-4 mr-2 text-emerald-500" /> Tech Stack
+// // // //             </h3>
+// // // //             <div className="flex flex-wrap gap-2">
+// // // //                 <motion.button
+// // // //                     onClick={() => onToolChange(null)}
+// // // //                     className={`px-3 py-1.5 rounded-md font-medium text-xs transition-colors border ${
+// // // //                     activeToolId === null ? 'bg-emerald-600 border-emerald-600 text-white' : 'bg-white border-gray-200 text-gray-600 hover:bg-gray-50'
+// // // //                     }`}
+// // // //                     whileTap={{ scale: 0.95 }}
+// // // //                 >
+// // // //                     Any
+// // // //                 </motion.button>
+// // // //                 {tools.map((tool) => (
+// // // //                     <motion.button
+// // // //                         key={tool.id}
+// // // //                         onClick={() => onToolChange(tool.id)}
+// // // //                         className={`px-3 py-1.5 rounded-md font-medium text-xs transition-colors border ${activeToolId === tool.id ? 'bg-emerald-600 border-emerald-600 text-white shadow-sm' : 'bg-white border-gray-200 text-gray-600 hover:border-emerald-300'}`}
+// // // //                         whileTap={{ scale: 0.95 }}
+// // // //                     >
+// // // //                         {tool.name}
+// // // //                     </motion.button>
+// // // //                 ))}
+// // // //             </div>
+// // // //         </div>
+// // // //     </motion.div>
+// // // //   );
+// // // // };
+
+// // // // // --- Main Projects Component ---
+// // // // const Projects = () => {
+// // // //   const { data: categories } = useHomepageData(fetchProjectCategories, 'project_categories');
+// // // //   const { data: tools } = useHomepageData(fetchProjectTools, 'project_tools'); 
+// // // //   const { data: tiers } = useHomepageData(fetchProjectTiers, 'project_tiers'); 
+
+// // // //   const [projects, setProjects] = useState([]);
+// // // //   const [loading, setLoading] = useState(true);
+// // // //   const [isFilterOpen, setIsFilterOpen] = useState(false);
+// // // //   const [isDeckViewActive, setIsDeckViewActive] = useState(true); 
+  
+// // // //   // --- Deck Pagination State ---
+// // // //   const [deckIndex, setDeckIndex] = useState(0); 
+// // // //   const CARDS_PER_DECK = 7; 
+
+// // // //   // Filtering states
+// // // //   const [activeCategory, setActiveCategory] = useState('all');
+// // // //   const [activeToolId, setActiveToolId] = useState(null);
+// // // //   const [activeTierId, setActiveTierId] = useState(null);
+// // // //   const [searchQuery, setSearchQuery] = useState('');
+  
+// // // //   const styledProjects = useMemo(() => {
+// // // //     return projects.map((project) => ({
+// // // //       ...project,
+// // // //       assignedStyle: CardStyle.UNIFIED_DESIGN 
+// // // //     }));
+// // // //   }, [projects]);
+
+// // // //   const loadProjects = useCallback(async () => {
+// // // //     setLoading(true);
+// // // //     const limit = 30; 
+// // // //     try {
+// // // //         const { data } = await fetchProjects({ 
+// // // //             limit: limit, 
+// // // //             categorySlug: activeCategory, 
+// // // //             searchQuery, 
+// // // //             toolId: activeToolId, 
+// // // //             tierId: activeTierId 
+// // // //         });
+// // // //         setProjects(Array.isArray(data) ? data : []); 
+// // // //         setDeckIndex(0); 
+// // // //     } catch (error) {
+// // // //         console.error("Failed to load projects:", error);
+// // // //         setProjects([]);
+// // // //     } finally {
+// // // //         setLoading(false);
+// // // //     }
+// // // //   }, [activeCategory, searchQuery, activeToolId, activeTierId]); 
+  
+// // // //   useEffect(() => {
+// // // //     loadProjects();
+// // // //   }, [loadProjects]); 
+
+// // // //   const totalDecks = Math.ceil(projects.length / CARDS_PER_DECK);
+// // // //   const startCardIndex = deckIndex * CARDS_PER_DECK;
+// // // //   const endCardIndex = startCardIndex + CARDS_PER_DECK;
+  
+// // // //   const visibleDeckProjects = styledProjects.slice(startCardIndex, endCardIndex);
+  
+// // // //   const goToNextDeck = () => deckIndex < totalDecks - 1 && setDeckIndex(deckIndex + 1);
+// // // //   const goToPrevDeck = () => deckIndex > 0 && setDeckIndex(deckIndex - 1);
+
+// // // //   const hasProjects = styledProjects.length > 0;
+// // // //   const canGoNext = deckIndex < totalDecks - 1;
+// // // //   const canGoPrev = deckIndex > 0;
+
+// // // //   if (loading && projects.length === 0) {
+// // // //     return (
+// // // //       <div className="min-h-screen flex items-center justify-center bg-gray-50">
+// // // //         <motion.div initial={{ rotate: 0 }} animate={{ rotate: 360 }} transition={{ duration: 1, repeat: Infinity, ease: "linear" }}>
+// // // //           <Loader2 className="w-12 h-12 text-indigo-600 animate-spin" />
+// // // //         </motion.div>
+// // // //       </div>
+// // // //     );
+// // // //   }
+
+// // // //   return (
+// // // //     <div className="pt-24 pb-48 bg-gray-50 min-h-screen relative overflow-x-hidden selection:bg-indigo-100 selection:text-indigo-900">
+      
+// // // //       {/* --- Header Section --- */}
+// // // //       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+// // // //         <div className="flex flex-col md:flex-row justify-between items-end max-w-7xl mx-auto mb-12 gap-6">
+// // // //             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+// // // //                 <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 tracking-tight leading-tight">
+// // // //                     Project <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-violet-600">Gallery</span>
+// // // //                 </h1>
+// // // //                 <p className="mt-3 text-lg text-gray-500 max-w-2xl">
+// // // //                     {isDeckViewActive 
+// // // //                         ? 'Explore our work in an interactive deck. Swipe or use arrows to navigate.' 
+// // // //                         : 'Browse our complete portfolio in a comprehensive grid layout.'}
+// // // //                 </p>
+// // // //             </motion.div>
+
+// // // //             <div className="flex space-x-3">
+// // // //                 <motion.button
+// // // //                     onClick={() => setIsDeckViewActive(!isDeckViewActive)}
+// // // //                     className="bg-white text-gray-700 border border-gray-200 px-5 py-2.5 rounded-lg text-sm font-semibold shadow-sm hover:border-indigo-300 hover:text-indigo-600 hover:shadow-md transition-all inline-flex items-center"
+// // // //                     whileHover={{ scale: 1.02 }}
+// // // //                     whileTap={{ scale: 0.98 }}
+// // // //                 >
+// // // //                     {isDeckViewActive ? <LayoutGrid className="w-4 h-4 mr-2" /> : <Copy className="w-4 h-4 mr-2" />}
+// // // //                     {isDeckViewActive ? 'Grid View' : 'Deck View'}
+// // // //                 </motion.button>
+// // // //                 <motion.button
+// // // //                     onClick={() => setIsFilterOpen(true)}
+// // // //                     className="bg-indigo-600 text-white px-5 py-2.5 rounded-lg text-sm font-semibold shadow-md shadow-indigo-200 hover:bg-indigo-700 transition-colors inline-flex items-center"
+// // // //                     whileHover={{ scale: 1.02 }}
+// // // //                     whileTap={{ scale: 0.98 }}
+// // // //                 >
+// // // //                     <Filter className="w-4 h-4 mr-2" /> Filters
+// // // //                 </motion.button>
+// // // //             </div>
+// // // //         </div>
+// // // //       </div>
+
+// // // //       <AnimatePresence mode="wait">
+// // // //         {hasProjects ? (
+// // // //             isDeckViewActive ? (
+// // // //                 // --- Deck Container (Responsive) ---
+// // // //                 <motion.div
+// // // //                     key="project-deck-container"
+// // // //                     initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+// // // //                     className="flex flex-col items-center justify-start w-full min-h-[600px] relative z-0"
+// // // //                 >
+// // // //                     {/* Pagination Indicators */}
+// // // //                     <div className="flex items-center space-x-2 mb-6">
+// // // //                         <span className="text-xs font-semibold text-gray-400 uppercase tracking-widest">Deck {deckIndex + 1} / {totalDecks}</span>
+// // // //                     </div>
+                    
+// // // //                     <div className="flex items-center justify-between w-full max-w-[90vw] lg:max-w-6xl px-2">
+// // // //                         {/* Prev Button */}
+// // // //                         <motion.button
+// // // //                             onClick={goToPrevDeck}
+// // // //                             disabled={!canGoPrev}
+// // // //                             className={`p-3 rounded-full transition-all duration-300 z-20 ${
+// // // //                                 canGoPrev ? 'bg-white text-gray-800 hover:text-indigo-600 shadow-lg border border-gray-100' : 'bg-gray-100 text-gray-300 cursor-not-allowed'
+// // // //                             }`}
+// // // //                             whileHover={canGoPrev ? { scale: 1.1 } : {}}
+// // // //                             whileTap={canGoPrev ? { scale: 0.9 } : {}}
+// // // //                         >
+// // // //                             <ChevronLeft className="w-6 h-6" />
+// // // //                         </motion.button>
+
+// // // //                         {/* Deck Render Area - Responsive Size */}
+// // // //                         <div className="relative w-full max-w-4xl h-[500px] sm:h-[600px] flex justify-center items-center perspective-1000">
+// // // //                             <AnimatePresence mode='popLayout'>
+// // // //                                 <motion.div 
+// // // //                                     key={`deck-${deckIndex}`} 
+// // // //                                     className="relative w-full h-full flex justify-center items-center"
+// // // //                                 >
+// // // //                                     {visibleDeckProjects.map((project, index) => (
+// // // //                                         <ProjectCard 
+// // // //                                             key={project.id} 
+// // // //                                             project={project} 
+// // // //                                             index={index}
+// // // //                                             isDeckView={true} 
+// // // //                                         />
+// // // //                                     ))}
+// // // //                                 </motion.div>
+// // // //                             </AnimatePresence>
+// // // //                         </div>
+
+// // // //                         {/* Next Button */}
+// // // //                         <motion.button
+// // // //                             onClick={goToNextDeck}
+// // // //                             disabled={!canGoNext}
+// // // //                             className={`p-3 rounded-full transition-all duration-300 z-20 ${
+// // // //                                 canGoNext ? 'bg-white text-gray-800 hover:text-indigo-600 shadow-lg border border-gray-100' : 'bg-gray-100 text-gray-300 cursor-not-allowed'
+// // // //                             }`}
+// // // //                             whileHover={canGoNext ? { scale: 1.1 } : {}}
+// // // //                             whileTap={canGoNext ? { scale: 0.9 } : {}}
+// // // //                         >
+// // // //                             <ChevronRight className="w-6 h-6" />
+// // // //                         </motion.button>
+// // // //                     </div>
+// // // //                 </motion.div>
+                
+// // // //             ) : (
+// // // //                 // --- Grid Container ---
+// // // //                 <motion.div
+// // // //                     key="project-grid"
+// // // //                     initial={{ opacity: 0, y: 30 }}
+// // // //                     animate={{ opacity: 1, y: 0 }}
+// // // //                     exit={{ opacity: 0, y: -30 }}
+// // // //                     transition={{ duration: 0.5 }}
+// // // //                     className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl"
+// // // //                 >
+// // // //                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+// // // //                         {styledProjects.map((project, index) => (
+// // // //                             <ProjectCard 
+// // // //                                 key={project.id} 
+// // // //                                 project={project} 
+// // // //                                 index={index}
+// // // //                                 isDeckView={false} 
+// // // //                             />
+// // // //                         ))}
+// // // //                     </div>
+// // // //                 </motion.div>
+// // // //             )
+// // // //         ) : (
+// // // //             !loading && (
+// // // //                 <motion.div 
+// // // //                     key="empty-state"
+// // // //                     initial={{ opacity: 0, scale: 0.9 }}
+// // // //                     animate={{ opacity: 1, scale: 1 }}
+// // // //                     className="flex flex-col items-center justify-center mt-20 p-12 text-center"
+// // // //                 >
+// // // //                     <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-6">
+// // // //                         <Search className="w-10 h-10 text-gray-400" />
+// // // //                     </div>
+// // // //                     <h3 className="text-2xl font-bold text-gray-900">No projects found</h3>
+// // // //                     <p className="text-gray-500 mt-2 max-w-md">
+// // // //                       We couldn't find any projects matching your current filters. Try adjusting your search or categories.
+// // // //                     </p>
+// // // //                     <button 
+// // // //                         onClick={() => { setActiveCategory('all'); setSearchQuery(''); setActiveToolId(null); setActiveTierId(null); }}
+// // // //                         className="mt-6 text-indigo-600 font-semibold hover:text-indigo-800 underline"
+// // // //                     >
+// // // //                         Clear all filters
+// // // //                     </button>
+// // // //                 </motion.div>
+// // // //             )
+// // // //         )}
+// // // //       </AnimatePresence>
+
+// // // //       {/* --- Filter Overlay --- */}
+// // // //       <AnimatePresence>
+// // // //         {isFilterOpen && (
+// // // //           <motion.div
+// // // //             className="fixed inset-0 bg-gray-900/30 backdrop-blur-sm z-50"
+// // // //             initial={{ opacity: 0 }}
+// // // //             animate={{ opacity: 1 }}
+// // // //             exit={{ opacity: 0 }}
+// // // //             onClick={() => setIsFilterOpen(false)}
+// // // //           />
+// // // //         )}
+// // // //       </AnimatePresence>
+// // // //       <AnimatePresence>
+// // // //         {isFilterOpen && (
+// // // //             <FilterPanel
+// // // //                 categories={categories || []}
+// // // //                 tools={tools || []}
+// // // //                 tiers={tiers || []}
+// // // //                 activeCategory={activeCategory}
+// // // //                 activeToolId={activeToolId}
+// // // //                 activeTierId={activeTierId}
+// // // //                 searchQuery={searchQuery}
+// // // //                 onFilterChange={(slug) => { setActiveCategory(slug); setIsFilterOpen(false); }}
+// // // //                 onToolChange={(id) => { setActiveToolId(id); setIsFilterOpen(false); }}
+// // // //                 onTierChange={(id) => { setActiveTierId(id); setIsFilterOpen(false); }}
+// // // //                 onSearchChange={(query) => { setSearchQuery(query); setIsFilterOpen(false); }}
+// // // //                 onClose={() => setIsFilterOpen(false)}
+// // // //             />
+// // // //         )}
+// // // //       </AnimatePresence>
+// // // //     </div>
+// // // //   );
+// // // // };
+
+// // // // export default Projects;
+
+// // // import React, { useState, useEffect, useCallback, useMemo } from 'react';
+// // // import { motion, AnimatePresence } from 'framer-motion';
+// // // import { Filter, X, Loader2, Search, Layers, ShieldCheck, List, ChevronLeft, ChevronRight, LayoutGrid, Copy } from 'lucide-react';
+// // // import { fetchProjectCategories, fetchProjects, fetchProjectTools, fetchProjectTiers } from '../api/projectspage'; 
+// // // import { useHomepageData } from '../hooks/useHomepageData'; 
+// // // import ProjectCard, { CardStyle } from '../components/projects/ProjectCard'; 
+
+// // // // --- FilterPanel Component ---
+// // // const FilterPanel = ({ 
+// // //   categories, tools, tiers,
+// // //   activeCategory, activeToolId, activeTierId, searchQuery,
+// // //   onFilterChange, onToolChange, onTierChange, onSearchChange,
+// // //   onClose,
+// // // }) => {
+// // //   const [localSearch, setLocalSearch] = useState(searchQuery);
+
+// // //   const handleSearch = (e) => {
+// // //     e.preventDefault();
+// // //     onSearchChange(localSearch);
+// // //   };
+
+// // //   return (
+// // //     <motion.div 
+// // //       className="fixed inset-0 z-[60] bg-white/95 backdrop-blur-md shadow-2xl overflow-y-auto p-6 md:p-10 lg:w-[400px] lg:right-0 lg:left-auto border-l border-gray-200"
+// // //       initial={{ x: '100%' }}
+// // //       animate={{ x: 0 }}
+// // //       exit={{ x: '100%' }}
+// // //       transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+// // //     >
+// // //         <div className="flex justify-between items-center mb-8">
+// // //             <h2 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
+// // //                 <Filter className="w-6 h-6 text-indigo-600" /> Filters
+// // //             </h2>
+// // //             <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-full transition-colors">
+// // //                 <X className="w-6 h-6 text-gray-500" />
+// // //             </button>
+// // //         </div>
+
+// // //         {/* Search */}
+// // //         <form onSubmit={handleSearch} className="mb-8 relative">
+// // //             <input 
+// // //                 type="text" 
+// // //                 placeholder="Search projects..." 
+// // //                 value={localSearch}
+// // //                 onChange={(e) => setLocalSearch(e.target.value)}
+// // //                 className="w-full p-4 pl-12 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all"
+// // //             />
+// // //             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+// // //         </form>
+
+// // //         {/* Categories */}
+// // //         <div className="mb-8">
+// // //             <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider mb-4 flex items-center gap-2">
+// // //                 <Layers className="w-4 h-4" /> Categories
+// // //             </h3>
+// // //             <div className="flex flex-wrap gap-2">
+// // //                 <button
+// // //                     onClick={() => onFilterChange('all')}
+// // //                     className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+// // //                         activeCategory === 'all' 
+// // //                         ? 'bg-indigo-600 text-white shadow-md shadow-indigo-200' 
+// // //                         : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+// // //                     }`}
+// // //                 >
+// // //                     All
+// // //                 </button>
+// // //                 {categories.map(cat => (
+// // //                     <button
+// // //                         key={cat.slug}
+// // //                         onClick={() => onFilterChange(cat.slug)}
+// // //                         className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+// // //                             activeCategory === cat.slug 
+// // //                             ? 'bg-indigo-600 text-white shadow-md shadow-indigo-200' 
+// // //                             : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+// // //                         }`}
+// // //                     >
+// // //                         {cat.name}
+// // //                     </button>
+// // //                 ))}
+// // //             </div>
+// // //         </div>
+
+// // //         {/* Tiers */}
+// // //         <div className="mb-8">
+// // //             <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider mb-4 flex items-center gap-2">
+// // //                 <ShieldCheck className="w-4 h-4" /> Complexity
+// // //             </h3>
+// // //             <div className="space-y-2">
+// // //                 <label className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors">
+// // //                     <input 
+// // //                         type="radio" 
+// // //                         name="tier" 
+// // //                         checked={activeTierId === null}
+// // //                         onChange={() => onTierChange(null)}
+// // //                         className="w-4 h-4 text-indigo-600 border-gray-300 focus:ring-indigo-500"
+// // //                     />
+// // //                     <span className="text-gray-700 font-medium">Any Complexity</span>
+// // //                 </label>
+// // //                 {tiers.map(tier => (
+// // //                     <label key={tier.id} className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors">
+// // //                         <input 
+// // //                             type="radio" 
+// // //                             name="tier" 
+// // //                             checked={activeTierId === tier.id}
+// // //                             onChange={() => onTierChange(tier.id)}
+// // //                             className="w-4 h-4 text-indigo-600 border-gray-300 focus:ring-indigo-500"
+// // //                         />
+// // //                         <span className="text-gray-700 font-medium flex items-center gap-2">
+// // //                             {tier.name}
+// // //                             <span className="w-2 h-2 rounded-full" style={{ background: tier.color_hex }} />
+// // //                         </span>
+// // //                     </label>
+// // //                 ))}
+// // //             </div>
+// // //         </div>
+
+// // //         {/* Tools */}
+// // //         <div>
+// // //             <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider mb-4 flex items-center gap-2">
+// // //                 <List className="w-4 h-4" /> Tools
+// // //             </h3>
+// // //             <div className="flex flex-wrap gap-2">
+// // //                 {tools.map(tool => (
+// // //                     <button
+// // //                         key={tool.id}
+// // //                         onClick={() => onToolChange(activeToolId === tool.id ? null : tool.id)}
+// // //                         className={`px-3 py-1.5 rounded-md text-xs font-medium border transition-all ${
+// // //                             activeToolId === tool.id 
+// // //                             ? 'bg-indigo-50 border-indigo-200 text-indigo-700' 
+// // //                             : 'bg-white border-gray-200 text-gray-600 hover:border-gray-300'
+// // //                         }`}
+// // //                     >
+// // //                         {tool.name}
+// // //                     </button>
+// // //                 ))}
+// // //             </div>
+// // //         </div>
+// // //     </motion.div>
+// // //   );
+// // // };
+
+// // // const Projects = () => {
+// // //   // --- Data Hooks ---
+// // //   const { categories, tools, tiers, loading: metaLoading } = useHomepageData();
+  
+// // //   // --- Local State ---
+// // //   const [projects, setProjects] = useState([]);
+// // //   const [loading, setLoading] = useState(true);
+// // //   const [totalCount, setTotalCount] = useState(0);
+// // //   const [page, setPage] = useState(1);
+  
+// // //   // --- Filters ---
+// // //   const [activeCategory, setActiveCategory] = useState('all');
+// // //   const [activeToolId, setActiveToolId] = useState(null);
+// // //   const [activeTierId, setActiveTierId] = useState(null);
+// // //   const [searchQuery, setSearchQuery] = useState('');
+  
+// // //   // --- UI State ---
+// // //   const [isFilterOpen, setIsFilterOpen] = useState(false);
+// // //   const [viewMode, setViewMode] = useState(CardStyle.DECK_STACKED); // Default to our new Carousel Deck
+  
+// // //   // --- Carousel Deck State ---
+// // //   const [deckIndex, setDeckIndex] = useState(0);
+
+// // //   const loadProjects = useCallback(async () => {
+// // //     setLoading(true);
+// // //     try {
+// // //         // If in DECK mode, we might want to fetch ALL relevant projects to scroll through
+// // //         // But for pagination sake, let's stick to a limit or fetch more if needed.
+// // //         // For the carousel, let's fetch a decent batch (e.g. 50) to scroll smoothly.
+// // //         const limit = viewMode === CardStyle.DECK_STACKED ? 50 : 12; 
+        
+// // //         const { data, count } = await fetchProjects({
+// // //             page,
+// // //             limit,
+// // //             categorySlug: activeCategory,
+// // //             searchQuery,
+// // //             toolId: activeToolId,
+// // //             tierId: activeTierId
+// // //         });
+        
+// // //         setProjects(data || []);
+// // //         setTotalCount(count || 0);
+        
+// // //         // Reset deck index when filters change
+// // //         if (page === 1) setDeckIndex(0);
+
+// // //     } catch (err) {
+// // //         console.error("Failed to load projects", err);
+// // //     } finally {
+// // //         setLoading(false);
+// // //     }
+// // //   }, [page, activeCategory, searchQuery, activeToolId, activeTierId, viewMode]);
+
+// // //   useEffect(() => {
+// // //     loadProjects();
+// // //   }, [loadProjects]);
+
+// // //   // --- Carousel Logic ---
+// // //   const handleNextCard = () => {
+// // //       if (deckIndex < projects.length - 1) {
+// // //           setDeckIndex(prev => prev + 1);
+// // //       }
+// // //   };
+
+// // //   const handlePrevCard = () => {
+// // //       if (deckIndex > 0) {
+// // //           setDeckIndex(prev => prev - 1);
+// // //       }
+// // //   };
+
+// // //   // Helper to determine card position for the 3-card carousel
+// // //   const getCardPosition = (index) => {
+// // //       if (index === deckIndex) return 'center';
+// // //       if (index === deckIndex - 1) return 'left';
+// // //       if (index === deckIndex + 1) return 'right';
+// // //       if (index < deckIndex - 1) return 'hiddenLeft';
+// // //       return 'hiddenRight';
+// // //   };
+
+// // //   // Calculate which projects to actually render in the carousel DOM to improve performance
+// // //   // We only need the active one, plus neighbors. 
+// // //   // Rendering all of them with 'hidden' variants works too with Framer Motion AnimatePresence or layout animation.
+// // //   // For simplicity and smoothness, let's render a window around the active index.
+// // //   const visibleCarouselProjects = useMemo(() => {
+// // //       if (viewMode !== CardStyle.DECK_STACKED) return projects;
+      
+// // //       // Keep a buffer to allow smooth exit animations
+// // //       const start = Math.max(0, deckIndex - 2);
+// // //       const end = Math.min(projects.length, deckIndex + 3);
+// // //       // We actually need to map over the ORIGINAL indices to assign correct positions
+// // //       return projects.map((p, i) => ({...p, originalIndex: i})).slice(start, end);
+// // //   }, [projects, deckIndex, viewMode]);
+
+
+// // //   return (
+// // //     <div className="min-h-screen bg-gray-50/50 font-sans text-gray-900 relative overflow-x-hidden">
+      
+// // //       {/* --- Header & Controls --- */}
+// // //       <div className="bg-white border-b border-gray-200 sticky top-0 z-40 shadow-sm/50 backdrop-blur-md bg-white/90">
+// // //         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+// // //             <h1 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">
+// // //                 Portfolio
+// // //             </h1>
+
+// // //             <div className="flex items-center gap-2 md:gap-4">
+// // //                 {/* View Toggle */}
+// // //                 <div className="bg-gray-100 p-1 rounded-lg flex items-center">
+// // //                     <button 
+// // //                         onClick={() => setViewMode(CardStyle.DECK_STACKED)}
+// // //                         className={`p-2 rounded-md transition-all ${viewMode === CardStyle.DECK_STACKED ? 'bg-white shadow-sm text-indigo-600' : 'text-gray-500 hover:text-gray-700'}`}
+// // //                         title="Carousel View"
+// // //                     >
+// // //                         <Copy className="w-4 h-4 rotate-90" />
+// // //                     </button>
+// // //                     <button 
+// // //                         onClick={() => setViewMode(CardStyle.UNIFIED_DESIGN)}
+// // //                         className={`p-2 rounded-md transition-all ${viewMode === CardStyle.UNIFIED_DESIGN ? 'bg-white shadow-sm text-indigo-600' : 'text-gray-500 hover:text-gray-700'}`}
+// // //                         title="Grid View"
+// // //                     >
+// // //                         <LayoutGrid className="w-4 h-4" />
+// // //                     </button>
+// // //                 </div>
+
+// // //                 {/* Filter Button */}
+// // //                 <button 
+// // //                     onClick={() => setIsFilterOpen(true)}
+// // //                     className="flex items-center gap-2 px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-all shadow-lg shadow-gray-900/20 text-sm font-medium"
+// // //                 >
+// // //                     <Filter className="w-4 h-4" /> 
+// // //                     <span className="hidden md:inline">Filters</span>
+// // //                 </button>
+// // //             </div>
+// // //         </div>
+// // //       </div>
+
+// // //       {/* --- Main Content --- */}
+// // //       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative min-h-[80vh]">
+// // //         {loading ? (
+// // //             <div className="flex flex-col items-center justify-center py-20">
+// // //                 <Loader2 className="w-10 h-10 animate-spin text-indigo-600 mb-4" />
+// // //                 <p className="text-gray-500 font-medium">Loading projects...</p>
+// // //             </div>
+// // //         ) : (
+// // //             <AnimatePresence mode='wait'>
+// // //                 {viewMode === CardStyle.DECK_STACKED ? (
+// // //                     <motion.div 
+// // //                         key="deck"
+// // //                         initial={{ opacity: 0, y: 20 }}
+// // //                         animate={{ opacity: 1, y: 0 }}
+// // //                         exit={{ opacity: 0, y: -20 }}
+// // //                         className="relative h-[600px] flex flex-col items-center justify-center w-full"
+// // //                     >
+// // //                         {/* 3-Card Carousel Container */}
+// // //                         <div className="relative w-full max-w-4xl h-[500px] flex items-center justify-center perspective-1000">
+// // //                             {/* Navigation Buttons - Absolutely Positioned */}
+// // //                             <button 
+// // //                                 onClick={handlePrevCard}
+// // //                                 disabled={deckIndex === 0}
+// // //                                 className="absolute left-4 md:left-0 z-50 p-4 rounded-full bg-white/80 backdrop-blur-md border border-gray-200 shadow-lg text-gray-700 hover:text-indigo-600 hover:bg-white disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+// // //                             >
+// // //                                 <ChevronLeft className="w-6 h-6" />
+// // //                             </button>
+
+// // //                             <button 
+// // //                                 onClick={handleNextCard}
+// // //                                 disabled={deckIndex === projects.length - 1}
+// // //                                 className="absolute right-4 md:right-0 z-50 p-4 rounded-full bg-white/80 backdrop-blur-md border border-gray-200 shadow-lg text-gray-700 hover:text-indigo-600 hover:bg-white disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+// // //                             >
+// // //                                 <ChevronRight className="w-6 h-6" />
+// // //                             </button>
+
+// // //                             {/* Render Visible Cards */}
+// // //                             {projects.length > 0 ? (
+// // //                                 <div className="relative w-full h-full flex items-center justify-center">
+// // //                                     {visibleCarouselProjects.map((project) => (
+// // //                                         <ProjectCard
+// // //                                             key={project.id}
+// // //                                             project={project}
+// // //                                             index={project.originalIndex}
+// // //                                             style={CardStyle.DECK_STACKED}
+// // //                                             deckPosition={getCardPosition(project.originalIndex)}
+// // //                                             // If it's not the center card, clicking it should navigate to it (optional UX)
+// // //                                             // Or we can make clicking side cards scroll to them
+// // //                                             onClick={() => {
+// // //                                                 if (project.originalIndex === deckIndex) {
+// // //                                                     // Navigate to detail
+// // //                                                     window.location.href = `/projects/${project.slug}`; 
+// // //                                                 } else {
+// // //                                                     setDeckIndex(project.originalIndex);
+// // //                                                 }
+// // //                                             }}
+// // //                                         />
+// // //                                     ))}
+// // //                                 </div>
+// // //                             ) : (
+// // //                                 <div className="text-center text-gray-500">
+// // //                                     No projects found matching your criteria.
+// // //                                 </div>
+// // //                             )}
+// // //                         </div>
+
+// // //                         {/* Pagination Indicators */}
+// // //                         <div className="flex gap-2 mt-8">
+// // //                             {projects.map((_, idx) => (
+// // //                                 <button 
+// // //                                     key={idx}
+// // //                                     onClick={() => setDeckIndex(idx)}
+// // //                                     className={`w-2 h-2 rounded-full transition-all ${idx === deckIndex ? 'w-6 bg-indigo-600' : 'bg-gray-300 hover:bg-gray-400'}`}
+// // //                                 />
+// // //                             ))}
+// // //                         </div>
+
+// // //                     </motion.div>
+// // //                 ) : (
+// // //                     <motion.div 
+// // //                         key="grid"
+// // //                         initial={{ opacity: 0 }}
+// // //                         animate={{ opacity: 1 }}
+// // //                         exit={{ opacity: 0 }}
+// // //                     >
+// // //                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+// // //                             {projects.map((project, index) => (
+// // //                                 <div key={project.id} className="h-[400px]">
+// // //                                     <ProjectCard 
+// // //                                         project={project} 
+// // //                                         index={index}
+// // //                                         style={CardStyle.UNIFIED_DESIGN}
+// // //                                     />
+// // //                                 </div>
+// // //                             ))}
+// // //                         </div>
+                        
+// // //                         {/* Pagination for Grid */}
+// // //                         {totalCount > 0 && (
+// // //                             <div className="flex justify-center mt-12 gap-4">
+// // //                                 <button
+// // //                                     onClick={() => setPage(p => Math.max(1, p - 1))}
+// // //                                     disabled={page === 1}
+// // //                                     className="px-4 py-2 bg-white border border-gray-200 rounded-lg disabled:opacity-50 hover:bg-gray-50 transition-colors"
+// // //                                 >
+// // //                                     Previous
+// // //                                 </button>
+// // //                                 <span className="px-4 py-2 bg-gray-100 rounded-lg font-medium text-gray-600">
+// // //                                     Page {page}
+// // //                                 </span>
+// // //                                 <button
+// // //                                     onClick={() => setPage(p => p + 1)} // Simple next logic, ideally check total pages
+// // //                                     disabled={projects.length < 12} // Assuming limit is 12
+// // //                                     className="px-4 py-2 bg-white border border-gray-200 rounded-lg disabled:opacity-50 hover:bg-gray-50 transition-colors"
+// // //                                 >
+// // //                                     Next
+// // //                                 </button>
+// // //                             </div>
+// // //                         )}
+// // //                     </motion.div>
+// // //                 )}
+// // //             </AnimatePresence>
+// // //         )}
+// // //       </div>
+
+// // //       {/* --- Floating Clear Filter Button (if filters active) --- */}
+// // //       <AnimatePresence>
+// // //         {(activeCategory !== 'all' || activeToolId || activeTierId || searchQuery) && (
+// // //             !isFilterOpen && (
+// // //                 <motion.div 
+// // //                     initial={{ y: 100 }}
+// // //                     animate={{ y: 0 }}
+// // //                     exit={{ y: 100 }}
+// // //                     className="fixed bottom-8 left-1/2 -translate-x-1/2 z-30 bg-gray-900 text-white px-6 py-3 rounded-full shadow-xl flex items-center gap-3 text-sm font-medium"
+// // //                 >
+// // //                     <span>Filters Active</span>
+// // //                     <div className="h-4 w-px bg-gray-700" />
+// // //                     <button 
+// // //                         onClick={() => {
+// // //                             setActiveCategory('all');
+// // //                             setActiveToolId(null);
+// // //                             setActiveTierId(null);
+// // //                             setSearchQuery('');
+// // //                         }}
+// // //                         className="hover:text-indigo-300 transition-colors"
+// // //                     >
+// // //                         Clear All
+// // //                     </button>
+// // //                 </motion.div>
+// // //             )
+// // //         )}
+// // //       </AnimatePresence>
+
+// // //       {/* --- Filter Overlay --- */}
+// // //       <AnimatePresence>
+// // //         {isFilterOpen && (
+// // //           <motion.div
+// // //             className="fixed inset-0 bg-gray-900/30 backdrop-blur-sm z-50"
+// // //             initial={{ opacity: 0 }}
+// // //             animate={{ opacity: 1 }}
+// // //             exit={{ opacity: 0 }}
+// // //             onClick={() => setIsFilterOpen(false)}
+// // //           />
+// // //         )}
+// // //       </AnimatePresence>
+// // //       <AnimatePresence>
+// // //         {isFilterOpen && (
+// // //             <FilterPanel
+// // //                 categories={categories || []}
+// // //                 tools={tools || []}
+// // //                 tiers={tiers || []}
+// // //                 activeCategory={activeCategory}
+// // //                 activeToolId={activeToolId}
+// // //                 activeTierId={activeTierId}
+// // //                 searchQuery={searchQuery}
+// // //                 onFilterChange={(slug) => { setActiveCategory(slug); setIsFilterOpen(false); }}
+// // //                 onToolChange={(id) => { setActiveToolId(id); setIsFilterOpen(false); }}
+// // //                 onTierChange={(id) => { setActiveTierId(id); setIsFilterOpen(false); }}
+// // //                 onSearchChange={(query) => { setSearchQuery(query); setIsFilterOpen(false); }}
+// // //                 onClose={() => setIsFilterOpen(false)}
+// // //             />
+// // //         )}
+// // //       </AnimatePresence>
+// // //     </div>
+// // //   );
+// // // };
+
+// // // export default Projects;
+// // import React, { useState, useEffect, useCallback, useMemo } from 'react';
+// // import { motion, AnimatePresence } from 'framer-motion';
+// // import { Filter, X, Loader2, Search, Layers, ShieldCheck, List, ChevronLeft, ChevronRight, LayoutGrid, Copy, ArrowRight } from 'lucide-react';
+// // import { fetchProjectCategories, fetchProjects, fetchProjectTools, fetchProjectTiers } from '../api/projectspage'; 
+// // import { useHomepageData } from '../hooks/useHomepageData'; 
+// // import ProjectCard, { CardStyle } from '../components/projects/ProjectCard'; 
+
+// // // --- FilterPanel Component (Unchanged logic, just kept for context) ---
+// // const FilterPanel = ({ 
+// //   categories, tools, tiers,
+// //   activeCategory, activeToolId, activeTierId, searchQuery,
+// //   onFilterChange, onToolChange, onTierChange, onSearchChange,
+// //   onClose,
+// // }) => {
+// //   const [localSearch, setLocalSearch] = useState(searchQuery);
+
+// //   const handleSearch = (e) => {
+// //     e.preventDefault();
+// //     onSearchChange(localSearch);
+// //   };
+
+// //   return (
+// //     <motion.div 
+// //       className="fixed inset-0 z-[60] bg-white/95 backdrop-blur-md shadow-2xl overflow-y-auto p-6 md:p-10 lg:w-[400px] lg:right-0 lg:left-auto border-l border-gray-200"
+// //       initial={{ x: '100%' }}
+// //       animate={{ x: 0 }}
+// //       exit={{ x: '100%' }}
+// //       transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+// //     >
+// //         <div className="flex justify-between items-center mb-8">
+// //             <h2 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
+// //                 <Filter className="w-6 h-6 text-indigo-600" /> Filters
+// //             </h2>
+// //             <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-full transition-colors">
+// //                 <X className="w-6 h-6 text-gray-500" />
+// //             </button>
+// //         </div>
+
+// //         {/* Search */}
+// //         <form onSubmit={handleSearch} className="mb-8 relative">
+// //             <input 
+// //                 type="text" 
+// //                 placeholder="Search projects..." 
+// //                 value={localSearch}
+// //                 onChange={(e) => setLocalSearch(e.target.value)}
+// //                 className="w-full p-4 pl-12 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all"
+// //             />
+// //             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+// //         </form>
+
+// //         {/* Categories */}
+// //         <div className="mb-8">
+// //             <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider mb-4 flex items-center gap-2">
+// //                 <Layers className="w-4 h-4" /> Categories
+// //             </h3>
+// //             <div className="flex flex-wrap gap-2">
+// //                 <button
+// //                     onClick={() => onFilterChange('all')}
+// //                     className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+// //                         activeCategory === 'all' 
+// //                         ? 'bg-indigo-600 text-white shadow-md shadow-indigo-200' 
+// //                         : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+// //                     }`}
+// //                 >
+// //                     All
+// //                 </button>
+// //                 {categories.map(cat => (
+// //                     <button
+// //                         key={cat.slug}
+// //                         onClick={() => onFilterChange(cat.slug)}
+// //                         className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+// //                             activeCategory === cat.slug 
+// //                             ? 'bg-indigo-600 text-white shadow-md shadow-indigo-200' 
+// //                             : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+// //                         }`}
+// //                     >
+// //                         {cat.name}
+// //                     </button>
+// //                 ))}
+// //             </div>
+// //         </div>
+
+// //         {/* Tiers */}
+// //         <div className="mb-8">
+// //             <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider mb-4 flex items-center gap-2">
+// //                 <ShieldCheck className="w-4 h-4" /> Complexity
+// //             </h3>
+// //             <div className="space-y-2">
+// //                 <label className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors">
+// //                     <input 
+// //                         type="radio" 
+// //                         name="tier" 
+// //                         checked={activeTierId === null}
+// //                         onChange={() => onTierChange(null)}
+// //                         className="w-4 h-4 text-indigo-600 border-gray-300 focus:ring-indigo-500"
+// //                     />
+// //                     <span className="text-gray-700 font-medium">Any Complexity</span>
+// //                 </label>
+// //                 {tiers.map(tier => (
+// //                     <label key={tier.id} className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors">
+// //                         <input 
+// //                             type="radio" 
+// //                             name="tier" 
+// //                             checked={activeTierId === tier.id}
+// //                             onChange={() => onTierChange(tier.id)}
+// //                             className="w-4 h-4 text-indigo-600 border-gray-300 focus:ring-indigo-500"
+// //                         />
+// //                         <span className="text-gray-700 font-medium flex items-center gap-2">
+// //                             {tier.name}
+// //                             <span className="w-2 h-2 rounded-full" style={{ background: tier.color_hex }} />
+// //                         </span>
+// //                     </label>
+// //                 ))}
+// //             </div>
+// //         </div>
+
+// //         {/* Tools */}
+// //         <div>
+// //             <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider mb-4 flex items-center gap-2">
+// //                 <List className="w-4 h-4" /> Tools
+// //             </h3>
+// //             <div className="flex flex-wrap gap-2">
+// //                 {tools.map(tool => (
+// //                     <button
+// //                         key={tool.id}
+// //                         onClick={() => onToolChange(activeToolId === tool.id ? null : tool.id)}
+// //                         className={`px-3 py-1.5 rounded-md text-xs font-medium border transition-all ${
+// //                             activeToolId === tool.id 
+// //                             ? 'bg-indigo-50 border-indigo-200 text-indigo-700' 
+// //                             : 'bg-white border-gray-200 text-gray-600 hover:border-gray-300'
+// //                         }`}
+// //                     >
+// //                         {tool.name}
+// //                     </button>
+// //                 ))}
+// //             </div>
+// //         </div>
+// //     </motion.div>
+// //   );
+// // };
+
+// // const Projects = () => {
+// //   // --- Data Hooks ---
+// //   const { categories, tools, tiers, loading: metaLoading } = useHomepageData();
+  
+// //   // --- Local State ---
+// //   const [projects, setProjects] = useState([]);
+// //   const [loading, setLoading] = useState(true);
+// //   const [totalCount, setTotalCount] = useState(0);
+// //   const [page, setPage] = useState(1);
+  
+// //   // --- Filters ---
+// //   const [activeCategory, setActiveCategory] = useState('all');
+// //   const [activeToolId, setActiveToolId] = useState(null);
+// //   const [activeTierId, setActiveTierId] = useState(null);
+// //   const [searchQuery, setSearchQuery] = useState('');
+  
+// //   // --- UI State ---
+// //   const [isFilterOpen, setIsFilterOpen] = useState(false);
+// //   const [viewMode, setViewMode] = useState(CardStyle.DECK_STACKED); 
+  
+// //   // --- Deck Stack Rotation State ---
+// //   const [stackOffset, setStackOffset] = useState(0);
+
+// //   const loadProjects = useCallback(async () => {
+// //     setLoading(true);
+// //     try {
+// //         // Load a larger batch for deck view to make it feel substantial
+// //         const limit = viewMode === CardStyle.DECK_STACKED ? 20 : 12; 
+        
+// //         const { data, count } = await fetchProjects({
+// //             page,
+// //             limit,
+// //             categorySlug: activeCategory,
+// //             searchQuery,
+// //             toolId: activeToolId,
+// //             tierId: activeTierId
+// //         });
+        
+// //         setProjects(data || []);
+// //         setTotalCount(count || 0);
+// //         setStackOffset(0); // Reset stack on new fetch
+
+// //     } catch (err) {
+// //         console.error("Failed to load projects", err);
+// //     } finally {
+// //         setLoading(false);
+// //     }
+// //   }, [page, activeCategory, searchQuery, activeToolId, activeTierId, viewMode]);
+
+// //   useEffect(() => {
+// //     loadProjects();
+// //   }, [loadProjects]);
+
+// //   // --- Deck Navigation Logic ---
+// //   // Rotate the array effectively by slicing based on stackOffset
+// //   const deckProjects = useMemo(() => {
+// //       if (projects.length === 0) return [];
+// //       // Create a rotated version of the array
+// //       const rotated = [...projects.slice(stackOffset), ...projects.slice(0, stackOffset)];
+// //       return rotated;
+// //   }, [projects, stackOffset]);
+
+// //   const nextCard = () => {
+// //       setStackOffset(prev => (prev + 1) % projects.length);
+// //   };
+
+// //   const prevCard = () => {
+// //       setStackOffset(prev => (prev - 1 + projects.length) % projects.length);
+// //   };
+
+// //   return (
+// //     <div className="min-h-screen bg-gray-50 font-sans text-gray-900 relative overflow-x-hidden selection:bg-indigo-100">
+      
+// //       {/* --- Background Elements for polish --- */}
+// //       <div className="absolute top-0 left-0 right-0 h-[500px] bg-gradient-to-b from-white to-gray-50 z-0 pointer-events-none" />
+// //       <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-indigo-50/50 blur-3xl rounded-full z-0 pointer-events-none translate-x-1/2 -translate-y-1/4" />
+
+// //       {/* --- Header & Controls --- */}
+// //       <div className="bg-white/80 border-b border-gray-200 sticky top-0 z-40 shadow-sm backdrop-blur-md">
+// //         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+// //             <div className="flex flex-col">
+// //                 <h1 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600 tracking-tight">
+// //                     Showcase
+// //                 </h1>
+// //                 <p className="text-xs text-gray-500 font-medium">
+// //                     {totalCount} Projects Found
+// //                 </p>
+// //             </div>
+
+// //             <div className="flex items-center gap-3">
+// //                 {/* View Toggle */}
+// //                 <div className="bg-gray-100 p-1 rounded-xl flex items-center ring-1 ring-gray-200">
+// //                     <button 
+// //                         onClick={() => setViewMode(CardStyle.DECK_STACKED)}
+// //                         className={`p-2 rounded-lg transition-all ${viewMode === CardStyle.DECK_STACKED ? 'bg-white shadow-sm text-indigo-600' : 'text-gray-400 hover:text-gray-600'}`}
+// //                         title="Stack View"
+// //                     >
+// //                         <Copy className="w-4 h-4 rotate-90" />
+// //                     </button>
+// //                     <button 
+// //                         onClick={() => setViewMode(CardStyle.UNIFIED_DESIGN)}
+// //                         className={`p-2 rounded-lg transition-all ${viewMode === CardStyle.UNIFIED_DESIGN ? 'bg-white shadow-sm text-indigo-600' : 'text-gray-400 hover:text-gray-600'}`}
+// //                         title="Grid View"
+// //                     >
+// //                         <LayoutGrid className="w-4 h-4" />
+// //                     </button>
+// //                 </div>
+
+// //                 {/* Filter Button */}
+// //                 <button 
+// //                     onClick={() => setIsFilterOpen(true)}
+// //                     className="group flex items-center gap-2 px-4 py-2.5 bg-gray-900 text-white rounded-xl hover:bg-gray-800 transition-all shadow-lg shadow-gray-900/10 text-sm font-medium"
+// //                 >
+// //                     <Filter className="w-4 h-4 transition-transform group-hover:rotate-180" /> 
+// //                     <span className="hidden md:inline">Filters</span>
+// //                 </button>
+// //             </div>
+// //         </div>
+// //       </div>
+
+// //       {/* --- Main Content --- */}
+// //       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10 min-h-[80vh]">
+        
+// //         {/* --- Page Title / Hero Section --- */}
+// //         <div className="mb-12 text-center max-w-2xl mx-auto">
+// //             <motion.h2 
+// //                 initial={{ opacity: 0, y: 10 }} 
+// //                 animate={{ opacity: 1, y: 0 }} 
+// //                 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4 tracking-tight"
+// //             >
+// //                 Selected Works
+// //             </motion.h2>
+// //             <motion.p 
+// //                 initial={{ opacity: 0, y: 10 }} 
+// //                 animate={{ opacity: 1, y: 0 }} 
+// //                 transition={{ delay: 0.1 }}
+// //                 className="text-lg text-gray-500 leading-relaxed"
+// //             >
+// //                 A curated collection of web applications, design systems, and creative experiments.
+// //             </motion.p>
+// //         </div>
+
+// //         {loading ? (
+// //             <div className="flex flex-col items-center justify-center py-32">
+// //                 <Loader2 className="w-12 h-12 animate-spin text-indigo-600 mb-4" />
+// //                 <p className="text-gray-500 font-medium animate-pulse">Curating projects...</p>
+// //             </div>
+// //         ) : (
+// //             <AnimatePresence mode='wait'>
+// //                 {viewMode === CardStyle.DECK_STACKED ? (
+// //                     <motion.div 
+// //                         key="deck"
+// //                         initial={{ opacity: 0, y: 20 }}
+// //                         animate={{ opacity: 1, y: 0 }}
+// //                         exit={{ opacity: 0, y: -20 }}
+// //                         className="relative flex flex-col items-center w-full"
+// //                     >
+// //                         {/* Deck Container */}
+// //                         <div className="relative w-full max-w-xl h-[550px] flex items-center justify-center">
+// //                             {/* Render the top 3 cards from the rotated array */}
+// //                             {deckProjects.length > 0 ? (
+// //                                 <div className="relative w-full h-full">
+// //                                     <AnimatePresence initial={false}>
+// //                                         {deckProjects.slice(0, 4).map((project, index) => (
+// //                                             <ProjectCard
+// //                                                 key={project.id} // Key must be unique ID to track moves
+// //                                                 project={project}
+// //                                                 index={index}
+// //                                                 style={CardStyle.DECK_STACKED}
+// //                                                 totalCards={projects.length}
+// //                                             />
+// //                                         ))}
+// //                                     </AnimatePresence>
+// //                                 </div>
+// //                             ) : (
+// //                                 <div className="flex flex-col items-center text-gray-400 mt-20">
+// //                                     <Search className="w-12 h-12 mb-4 opacity-20" />
+// //                                     <p>No projects match your filters.</p>
+// //                                 </div>
+// //                             )}
+// //                         </div>
+
+// //                         {/* Deck Controls */}
+// //                         {deckProjects.length > 1 && (
+// //                             <div className="flex items-center gap-6 mt-8">
+// //                                 <button 
+// //                                     onClick={prevCard}
+// //                                     className="p-4 rounded-full bg-white border border-gray-200 shadow-md hover:shadow-lg hover:border-indigo-200 text-gray-600 hover:text-indigo-600 transition-all active:scale-95"
+// //                                 >
+// //                                     <ChevronLeft className="w-6 h-6" />
+// //                                 </button>
+// //                                 <div className="text-sm font-medium text-gray-400 tabular-nums tracking-widest">
+// //                                     {(stackOffset + 1).toString().padStart(2, '0')} / {projects.length.toString().padStart(2, '0')}
+// //                                 </div>
+// //                                 <button 
+// //                                     onClick={nextCard}
+// //                                     className="p-4 rounded-full bg-white border border-gray-200 shadow-md hover:shadow-lg hover:border-indigo-200 text-gray-600 hover:text-indigo-600 transition-all active:scale-95"
+// //                                 >
+// //                                     <ChevronRight className="w-6 h-6" />
+// //                                 </button>
+// //                             </div>
+// //                         )}
+
+// //                     </motion.div>
+// //                 ) : (
+// //                     <motion.div 
+// //                         key="grid"
+// //                         initial={{ opacity: 0 }}
+// //                         animate={{ opacity: 1 }}
+// //                         exit={{ opacity: 0 }}
+// //                     >
+// //                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+// //                             {projects.map((project, index) => (
+// //                                 <div key={project.id} className="h-[420px]">
+// //                                     <ProjectCard 
+// //                                         project={project} 
+// //                                         index={index}
+// //                                         style={CardStyle.UNIFIED_DESIGN}
+// //                                     />
+// //                                 </div>
+// //                             ))}
+// //                         </div>
+                        
+// //                         {/* Pagination for Grid */}
+// //                         {totalCount > 0 && (
+// //                             <div className="flex justify-center mt-16 gap-4">
+// //                                 <button
+// //                                     onClick={() => setPage(p => Math.max(1, p - 1))}
+// //                                     disabled={page === 1}
+// //                                     className="px-6 py-2.5 bg-white border border-gray-200 rounded-xl disabled:opacity-50 hover:bg-gray-50 transition-all font-medium text-gray-600 hover:text-gray-900 shadow-sm"
+// //                                 >
+// //                                     Previous
+// //                                 </button>
+// //                                 <span className="px-6 py-2.5 bg-gray-100 rounded-xl font-bold text-gray-700 border border-gray-200/50">
+// //                                     {page}
+// //                                 </span>
+// //                                 <button
+// //                                     onClick={() => setPage(p => p + 1)} 
+// //                                     disabled={projects.length < 12} 
+// //                                     className="px-6 py-2.5 bg-white border border-gray-200 rounded-xl disabled:opacity-50 hover:bg-gray-50 transition-all font-medium text-gray-600 hover:text-gray-900 shadow-sm"
+// //                                 >
+// //                                     Next
+// //                                 </button>
+// //                             </div>
+// //                         )}
+// //                     </motion.div>
+// //                 )}
+// //             </AnimatePresence>
+// //         )}
+// //       </div>
+
+// //       {/* --- Active Filters Bar (Visible if filters active) --- */}
+// //       <AnimatePresence>
+// //         {(activeCategory !== 'all' || activeToolId || activeTierId || searchQuery) && (
+// //             <motion.div 
+// //                 initial={{ y: 100, opacity: 0 }}
+// //                 animate={{ y: 0, opacity: 1 }}
+// //                 exit={{ y: 100, opacity: 0 }}
+// //                 className="fixed bottom-8 left-0 right-0 flex justify-center z-30 pointer-events-none"
+// //             >
+// //                 <div className="bg-white/90 backdrop-blur-md border border-gray-200 px-6 py-3 rounded-full shadow-2xl flex items-center gap-4 pointer-events-auto">
+// //                     <span className="text-sm font-semibold text-gray-900 flex items-center gap-2">
+// //                         <Filter className="w-4 h-4 text-indigo-600" /> Filters Active
+// //                     </span>
+// //                     <div className="h-4 w-px bg-gray-300" />
+// //                     <button 
+// //                         onClick={() => {
+// //                             setActiveCategory('all');
+// //                             setActiveToolId(null);
+// //                             setActiveTierId(null);
+// //                             setSearchQuery('');
+// //                         }}
+// //                         className="text-sm text-gray-500 hover:text-red-600 font-medium transition-colors"
+// //                     >
+// //                         Clear All
+// //                     </button>
+// //                 </div>
+// //             </motion.div>
+// //         )}
+// //       </AnimatePresence>
+
+// //       {/* --- Filter Overlay --- */}
+// //       <AnimatePresence>
+// //         {isFilterOpen && (
+// //           <motion.div
+// //             className="fixed inset-0 bg-gray-900/20 backdrop-blur-sm z-50"
+// //             initial={{ opacity: 0 }}
+// //             animate={{ opacity: 1 }}
+// //             exit={{ opacity: 0 }}
+// //             onClick={() => setIsFilterOpen(false)}
+// //           />
+// //         )}
+// //       </AnimatePresence>
+// //       <AnimatePresence>
+// //         {isFilterOpen && (
+// //             <FilterPanel
+// //                 categories={categories || []}
+// //                 tools={tools || []}
+// //                 tiers={tiers || []}
+// //                 activeCategory={activeCategory}
+// //                 activeToolId={activeToolId}
+// //                 activeTierId={activeTierId}
+// //                 searchQuery={searchQuery}
+// //                 onFilterChange={(slug) => { setActiveCategory(slug); setIsFilterOpen(false); }}
+// //                 onToolChange={(id) => { setActiveToolId(id); setIsFilterOpen(false); }}
+// //                 onTierChange={(id) => { setActiveTierId(id); setIsFilterOpen(false); }}
+// //                 onSearchChange={(query) => { setSearchQuery(query); setIsFilterOpen(false); }}
+// //                 onClose={() => setIsFilterOpen(false)}
+// //             />
+// //         )}
+// //       </AnimatePresence>
+// //     </div>
+// //   );
+// // };
+
+// // export default Projects;
+// import React, { useState, useEffect, useCallback, useMemo } from 'react';
+// import { motion, AnimatePresence } from 'framer-motion';
+// import { Filter, X, Loader2, Search, Layers, ShieldCheck, List, ChevronLeft, ChevronRight, LayoutGrid, Copy, ArrowRight } from 'lucide-react';
+// import { fetchProjectCategories, fetchProjects, fetchProjectTools, fetchProjectTiers } from '../api/projectspage'; 
+// import { useHomepageData } from '../hooks/useHomepageData'; 
+// import ProjectCard, { CardStyle } from '../components/projects/ProjectCard'; 
+
+// // --- FilterPanel Component (Unchanged) ---
+// const FilterPanel = ({ 
+//   categories, tools, tiers,
+//   activeCategory, activeToolId, activeTierId, searchQuery,
+//   onFilterChange, onToolChange, onTierChange, onSearchChange,
+//   onClose,
+// }) => {
+//   const [localSearch, setLocalSearch] = useState(searchQuery);
+
+//   const handleSearch = (e) => {
+//     e.preventDefault();
+//     onSearchChange(localSearch);
+//   };
+
+//   return (
+//     <motion.div 
+//       className="fixed inset-0 z-[60] bg-white/95 backdrop-blur-md shadow-2xl overflow-y-auto p-6 md:p-10 lg:w-[400px] lg:right-0 lg:left-auto border-l border-gray-200"
+//       initial={{ x: '100%' }}
+//       animate={{ x: 0 }}
+//       exit={{ x: '100%' }}
+//       transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+//     >
+//         <div className="flex justify-between items-center mb-8">
+//             <h2 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
+//                 <Filter className="w-6 h-6 text-indigo-600" /> Filters
+//             </h2>
+//             <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-full transition-colors">
+//                 <X className="w-6 h-6 text-gray-500" />
+//             </button>
+//         </div>
+
+//         {/* Search */}
+//         <form onSubmit={handleSearch} className="mb-8 relative">
+//             <input 
+//                 type="text" 
+//                 placeholder="Search projects..." 
+//                 value={localSearch}
+//                 onChange={(e) => setLocalSearch(e.target.value)}
+//                 className="w-full p-4 pl-12 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all"
+//             />
+//             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+//         </form>
+
+//         {/* Categories */}
+//         <div className="mb-8">
+//             <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider mb-4 flex items-center gap-2">
+//                 <Layers className="w-4 h-4" /> Categories
+//             </h3>
+//             <div className="flex flex-wrap gap-2">
+//                 <button
+//                     onClick={() => onFilterChange('all')}
+//                     className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+//                         activeCategory === 'all' 
+//                         ? 'bg-indigo-600 text-white shadow-md shadow-indigo-200' 
+//                         : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+//                     }`}
+//                 >
+//                     All
+//                 </button>
+//                 {categories.map(cat => (
+//                     <button
+//                         key={cat.slug}
+//                         onClick={() => onFilterChange(cat.slug)}
+//                         className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+//                             activeCategory === cat.slug 
+//                             ? 'bg-indigo-600 text-white shadow-md shadow-indigo-200' 
+//                             : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+//                         }`}
+//                     >
+//                         {cat.name}
+//                     </button>
+//                 ))}
+//             </div>
+//         </div>
+
+//         {/* Tiers */}
+//         <div className="mb-8">
+//             <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider mb-4 flex items-center gap-2">
+//                 <ShieldCheck className="w-4 h-4" /> Complexity
+//             </h3>
+//             <div className="space-y-2">
+//                 <label className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors">
+//                     <input 
+//                         type="radio" 
+//                         name="tier" 
+//                         checked={activeTierId === null}
+//                         onChange={() => onTierChange(null)}
+//                         className="w-4 h-4 text-indigo-600 border-gray-300 focus:ring-indigo-500"
+//                     />
+//                     <span className="text-gray-700 font-medium">Any Complexity</span>
+//                 </label>
+//                 {tiers.map(tier => (
+//                     <label key={tier.id} className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors">
+//                         <input 
+//                             type="radio" 
+//                             name="tier" 
+//                             checked={activeTierId === tier.id}
+//                             onChange={() => onTierChange(tier.id)}
+//                             className="w-4 h-4 text-indigo-600 border-gray-300 focus:ring-indigo-500"
+//                         />
+//                         <span className="text-gray-700 font-medium flex items-center gap-2">
+//                             {tier.name}
+//                             <span className="w-2 h-2 rounded-full" style={{ background: tier.color_hex }} />
+//                         </span>
+//                     </label>
+//                 ))}
+//             </div>
+//         </div>
+
+//         {/* Tools */}
+//         <div>
+//             <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider mb-4 flex items-center gap-2">
+//                 <List className="w-4 h-4" /> Tools
+//             </h3>
+//             <div className="flex flex-wrap gap-2">
+//                 {tools.map(tool => (
+//                     <button
+//                         key={tool.id}
+//                         onClick={() => onToolChange(activeToolId === tool.id ? null : tool.id)}
+//                         className={`px-3 py-1.5 rounded-md text-xs font-medium border transition-all ${
+//                             activeToolId === tool.id 
+//                             ? 'bg-indigo-50 border-indigo-200 text-indigo-700' 
+//                             : 'bg-white border-gray-200 text-gray-600 hover:border-gray-300'
+//                         }`}
+//                     >
+//                         {tool.name}
+//                     </button>
+//                 ))}
+//             </div>
+//         </div>
+//     </motion.div>
+//   );
+// };
+
+// const Projects = () => {
+//   // --- Data Hooks ---
+//   const { categories, tools, tiers, loading: metaLoading } = useHomepageData();
+  
+//   // --- Local State ---
+//   const [projects, setProjects] = useState([]);
+//   const [loading, setLoading] = useState(true);
+//   const [totalCount, setTotalCount] = useState(0);
+//   const [page, setPage] = useState(1);
+  
+//   // --- Filters ---
+//   const [activeCategory, setActiveCategory] = useState('all');
+//   const [activeToolId, setActiveToolId] = useState(null);
+//   const [activeTierId, setActiveTierId] = useState(null);
+//   const [searchQuery, setSearchQuery] = useState('');
+  
+//   // --- UI State ---
+//   const [isFilterOpen, setIsFilterOpen] = useState(false);
+//   const [viewMode, setViewMode] = useState(CardStyle.DECK_STACKED); 
+  
+//   // --- Deck Index State ---
+//   const [deckIndex, setDeckIndex] = useState(0);
+
+//   const loadProjects = useCallback(async () => {
+//     setLoading(true);
+//     try {
+//         // Load more projects for deck view to allow smooth scrolling
+//         const limit = viewMode === CardStyle.DECK_STACKED ? 50 : 12; 
+        
+//         const { data, count } = await fetchProjects({
+//             page,
+//             limit,
+//             categorySlug: activeCategory,
+//             searchQuery,
+//             toolId: activeToolId,
+//             tierId: activeTierId
+//         });
+        
+//         setProjects(data || []);
+//         setTotalCount(count || 0);
+//         setDeckIndex(0); // Reset deck on new fetch
+
+//     } catch (err) {
+//         console.error("Failed to load projects", err);
+//     } finally {
+//         setLoading(false);
+//     }
+//   }, [page, activeCategory, searchQuery, activeToolId, activeTierId, viewMode]);
+
+//   useEffect(() => {
+//     loadProjects();
+//   }, [loadProjects]);
+
+//   // --- Deck Navigation ---
+//   const nextCard = () => {
+//       if (deckIndex < projects.length - 1) setDeckIndex(prev => prev + 1);
+//   };
+
+//   const prevCard = () => {
+//       if (deckIndex > 0) setDeckIndex(prev => prev - 1);
+//   };
+
+//   const getDeckPosition = (index) => {
+//       if (index === deckIndex) return 'center';
+//       if (index === deckIndex - 1) return 'left';
+//       if (index === deckIndex + 1) return 'right';
+//       if (index < deckIndex - 1) return 'hiddenLeft';
+//       return 'hiddenRight';
+//   };
+
+//   // To optimize rendering, we only need to render visible cards + buffer
+//   const visibleDeckProjects = useMemo(() => {
+//       if (viewMode !== CardStyle.DECK_STACKED) return projects;
+//       // Render a window around the active card
+//       const start = Math.max(0, deckIndex - 2);
+//       const end = Math.min(projects.length, deckIndex + 3);
+//       // Map over original indices to keep key/index consistent
+//       return projects.slice(start, end).map(p => ({
+//           ...p,
+//           originalIndex: projects.indexOf(p)
+//       }));
+//   }, [projects, deckIndex, viewMode]);
+
+//   return (
+//     <div className="min-h-screen bg-gray-50 font-sans text-gray-900 relative overflow-x-hidden selection:bg-indigo-100">
+      
+//       {/* --- Decorative Background --- */}
+//       <div className="absolute top-0 left-0 right-0 h-[600px] bg-gradient-to-b from-white to-transparent z-0 pointer-events-none" />
+//       <div className="absolute -top-20 -right-20 w-[500px] h-[500px] bg-indigo-100/40 rounded-full blur-3xl pointer-events-none" />
+//       <div className="absolute top-40 -left-20 w-[300px] h-[300px] bg-purple-100/40 rounded-full blur-3xl pointer-events-none" />
+
+//       {/* --- Header & Controls --- */}
+//       <div className="bg-white/80 border-b border-gray-200 sticky top-0 z-40 shadow-sm backdrop-blur-md">
+//         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+//             <div className="flex flex-col">
+//                 <h1 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600 tracking-tight">
+//                     Showcase
+//                 </h1>
+//                 <p className="text-xs text-gray-500 font-medium">
+//                     {totalCount} Projects Found
+//                 </p>
+//             </div>
+
+//             <div className="flex items-center gap-3">
+//                 {/* View Toggle */}
+//                 <div className="bg-gray-100 p-1 rounded-xl flex items-center ring-1 ring-gray-200">
+//                     <button 
+//                         onClick={() => setViewMode(CardStyle.DECK_STACKED)}
+//                         className={`p-2 rounded-lg transition-all ${viewMode === CardStyle.DECK_STACKED ? 'bg-white shadow-sm text-indigo-600' : 'text-gray-400 hover:text-gray-600'}`}
+//                         title="Carousel View"
+//                     >
+//                         <Copy className="w-4 h-4 rotate-90" />
+//                     </button>
+//                     <button 
+//                         onClick={() => setViewMode(CardStyle.UNIFIED_DESIGN)}
+//                         className={`p-2 rounded-lg transition-all ${viewMode === CardStyle.UNIFIED_DESIGN ? 'bg-white shadow-sm text-indigo-600' : 'text-gray-400 hover:text-gray-600'}`}
+//                         title="Grid View"
+//                     >
+//                         <LayoutGrid className="w-4 h-4" />
+//                     </button>
+//                 </div>
+
+//                 {/* Filter Button */}
+//                 <button 
+//                     onClick={() => setIsFilterOpen(true)}
+//                     className="group flex items-center gap-2 px-4 py-2.5 bg-gray-900 text-white rounded-xl hover:bg-gray-800 transition-all shadow-lg shadow-gray-900/10 text-sm font-medium"
+//                 >
+//                     <Filter className="w-4 h-4 transition-transform group-hover:rotate-180" /> 
+//                     <span className="hidden md:inline">Filters</span>
+//                 </button>
+//             </div>
+//         </div>
+//       </div>
+
+//       {/* --- Main Content --- */}
+//       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10 min-h-[80vh]">
+        
+//         {/* --- Hero Heading --- */}
+//         <div className="mb-16 text-center max-w-3xl mx-auto">
+//             <motion.div
+//                 initial={{ opacity: 0, y: 20 }}
+//                 animate={{ opacity: 1, y: 0 }}
+//                 transition={{ duration: 0.5 }}
+//             >
+//                 <span className="inline-block py-1 px-3 rounded-full bg-indigo-50 text-indigo-600 text-xs font-bold uppercase tracking-wider mb-4 border border-indigo-100">
+//                     Portfolio Gallery
+//                 </span>
+//                 <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6 tracking-tight leading-tight">
+//                     Crafting Digital <br className="hidden md:block" />
+//                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">Experiences that Matter</span>
+//                 </h2>
+//                 <p className="text-lg text-gray-500 leading-relaxed">
+//                     Explore a curated collection of web applications, design systems, and creative experiments built with modern technologies.
+//                 </p>
+//             </motion.div>
+//         </div>
+
+//         {loading ? (
+//             <div className="flex flex-col items-center justify-center py-32">
+//                 <Loader2 className="w-12 h-12 animate-spin text-indigo-600 mb-4" />
+//                 <p className="text-gray-500 font-medium animate-pulse">Curating projects...</p>
+//             </div>
+//         ) : (
+//             <AnimatePresence mode='wait'>
+//                 {viewMode === CardStyle.DECK_STACKED ? (
+//                     <motion.div 
+//                         key="deck"
+//                         initial={{ opacity: 0 }}
+//                         animate={{ opacity: 1 }}
+//                         exit={{ opacity: 0 }}
+//                         className="relative flex flex-col items-center w-full"
+//                     >
+//                         {/* Carousel Container */}
+//                         <div className="relative w-full max-w-5xl h-[500px] flex items-center justify-center perspective-1000">
+                            
+//                             {/* Left Button */}
+//                             <button 
+//                                 onClick={prevCard}
+//                                 disabled={deckIndex === 0}
+//                                 className="absolute left-4 md:left-10 z-50 p-4 rounded-full bg-white/90 backdrop-blur border border-gray-200 shadow-xl text-gray-700 hover:text-indigo-600 hover:scale-110 disabled:opacity-0 disabled:scale-90 transition-all duration-300 group"
+//                             >
+//                                 <ChevronLeft className="w-6 h-6 group-hover:-translate-x-1 transition-transform" />
+//                             </button>
+
+//                             {/* Right Button */}
+//                             <button 
+//                                 onClick={nextCard}
+//                                 disabled={deckIndex === projects.length - 1}
+//                                 className="absolute right-4 md:right-10 z-50 p-4 rounded-full bg-white/90 backdrop-blur border border-gray-200 shadow-xl text-gray-700 hover:text-indigo-600 hover:scale-110 disabled:opacity-0 disabled:scale-90 transition-all duration-300 group"
+//                             >
+//                                 <ChevronRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
+//                             </button>
+
+//                             {/* Render Visible Carousel Cards */}
+//                             {projects.length > 0 ? (
+//                                 <div className="relative w-full h-full flex items-center justify-center">
+//                                     {visibleDeckProjects.map((project) => (
+//                                         <ProjectCard
+//                                             key={project.id}
+//                                             project={project}
+//                                             index={project.originalIndex}
+//                                             style={CardStyle.DECK_STACKED}
+//                                             deckPosition={getDeckPosition(project.originalIndex)}
+//                                             onClick={() => {
+//                                                 if (project.originalIndex === deckIndex) {
+//                                                     // If center card clicked -> Go to page
+//                                                     window.location.href = `/projects/${project.slug}`;
+//                                                 } else {
+//                                                     // If side card clicked -> Scroll to it
+//                                                     setDeckIndex(project.originalIndex);
+//                                                 }
+//                                             }}
+//                                         />
+//                                     ))}
+//                                 </div>
+//                             ) : (
+//                                 <div className="flex flex-col items-center text-gray-400 mt-10">
+//                                     <Search className="w-12 h-12 mb-4 opacity-20" />
+//                                     <p>No projects found.</p>
+//                                 </div>
+//                             )}
+//                         </div>
+
+//                         {/* Dots Indicator */}
+//                         {projects.length > 1 && (
+//                             <div className="flex justify-center gap-2 mt-10">
+//                                 {projects.map((_, idx) => (
+//                                     <button 
+//                                         key={idx}
+//                                         onClick={() => setDeckIndex(idx)}
+//                                         className={`h-2 rounded-full transition-all duration-300 ${
+//                                             idx === deckIndex ? 'w-8 bg-indigo-600' : 'w-2 bg-gray-300 hover:bg-gray-400'
+//                                         }`}
+//                                     />
+//                                 ))}
+//                             </div>
+//                         )}
+
+//                     </motion.div>
+//                 ) : (
+//                     <motion.div 
+//                         key="grid"
+//                         initial={{ opacity: 0, y: 20 }}
+//                         animate={{ opacity: 1, y: 0 }}
+//                         exit={{ opacity: 0, y: -20 }}
+//                     >
+//                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+//                             {projects.map((project, index) => (
+//                                 <div key={project.id} className="h-[450px]">
+//                                     <ProjectCard 
+//                                         project={project} 
+//                                         index={index}
+//                                         style={CardStyle.UNIFIED_DESIGN}
+//                                     />
+//                                 </div>
+//                             ))}
+//                         </div>
+                        
+//                         {/* Pagination for Grid */}
+//                         {totalCount > 0 && (
+//                             <div className="flex justify-center mt-16 gap-4">
+//                                 <button
+//                                     onClick={() => setPage(p => Math.max(1, p - 1))}
+//                                     disabled={page === 1}
+//                                     className="px-6 py-2.5 bg-white border border-gray-200 rounded-xl disabled:opacity-50 hover:bg-gray-50 transition-all font-medium text-gray-600 hover:text-gray-900 shadow-sm"
+//                                 >
+//                                     Previous
+//                                 </button>
+//                                 <span className="px-6 py-2.5 bg-gray-100 rounded-xl font-bold text-gray-700 border border-gray-200/50">
+//                                     {page}
+//                                 </span>
+//                                 <button
+//                                     onClick={() => setPage(p => p + 1)} 
+//                                     disabled={projects.length < 12} 
+//                                     className="px-6 py-2.5 bg-white border border-gray-200 rounded-xl disabled:opacity-50 hover:bg-gray-50 transition-all font-medium text-gray-600 hover:text-gray-900 shadow-sm"
+//                                 >
+//                                     Next
+//                                 </button>
+//                             </div>
+//                         )}
+//                     </motion.div>
+//                 )}
+//             </AnimatePresence>
+//         )}
+//       </div>
+
+//       {/* --- Active Filters Bar --- */}
+//       <AnimatePresence>
+//         {(activeCategory !== 'all' || activeToolId || activeTierId || searchQuery) && (
+//             <motion.div 
+//                 initial={{ y: 100, opacity: 0 }}
+//                 animate={{ y: 0, opacity: 1 }}
+//                 exit={{ y: 100, opacity: 0 }}
+//                 className="fixed bottom-8 left-0 right-0 flex justify-center z-30 pointer-events-none"
+//             >
+//                 <div className="bg-white/90 backdrop-blur-md border border-gray-200 px-6 py-3 rounded-full shadow-2xl flex items-center gap-4 pointer-events-auto">
+//                     <span className="text-sm font-semibold text-gray-900 flex items-center gap-2">
+//                         <Filter className="w-4 h-4 text-indigo-600" /> Filters Active
+//                     </span>
+//                     <div className="h-4 w-px bg-gray-300" />
+//                     <button 
+//                         onClick={() => {
+//                             setActiveCategory('all');
+//                             setActiveToolId(null);
+//                             setActiveTierId(null);
+//                             setSearchQuery('');
+//                         }}
+//                         className="text-sm text-gray-500 hover:text-red-600 font-medium transition-colors"
+//                     >
+//                         Clear All
+//                     </button>
+//                 </div>
+//             </motion.div>
+//         )}
+//       </AnimatePresence>
+
+//       {/* --- Filter Overlay --- */}
+//       <AnimatePresence>
+//         {isFilterOpen && (
+//           <motion.div
+//             className="fixed inset-0 bg-gray-900/20 backdrop-blur-sm z-50"
+//             initial={{ opacity: 0 }}
+//             animate={{ opacity: 1 }}
+//             exit={{ opacity: 0 }}
+//             onClick={() => setIsFilterOpen(false)}
+//           />
+//         )}
+//       </AnimatePresence>
+//       <AnimatePresence>
+//         {isFilterOpen && (
+//             <FilterPanel
+//                 categories={categories || []}
+//                 tools={tools || []}
+//                 tiers={tiers || []}
+//                 activeCategory={activeCategory}
+//                 activeToolId={activeToolId}
+//                 activeTierId={activeTierId}
+//                 searchQuery={searchQuery}
+//                 onFilterChange={(slug) => { setActiveCategory(slug); setIsFilterOpen(false); }}
+//                 onToolChange={(id) => { setActiveToolId(id); setIsFilterOpen(false); }}
+//                 onTierChange={(id) => { setActiveTierId(id); setIsFilterOpen(false); }}
+//                 onSearchChange={(query) => { setSearchQuery(query); setIsFilterOpen(false); }}
+//                 onClose={() => setIsFilterOpen(false)}
+//             />
+//         )}
+//       </AnimatePresence>
+//     </div>
+//   );
+// };
+
+// export default Projects;
+
+// // // import React from 'react';
+// // // import { motion } from 'framer-motion';
+// // // import { useNavigate } from 'react-router-dom';
+// // // import { ChevronRight } from 'lucide-react';
+
+// // // export const CardStyle = {
+// // //   UNIFIED_DESIGN: 'UNIFIED_DESIGN',
+// // //   DECK_STACKED: 'DECK_STACKED' 
+// // // };
+
+// // // // --- Helper for Media Placeholder ---
+// // // const MediaPlaceholder = ({ project, className = 'h-56' }) => {
+// // //     const imageUrl = project.hero_image;
+
+// // //     if (imageUrl) {
+// // //         const placeholderUrl = `https://placehold.co/800x600/f3f4f6/9ca3af?text=${encodeURIComponent(project.title)}`;
+
+// // //         return (
+// // //             <div className={`relative ${className} overflow-hidden bg-gray-100 group`}>
+// // //                 <img 
+// // //                     src={imageUrl} 
+// // //                     alt={project.hero_alt || `Image for ${project.title}`} 
+// // //                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+// // //                     onError={(e) => { e.target.onerror = null; e.target.src = placeholderUrl; }}
+// // //                 />
+// // //                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-500" />
+// // //             </div>
+// // //         );
+// // //     }
+
+// // //     return (
+// // //         <div className={`${className} bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center text-gray-400`}>
+// // //             <span className="text-xs font-medium uppercase tracking-wider">No Preview</span>
+// // //         </div>
+// // //     );
+// // // };
+
+
+// // // const FullCardContent = ({ project, isDeck }) => {
+// // //     const navigate = useNavigate();
+
+// // //     const handleNavigate = (e) => {
+// // //         e.stopPropagation();
+// // //         navigate(`/projects/${project.slug}`);
+// // //     };
+
+// // //     return (
+// // //         <div className={`h-full flex flex-col bg-white rounded-2xl overflow-hidden transition-all duration-500 group relative ${isDeck ? 'shadow-2xl border border-gray-100' : 'border border-gray-100/80 hover:shadow-xl hover:shadow-indigo-100/40'}`}>
+// // //             {/* Image Section */}
+// // //             <div className="relative shrink-0">
+// // //                 {/* Taller image for deck view to showcase hero */}
+// // //                 <MediaPlaceholder project={project} className={isDeck ? "h-64 md:h-72" : "h-56"} />
+                
+// // //                 {/* Floating Category Badge */}
+// // //                 <div className="absolute top-4 left-4">
+// // //                     <span className="px-3 py-1 text-[11px] font-semibold bg-white/95 backdrop-blur-md text-indigo-600 rounded-full shadow-sm border border-indigo-50/50">
+// // //                         {project.category || "Project"}
+// // //                     </span>
+// // //                 </div>
+
+// // //                 {/* Status Badge */}
+// // //                 {project.status && (
+// // //                     <div className="absolute top-4 right-4">
+// // //                         <span className={`px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider rounded-md shadow-sm backdrop-blur-md ${
+// // //                             project.status === 'Completed' ? 'bg-emerald-500/90 text-white' : 
+// // //                             project.status === 'In Progress' ? 'bg-amber-500/90 text-white' : 
+// // //                             'bg-gray-500/90 text-white'
+// // //                         }`}>
+// // //                             {project.status}
+// // //                         </span>
+// // //                     </div>
+// // //                 )}
+// // //             </div>
+
+// // //             {/* Content Section */}
+// // //             <div className="flex-1 p-6 flex flex-col">
+// // //                 <div className="flex justify-between items-start mb-2">
+// // //                     <h3 className={`font-bold text-gray-900 line-clamp-1 group-hover:text-indigo-600 transition-colors ${isDeck ? 'text-xl md:text-2xl' : 'text-lg'}`}>
+// // //                         {project.title}
+// // //                     </h3>
+// // //                     {project.tier && (
+// // //                          <div className="w-2.5 h-2.5 rounded-full mt-2 shrink-0 ring-2 ring-white" title={project.tier.name} style={{ backgroundColor: project.tier.color_hex }}></div>
+// // //                     )}
+// // //                 </div>
+                
+// // //                 <p className="text-sm text-gray-500 line-clamp-2 mb-5 flex-1 leading-relaxed">
+// // //                     {project.description || "No description available."}
+// // //                 </p>
+
+// // //                 {/* Metadata Footer */}
+// // //                 <div className="pt-4 border-t border-gray-50 mt-auto space-y-3">
+// // //                     {/* Tools Row */}
+// // //                     {project.tools && project.tools.length > 0 && (
+// // //                         <div className="flex flex-wrap gap-2 mb-1">
+// // //                             {project.tools.slice(0, 3).map((tool, i) => (
+// // //                                 <span key={i} className="text-[10px] px-2 py-1 bg-gray-50 text-gray-600 rounded-md border border-gray-100 font-medium">
+// // //                                     {tool.name}
+// // //                                 </span>
+// // //                             ))}
+// // //                             {project.tools.length > 3 && (
+// // //                                 <span className="text-[10px] px-2 py-1 bg-gray-50 text-gray-400 rounded-md border border-gray-100">
+// // //                                     +{project.tools.length - 3}
+// // //                                 </span>
+// // //                             )}
+// // //                         </div>
+// // //                     )}
+
+// // //                     <div className="flex items-center justify-between mt-2">
+// // //                         <div className="flex items-center gap-3 text-xs text-gray-400 font-medium">
+// // //                             <div className="flex items-center gap-2" title="Completion">
+// // //                                 <div className="w-16 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+// // //                                     <div 
+// // //                                         className="h-full bg-indigo-500 rounded-full" 
+// // //                                         style={{ width: `${project.completion_percentage || 0}%` }}
+// // //                                     />
+// // //                                 </div>
+// // //                                 <span>{project.completion_percentage}%</span>
+// // //                             </div>
+// // //                         </div>
+
+// // //                         <button 
+// // //                             onClick={handleNavigate}
+// // //                             className={`flex items-center justify-center rounded-full transition-all duration-300 z-10 ${isDeck ? 'w-10 h-10 bg-indigo-600 text-white shadow-lg hover:bg-indigo-700' : 'p-2 bg-gray-50 text-gray-400 hover:bg-indigo-600 hover:text-white'}`}
+// // //                         >
+// // //                             <ChevronRight className={isDeck ? "w-5 h-5" : "w-4 h-4"} />
+// // //                         </button>
+// // //                     </div>
+// // //                 </div>
+// // //             </div>
+// // //         </div>
+// // //     );
+// // // };
+
+// // // const ProjectCard = ({ project, index, style = CardStyle.UNIFIED_DESIGN, totalCards = 1 }) => {
+// // //     const navigate = useNavigate();
+
+// // //     const handleClick = () => {
+// // //        navigate(`/projects/${project.slug}`);
+// // //     };
+
+// // //     // --- Deck Stack Logic (Clean Stack) ---
+// // //     // Replaces the messy fan with a clean, vertical stack with depth
+// // //     if (style === CardStyle.DECK_STACKED) {
+// // //         // Simplified stacking logic
+// // //         // Index 0 is front, Index 1 is behind, etc.
+// // //         // We limit the visual stack to top 3 items to keep it neat
+// // //         const isVisible = index < 3;
+        
+// // //         if (!isVisible) return null; 
+
+// // //         return (
+// // //             <motion.div
+// // //                 className="absolute top-0 left-0 right-0 mx-auto w-full max-w-md cursor-pointer"
+// // //                 initial={{ opacity: 0, y: 50, scale: 0.9 }}
+// // //                 animate={{ 
+// // //                     // Cards stack downwards slightly with scale drop
+// // //                     y: index * 12, 
+// // //                     scale: 1 - (index * 0.04),
+// // //                     opacity: 1 - (index * 0.15), // Fade out back cards
+// // //                     zIndex: totalCards - index,
+// // //                     filter: index > 0 ? 'blur(1px) grayscale(0.5)' : 'none', // Focus on top card
+// // //                 }}
+// // //                 whileHover={index === 0 ? { 
+// // //                     y: -5,
+// // //                     scale: 1.02,
+// // //                     transition: { duration: 0.2 }
+// // //                 } : {}}
+// // //                 transition={{
+// // //                     type: "spring",
+// // //                     stiffness: 200,
+// // //                     damping: 20
+// // //                 }}
+// // //                 onClick={handleClick}
+// // //                 style={{
+// // //                     transformOrigin: 'top center',
+// // //                     height: 'auto' // Let content dictate height
+// // //                 }}
+// // //             >
+// // //                 <FullCardContent project={project} isDeck={true} />
+// // //             </motion.div>
+// // //         );
+// // //     }
+    
+// // //     // --- Grid View Logic ---
+// // //     return (
+// // //         <motion.div
+// // //             layout
+// // //             initial={{ opacity: 0, scale: 0.95 }}
+// // //             animate={{ opacity: 1, scale: 1 }}
+// // //             exit={{ opacity: 0, scale: 0.95 }}
+// // //             transition={{ duration: 0.3 }}
+// // //             onClick={handleClick}
+// // //             className="cursor-pointer h-full"
+// // //         >
+// // //             <FullCardContent project={project} isDeck={false} /> 
+// // //         </motion.div>
+// // //     );
+// // // };
+
+// // // export default ProjectCard;
+
+// // import React from 'react';
+// // import { motion } from 'framer-motion';
+// // import { useNavigate } from 'react-router-dom';
+// // import { ChevronRight } from 'lucide-react';
+
+// // export const CardStyle = {
+// //   UNIFIED_DESIGN: 'UNIFIED_DESIGN',
+// //   DECK_STACKED: 'DECK_STACKED' 
+// // };
+
+// // // --- Helper for Media Placeholder ---
+// // const MediaPlaceholder = ({ project, className = 'h-56' }) => {
+// //     const imageUrl = project.hero_image;
+
+// //     if (imageUrl) {
+// //         const placeholderUrl = `https://placehold.co/800x600/f3f4f6/9ca3af?text=${encodeURIComponent(project.title)}`;
+
+// //         return (
+// //             <div className={`relative ${className} overflow-hidden bg-gray-100 group`}>
+// //                 <img 
+// //                     src={imageUrl} 
+// //                     alt={project.hero_alt || `Image for ${project.title}`} 
+// //                     className="w-full h-full object-fit transition-transform duration-700 group-hover:scale-105" 
+// //                     onError={(e) => { e.target.onerror = null; e.target.src = placeholderUrl; }}
+// //                 />
+// //                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-500" />
+// //             </div>
+// //         );
+// //     }
+
+// //     return (
+// //         <div className={`${className} bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center text-gray-400`}>
+// //             <span className="text-xs font-medium uppercase tracking-wider">No Preview</span>
+// //         </div>
+// //     );
+// // };
+
+
+// // const FullCardContent = ({ project, isDeck }) => {
+// //     const navigate = useNavigate();
+
+// //     const handleNavigate = (e) => {
+// //         e.stopPropagation();
+// //         navigate(`/projects/${project.slug}`);
+// //     };
+
+// //     return (
+// //         <div className={`h-full flex flex-col bg-white rounded-2xl overflow-hidden transition-all duration-500 group relative ${isDeck ? 'shadow-2xl border border-gray-100' : 'border border-gray-100/80 hover:shadow-xl hover:shadow-indigo-100/40'}`}>
+// //             {/* Image Section */}
+// //             <div className="relative shrink-0">
+// //                 {/* Taller image for deck view to showcase hero */}
+// //                 <MediaPlaceholder project={project} className={isDeck ? "h-64 md:h-72" : "h-56"} />
+                
+// //                 {/* Floating Category Badge */}
+// //                 <div className="absolute top-4 left-4">
+// //                     <span className="px-3 py-1 text-[11px] font-semibold bg-white/95 backdrop-blur-md text-indigo-600 rounded-full shadow-sm border border-indigo-50/50">
+// //                         {project.category || "Project"}
+// //                     </span>
+// //                 </div>
+
+// //                 {/* Status Badge */}
+// //                 {project.status && (
+// //                     <div className="absolute top-4 right-4">
+// //                         <span className={`px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider rounded-md shadow-sm backdrop-blur-md ${
+// //                             project.status === 'Completed' ? 'bg-emerald-500/90 text-white' : 
+// //                             project.status === 'In Progress' ? 'bg-amber-500/90 text-white' : 
+// //                             'bg-gray-500/90 text-white'
+// //                         }`}>
+// //                             {project.status}
+// //                         </span>
+// //                     </div>
+// //                 )}
+// //             </div>
+
+// //             {/* Content Section */}
+// //             <div className="flex-1 p-6 flex flex-col">
+// //                 <div className="flex justify-between items-start mb-2">
+// //                     <h3 className={`font-bold text-gray-900 line-clamp-1 group-hover:text-indigo-600 transition-colors ${isDeck ? 'text-xl md:text-2xl' : 'text-lg'}`}>
+// //                         {project.title}
+// //                     </h3>
+// //                     {project.tier && (
+// //                          <div className="w-2.5 h-2.5 rounded-full mt-2 shrink-0 ring-2 ring-white" title={project.tier.name} style={{ backgroundColor: project.tier.color_hex }}></div>
+// //                     )}
+// //                 </div>
+                
+// //                 <p className="text-sm text-gray-500 line-clamp-2 mb-5 flex-1 leading-relaxed">
+// //                     {project.description || "No description available."}
+// //                 </p>
+
+// //                 {/* Metadata Footer */}
+// //                 <div className="pt-4 border-t border-gray-50 mt-auto space-y-3">
+// //                     {/* Tools Row */}
+// //                     {project.tools && project.tools.length > 0 && (
+// //                         <div className="flex flex-wrap gap-2 mb-1">
+// //                             {project.tools.slice(0, 3).map((tool, i) => (
+// //                                 <span key={i} className="text-[10px] px-2 py-1 bg-gray-50 text-gray-600 rounded-md border border-gray-100 font-medium">
+// //                                     {tool.name}
+// //                                 </span>
+// //                             ))}
+// //                             {project.tools.length > 3 && (
+// //                                 <span className="text-[10px] px-2 py-1 bg-gray-50 text-gray-400 rounded-md border border-gray-100">
+// //                                     +{project.tools.length - 3}
+// //                                 </span>
+// //                             )}
+// //                         </div>
+// //                     )}
+
+// //                     <div className="flex items-center justify-between mt-2">
+// //                         <div className="flex items-center gap-3 text-xs text-gray-400 font-medium">
+// //                             <div className="flex items-center gap-2" title="Completion">
+// //                                 <div className="w-16 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+// //                                     <div 
+// //                                         className="h-full bg-indigo-500 rounded-full" 
+// //                                         style={{ width: `${project.completion_percentage || 0}%` }}
+// //                                     />
+// //                                 </div>
+// //                                 <span>{project.completion_percentage}%</span>
+// //                             </div>
+// //                         </div>
+
+// //                         <button 
+// //                             onClick={handleNavigate}
+// //                             className={`flex items-center justify-center rounded-full transition-all duration-300 z-10 ${isDeck ? 'w-10 h-10 bg-indigo-600 text-white shadow-lg hover:bg-indigo-700' : 'p-2 bg-gray-50 text-gray-400 hover:bg-indigo-600 hover:text-white'}`}
+// //                         >
+// //                             <ChevronRight className={isDeck ? "w-5 h-5" : "w-4 h-4"} />
+// //                         </button>
+// //                     </div>
+// //                 </div>
+// //             </div>
+// //         </div>
+// //     );
+// // };
+
+// // const ProjectCard = ({ 
+// //     project, 
+// //     index, 
+// //     style = CardStyle.UNIFIED_DESIGN, 
+// //     // New props for the 3-card carousel logic
+// //     deckPosition = 'hidden', // 'left', 'center', 'right', 'hidden'
+// //     onClick 
+// // }) => {
+// //     const navigate = useNavigate();
+
+// //     const handleClick = () => {
+// //         if (onClick) {
+// //             onClick();
+// //         } else {
+// //             navigate(`/projects/${project.slug}`);
+// //         }
+// //     };
+
+// //     // --- 3-Card Carousel Logic ---
+// //     if (style === CardStyle.DECK_STACKED) {
+// //         // Define variants for the positions
+// //         const variants = {
+// //             center: {
+// //                 x: 0,
+// //                 scale: 1,
+// //                 zIndex: 30,
+// //                 opacity: 1,
+// //                 filter: 'blur(0px)',
+// //                 rotateY: 0,
+// //             },
+// //             left: {
+// //                 x: '-60%', // Move to left
+// //                 scale: 0.85, // Zoom out
+// //                 zIndex: 20,
+// //                 opacity: 0.7,
+// //                 filter: 'blur(1px)',
+// //                 rotateY: 15, // Slight 3D rotation inwards
+// //             },
+// //             right: {
+// //                 x: '60%', // Move to right
+// //                 scale: 0.85, // Zoom out
+// //                 zIndex: 20,
+// //                 opacity: 0.7,
+// //                 filter: 'blur(1px)',
+// //                 rotateY: -15, // Slight 3D rotation inwards
+// //             },
+// //             hiddenLeft: {
+// //                 x: '-120%',
+// //                 scale: 0.6,
+// //                 zIndex: 10,
+// //                 opacity: 0,
+// //                 filter: 'blur(5px)',
+// //             },
+// //             hiddenRight: {
+// //                 x: '120%',
+// //                 scale: 0.6,
+// //                 zIndex: 10,
+// //                 opacity: 0,
+// //                 filter: 'blur(5px)',
+// //             }
+// //         };
+
+// //         // Determine which variant to use based on deckPosition prop
+// //         let animateVariant = 'hiddenRight';
+// //         if (deckPosition === 'center') animateVariant = 'center';
+// //         else if (deckPosition === 'left') animateVariant = 'left';
+// //         else if (deckPosition === 'right') animateVariant = 'right';
+// //         else if (deckPosition === 'hiddenLeft') animateVariant = 'hiddenLeft';
+
+// //         return (
+// //             <motion.div
+// //                 className="absolute top-0 left-0 right-0 mx-auto w-full max-w-md cursor-pointer perspective-1000"
+// //                 initial={false} // Let it animate from current state
+// //                 animate={animateVariant}
+// //                 variants={variants}
+// //                 transition={{
+// //                     type: "spring",
+// //                     stiffness: 150,
+// //                     damping: 20
+// //                 }}
+// //                 onClick={handleClick}
+// //                 style={{
+// //                     transformOrigin: 'center center',
+// //                     height: 'auto',
+// //                     perspective: 1000 // Important for 3D rotation
+// //                 }}
+// //             >
+// //                 <FullCardContent project={project} isDeck={true} />
+// //             </motion.div>
+// //         );
+// //     }
+    
+// //     // --- Grid View Logic ---
+// //     return (
+// //         <motion.div
+// //             layout
+// //             initial={{ opacity: 0, scale: 0.95 }}
+// //             animate={{ opacity: 1, scale: 1 }}
+// //             exit={{ opacity: 0, scale: 0.95 }}
+// //             transition={{ duration: 0.3 }}
+// //             onClick={handleClick}
+// //             className="cursor-pointer h-full"
+// //         >
+// //             <FullCardContent project={project} isDeck={false} /> 
+// //         </motion.div>
+// //     );
+// // };
+
+// // export default ProjectCard;
+
+// import React from 'react';
+// import { motion } from 'framer-motion';
+// import { useNavigate } from 'react-router-dom';
+// import { ChevronRight } from 'lucide-react';
+
+// export const CardStyle = {
+//   UNIFIED_DESIGN: 'UNIFIED_DESIGN',
+//   DECK_STACKED: 'DECK_STACKED' 
+// };
+
+// // --- Helper for Media Placeholder ---
+// const MediaPlaceholder = ({ project, className = 'h-56' }) => {
+//     const imageUrl = project.hero_image;
+
+//     if (imageUrl) {
+//         // Fallback for demo purposes
+//         const placeholderUrl = `https://placehold.co/800x600/f3f4f6/9ca3af?text=${encodeURIComponent(project.title)}`;
+
+//         return (
+//             <div className={`relative ${className} overflow-hidden bg-gray-100 group w-full`}>
+//                 <img 
+//                     src={imageUrl} 
+//                     alt={project.hero_alt || `Image for ${project.title}`} 
+//                     // Changed object-cover to object-center to keep focus, 
+//                     // but 'aspect-video' or similar in parent is key. 
+//                     // Using h-full w-full object-cover is standard for cards, 
+//                     // but let's ensure the container aspect ratio is good.
+//                     className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105" 
+//                     onError={(e) => { e.target.onerror = null; e.target.src = placeholderUrl; }}
+//                 />
+//                 {/* Gradient Overlay for text contrast if needed, lighter now */}
+//                 <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-40 group-hover:opacity-30 transition-opacity duration-500" />
+//             </div>
+//         );
+//     }
+
+//     return (
+//         <div className={`${className} bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center text-gray-400`}>
+//             <span className="text-xs font-medium uppercase tracking-wider">No Preview</span>
+//         </div>
+//     );
+// };
+
+
+// const FullCardContent = ({ project, isDeck }) => {
+//     const navigate = useNavigate();
+
+//     const handleNavigate = (e) => {
+//         e.stopPropagation();
+//         navigate(`/projects/${project.slug}`);
+//     };
+
+//     return (
+//         <div className={`h-full flex flex-col bg-white rounded-2xl overflow-hidden transition-all duration-500 group relative ${isDeck ? 'shadow-2xl border border-gray-100' : 'border border-gray-100/80 hover:shadow-xl hover:shadow-indigo-100/40'}`}>
+//             {/* Image Section */}
+//             <div className="relative shrink-0">
+//                 {/* Fix: Use aspect-ratio utility instead of fixed height if possible, 
+//                     or just a taller fixed height for the deck view to show more image.
+//                 */}
+//                 <MediaPlaceholder project={project} className={isDeck ? "h-64 md:h-80" : "h-56"} />
+                
+//                 {/* Floating Category Badge */}
+//                 <div className="absolute top-4 left-4">
+//                     <span className="px-3 py-1 text-[11px] font-semibold bg-white/95 backdrop-blur-md text-indigo-600 rounded-full shadow-sm border border-indigo-50/50">
+//                         {project.category || "Project"}
+//                     </span>
+//                 </div>
+
+//                 {/* Status Badge */}
+//                 {project.status && (
+//                     <div className="absolute top-4 right-4">
+//                         <span className={`px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider rounded-md shadow-sm backdrop-blur-md ${
+//                             project.status === 'Completed' ? 'bg-emerald-500/90 text-white' : 
+//                             project.status === 'In Progress' ? 'bg-amber-500/90 text-white' : 
+//                             'bg-gray-500/90 text-white'
+//                         }`}>
+//                             {project.status}
+//                         </span>
+//                     </div>
+//                 )}
+//             </div>
+
+//             {/* Content Section */}
+//             <div className="flex-1 p-6 flex flex-col">
+//                 <div className="flex justify-between items-start mb-2 gap-4">
+//                     <h3 className={`font-bold text-gray-900 line-clamp-1 group-hover:text-indigo-600 transition-colors ${isDeck ? 'text-xl md:text-2xl' : 'text-lg'}`}>
+//                         {project.title}
+//                     </h3>
+//                     {project.tier && (
+//                          <div className="w-2.5 h-2.5 rounded-full mt-2 shrink-0 ring-2 ring-white" title={project.tier.name} style={{ backgroundColor: project.tier.color_hex }}></div>
+//                     )}
+//                 </div>
+                
+//                 <p className="text-sm text-gray-500 line-clamp-3 mb-5 flex-1 leading-relaxed">
+//                     {project.description || "No description available."}
+//                 </p>
+
+//                 {/* Metadata Footer */}
+//                 <div className="pt-4 border-t border-gray-50 mt-auto space-y-3">
+//                     {/* Tools Row */}
+//                     {project.tools && project.tools.length > 0 && (
+//                         <div className="flex flex-wrap gap-2 mb-1">
+//                             {project.tools.slice(0, 3).map((tool, i) => (
+//                                 <span key={i} className="text-[10px] px-2 py-1 bg-gray-50 text-gray-600 rounded-md border border-gray-100 font-medium">
+//                                     {tool.name}
+//                                 </span>
+//                             ))}
+//                             {project.tools.length > 3 && (
+//                                 <span className="text-[10px] px-2 py-1 bg-gray-50 text-gray-400 rounded-md border border-gray-100">
+//                                     +{project.tools.length - 3}
+//                                 </span>
+//                             )}
+//                         </div>
+//                     )}
+
+//                     <div className="flex items-center justify-between mt-2">
+//                         <div className="flex items-center gap-3 text-xs text-gray-400 font-medium">
+//                             <div className="flex items-center gap-2" title="Completion">
+//                                 <div className="w-16 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+//                                     <div 
+//                                         className="h-full bg-indigo-500 rounded-full" 
+//                                         style={{ width: `${project.completion_percentage || 0}%` }}
+//                                     />
+//                                 </div>
+//                                 <span>{project.completion_percentage}%</span>
+//                             </div>
+//                         </div>
+
+//                         <button 
+//                             onClick={handleNavigate}
+//                             className={`flex items-center justify-center rounded-full transition-all duration-300 z-10 ${isDeck ? 'w-10 h-10 bg-indigo-600 text-white shadow-lg hover:bg-indigo-700' : 'p-2 bg-gray-50 text-gray-400 hover:bg-indigo-600 hover:text-white'}`}
+//                         >
+//                             <ChevronRight className={isDeck ? "w-5 h-5" : "w-4 h-4"} />
+//                         </button>
+//                     </div>
+//                 </div>
+//             </div>
+//         </div>
+//     );
+// };
+
+// const ProjectCard = ({ project, index, style = CardStyle.UNIFIED_DESIGN, totalCards = 1 }) => {
+//     const navigate = useNavigate();
+
+//     const handleClick = () => {
+//        navigate(`/projects/${project.slug}`);
+//     };
+
+//     // --- Deck Stack Logic (Clean Vertical Stack) ---
+//     if (style === CardStyle.DECK_STACKED) {
+//         // Limit visible stack to top 3 for performance/cleanliness
+//         // index 0 is top
+//         if (index > 2) return null;
+
+//         return (
+//             <motion.div
+//                 className="absolute top-0 left-0 right-0 mx-auto w-full max-w-md cursor-pointer"
+//                 initial={{ opacity: 0, y: 50, scale: 0.9 }}
+//                 animate={{ 
+//                     // Stack vertically with slight scale drop
+//                     y: index * 15, 
+//                     scale: 1 - (index * 0.05),
+//                     opacity: 1 - (index * 0.2), 
+//                     zIndex: totalCards - index,
+//                     // Subtle blur for back cards
+//                     filter: index > 0 ? 'blur(2px)' : 'none',
+//                 }}
+//                 whileHover={index === 0 ? { 
+//                     y: -10,
+//                     scale: 1.02,
+//                     transition: { duration: 0.3, ease: "easeOut" }
+//                 } : {}}
+//                 transition={{
+//                     type: "spring",
+//                     stiffness: 200,
+//                     damping: 25
+//                 }}
+//                 onClick={handleClick}
+//                 style={{
+//                     transformOrigin: 'top center',
+//                     height: 'auto'
+//                 }}
+//             >
+//                 <FullCardContent project={project} isDeck={true} />
+//             </motion.div>
+//         );
+//     }
+    
+//     // --- Grid View Logic ---
+//     return (
+//         <motion.div
+//             layout
+//             initial={{ opacity: 0, scale: 0.95 }}
+//             animate={{ opacity: 1, scale: 1 }}
+//             exit={{ opacity: 0, scale: 0.95 }}
+//             transition={{ duration: 0.3 }}
+//             onClick={handleClick}
+//             className="cursor-pointer h-full"
+//         >
+//             <FullCardContent project={project} isDeck={false} /> 
+//         </motion.div>
+//     );
+// };
+
+// export default ProjectCard;
 
 
 
