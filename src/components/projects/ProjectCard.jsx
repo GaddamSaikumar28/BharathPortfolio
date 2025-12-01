@@ -293,6 +293,32 @@ const TiltContainer = ({ children, className, disabled }) => {
 };
 
 // --- Helper: Media Placeholder ---
+// const MediaPlaceholder = ({ project, className = 'h-56' }) => {
+//     const imageUrl = project.hero_image;
+    
+//     // Fallback logic
+//     const placeholderUrl = `https://placehold.co/800x600/f3f4f6/9ca3af?text=${encodeURIComponent(project.title || 'Project')}`;
+
+//     return (
+//         <div className={`relative ${className} overflow-hidden bg-gray-100 group w-full`}>
+//             {imageUrl ? (
+//                 <img 
+//                     src={imageUrl} 
+//                     alt={project.hero_alt || `Preview of ${project.title}`} 
+//                     className="w-full h-full object-fit object-center transition-transform duration-700 group-hover:scale-105" 
+//                     onError={(e) => { e.target.onerror = null; e.target.src = placeholderUrl; }}
+//                 />
+//             ) : (
+//                 <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center text-gray-400">
+//                     <Layers className="w-10 h-10 opacity-20" />
+//                 </div>
+//             )}
+//             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60 transition-opacity duration-500" />
+//         </div>
+//     );
+// };
+
+// --- Helper: Media Placeholder ---
 const MediaPlaceholder = ({ project, className = 'h-56' }) => {
     const imageUrl = project.hero_image;
     
@@ -300,12 +326,12 @@ const MediaPlaceholder = ({ project, className = 'h-56' }) => {
     const placeholderUrl = `https://placehold.co/800x600/f3f4f6/9ca3af?text=${encodeURIComponent(project.title || 'Project')}`;
 
     return (
-        <div className={`relative ${className} overflow-hidden bg-gray-100 group w-full`}>
+        <div className={`relative ${className} overflow-hidden bg-gray-200 flex items-center justify-center group w-full`}> {/* Changed bg-gray-100 to bg-gray-200 for better contrast */}
             {imageUrl ? (
                 <img 
                     src={imageUrl} 
                     alt={project.hero_alt || `Preview of ${project.title}`} 
-                    className="w-full h-full object-fit object-center transition-transform duration-700 group-hover:scale-105" 
+                    className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105" 
                     onError={(e) => { e.target.onerror = null; e.target.src = placeholderUrl; }}
                 />
             ) : (
@@ -313,7 +339,8 @@ const MediaPlaceholder = ({ project, className = 'h-56' }) => {
                     <Layers className="w-10 h-10 opacity-20" />
                 </div>
             )}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60 transition-opacity duration-500" />
+            {/* Overlay for gradient effect, adjusted for better blend */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-70 transition-opacity duration-500" />
         </div>
     );
 };
