@@ -33,7 +33,7 @@ const componentMap = {
   feature_showcase: FeatureShowcase,
   iphone_showcase: IphoneShowcase,
   portfolio_banner: PortfolioBanner,
-  parallax_project: ParallaxProject, 
+  // parallax_project: ParallaxProject, 
   // toolkit: Toolkit,
   testimonials: Testimonials,
   bento_showcase: BentoShowcase,

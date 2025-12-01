@@ -24,44 +24,456 @@ const DynamicIcon = ({ name, className, style }) => {
 };
 
 // --- Sub-Component: Complex Section Renderer (Handles 1, 2, or Carousel images) ---
+// const SectionRenderer = ({ section, openLightbox }) => {
+//     const [currentImageIndex, setCurrentImageIndex] = useState(0);
+//     const images = section.images || [];
+//     const imageCount = images.length;
+
+//     const nextImage = () => setCurrentImageIndex((prev) => (prev + 1) % imageCount);
+//     const prevImage = () => setCurrentImageIndex((prev) => (prev - 1 + imageCount) % imageCount);
+
+//     // CASE 1: Exactly 2 Images -> Stacked Layout (Text Top, Images Side-by-Side Bottom)
+//     if (imageCount === 2) {
+//         return (
+//             <section className={`py-24 ${section.bg_color || 'bg-white'}`}>
+//                 <div className="container mx-auto px-6 max-w-6xl">
+//                     {/* Text Area (Full Width Top) */}
+//                     <div className="mb-12 max-w-4xl">
+//                         <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-900">{section.heading}</h2>
+//                         <div className="w-20 h-1.5 bg-indigo-600 mb-8 rounded-full"></div>
+//                         <p className="text-lg text-gray-600 leading-relaxed whitespace-pre-line">{section.body_text}</p>
+//                     </div>
+
+//                     {/* Images Area (Side-by-Side) */}
+//                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+//                         {images.map((img, idx) => (
+//                             <motion.div 
+//                                 key={idx}
+//                                 initial={{ opacity: 0, y: 20 }}
+//                                 whileInView={{ opacity: 1, y: 0 }}
+//                                 transition={{ delay: idx * 0.1 }}
+//                                 className="rounded-2xl overflow-hidden shadow-xl cursor-pointer group relative h-80 md:h-96"
+//                                 onClick={() => openLightbox(img.path)}
+//                             >
+//                                 <img 
+//                                     src={img.path} 
+//                                     alt={img.alt} 
+//                                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+//                                 />
+//                                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+//                                     <Maximize2 className="text-white drop-shadow-md w-8 h-8" />
+//                                 </div>
+//                             </motion.div>
+//                         ))}
+//                     </div>
+//                 </div>
+//             </section>
+//         );
+//     }
+
+//     // CASE 2: > 2 Images (Carousel) OR 1 Image -> Split Layout (Text Left/Right)
+//     return (
+//         <section className={`py-24 ${section.bg_color || 'bg-white'}`}>
+//             <div className="container mx-auto px-6 max-w-6xl">
+//                 <div className={`flex flex-col lg:flex-row items-center gap-16 ${section.layout_type === 'image_right' ? 'lg:flex-row-reverse' : ''}`}>
+                    
+//                     {/* Text Side */}
+//                     <div className="flex-1">
+//                         <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-900">{section.heading}</h2>
+//                         <div className={`w-20 h-1.5 mb-8 rounded-full ${imageCount > 2 ? 'bg-indigo-600' : 'bg-orange-500'}`}></div>
+//                         <p className="text-lg text-gray-600 leading-relaxed whitespace-pre-line">{section.body_text}</p>
+//                     </div>
+
+//                     {/* Media Side */}
+//                     <div className="flex-1 w-full relative">
+//                         {imageCount > 2 ? (
+//                             // --- CAROUSEL ---
+//                             <div className="relative rounded-2xl shadow-2xl overflow-hidden bg-gray-100">
+//                                 {/* Controls */}
+//                                 <div className="absolute top-4 right-4 z-20 flex space-x-2">
+//                                     <button onClick={prevImage} className="p-2 bg-white/90 backdrop-blur text-gray-800 rounded-full hover:bg-white shadow-lg transition-all">
+//                                         <ChevronLeft className="w-5 h-5" />
+//                                     </button>
+//                                     <button onClick={nextImage} className="p-2 bg-white/90 backdrop-blur text-gray-800 rounded-full hover:bg-white shadow-lg transition-all">
+//                                         <ChevronRight className="w-5 h-5" />
+//                                     </button>
+//                                 </div>
+
+//                                 {/* Image Display */}
+//                                 <div className="relative h-80 md:h-[500px] cursor-pointer" onClick={() => openLightbox(images[currentImageIndex].path)}>
+//                                     <AnimatePresence mode='wait'>
+//                                         <motion.img 
+//                                             key={currentImageIndex}
+//                                             src={images[currentImageIndex].path}
+//                                             alt={images[currentImageIndex].alt}
+//                                             initial={{ opacity: 0, x: 20 }}
+//                                             animate={{ opacity: 1, x: 0 }}
+//                                             exit={{ opacity: 0, x: -20 }}
+//                                             transition={{ duration: 0.3 }}
+//                                             className="w-full h-full object-cover"
+//                                         />
+//                                     </AnimatePresence>
+//                                 </div>
+                                
+//                                 {/* Dots */}
+//                                 <div className="absolute bottom-4 left-0 right-0 flex justify-center space-x-2 z-20">
+//                                     {images.map((_, idx) => (
+//                                         <div 
+//                                             key={idx} 
+//                                             className={`w-2 h-2 rounded-full transition-colors ${idx === currentImageIndex ? 'bg-white' : 'bg-white/40'}`}
+//                                         />
+//                                     ))}
+//                                 </div>
+//                             </div>
+//                         ) : (
+//                             // --- SINGLE IMAGE ---
+//                             images[0] && (
+//                                 <motion.div 
+//                                     className="rounded-2xl shadow-2xl overflow-hidden cursor-pointer group"
+//                                     onClick={() => openLightbox(images[0].path)}
+//                                     whileHover={{ y: -5 }}
+//                                 >
+//                                     <img 
+//                                         src={images[0].path} 
+//                                         alt={images[0].alt} 
+//                                         className="w-full h-auto object-cover" 
+//                                     />
+//                                 </motion.div>
+//                             )
+//                         )}
+//                     </div>
+//                 </div>
+//             </div>
+//         </section>
+//     );
+// };
+
+// import { useState } from 'react';
+// import { motion, AnimatePresence } from 'framer-motion';
+// import { Maximize2, ChevronLeft, ChevronRight } from 'lucide-react'; // Assuming you use lucide-react
+
+// const SectionRenderer = ({ section, openLightbox }) => {
+//     const [currentImageIndex, setCurrentImageIndex] = useState(0);
+//     const images = section.images || [];
+//     const imageCount = images.length;
+    
+//     // 1. Check if this is an "Image Only" section
+//     const hasText = section.heading || section.body_text;
+
+//     const nextImage = () => setCurrentImageIndex((prev) => (prev + 1) % imageCount);
+//     const prevImage = () => setCurrentImageIndex((prev) => (prev - 1 + imageCount) % imageCount);
+
+//     // Common styling for image containers (The "Frame")
+//     const frameStyle = "bg-gray-50 border border-gray-100 rounded-2xl overflow-hidden flex items-center justify-center relative group shadow-lg";
+
+//     // =========================================================
+//     // SCENARIO A: IMAGE ONLY (No Text)
+//     // =========================================================
+//     if (!hasText && imageCount > 0) {
+//         return (
+//             <section className={`py-24 ${section.bg_color || 'bg-white'}`}>
+//                 <div className="container mx-auto px-6">
+                    
+//                     {/* CASE A1: SINGLE HERO IMAGE */}
+//                     {imageCount === 1 && (
+//                         <div className="flex justify-center">
+//                             <motion.div 
+//                                 className={`${frameStyle} w-full max-w-5xl cursor-pointer`}
+//                                 onClick={() => openLightbox(images[0].path)}
+//                                 whileHover={{ scale: 1.01 }}
+//                             >
+//                                 <img 
+//                                     src={images[0].path} 
+//                                     alt={images[0].alt} 
+//                                     // Limit height to 80% of screen height so it doesn't scroll forever
+//                                     className="w-auto h-auto max-h-[80vh] object-contain"
+//                                 />
+//                                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+//                                     <Maximize2 className="text-gray-800 drop-shadow-md w-10 h-10" />
+//                                 </div>
+//                             </motion.div>
+//                         </div>
+//                     )}
+
+//                     {/* CASE A2: TWO IMAGES (50/50 Split) */}
+//                     {imageCount === 2 && (
+//                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+//                             {images.map((img, idx) => (
+//                                 <motion.div 
+//                                     key={idx}
+//                                     className={`${frameStyle} h-[400px] md:h-[600px] cursor-pointer`}
+//                                     onClick={() => openLightbox(img.path)}
+//                                     whileHover={{ y: -5 }}
+//                                 >
+//                                     <img 
+//                                         src={img.path} 
+//                                         alt={img.alt} 
+//                                         className="w-full h-full object-contain p-2"
+//                                     />
+//                                 </motion.div>
+//                             ))}
+//                         </div>
+//                     )}
+
+//                     {/* CASE A3: 3 OR MORE IMAGES (Masonry/Grid Style) */}
+//                     {imageCount >= 3 && (
+//                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+//                             {images.map((img, idx) => (
+//                                 <motion.div 
+//                                     key={idx}
+//                                     // Make the first item span 2 cols if we have an odd number (optional visual flair)
+//                                     // or just keep it simple. Here is a standard grid.
+//                                     className={`${frameStyle} h-[350px] cursor-pointer`}
+//                                     onClick={() => openLightbox(img.path)}
+//                                     whileHover={{ scale: 1.02 }}
+//                                     initial={{ opacity: 0, y: 20 }}
+//                                     whileInView={{ opacity: 1, y: 0 }}
+//                                     transition={{ delay: idx * 0.1 }}
+//                                 >
+//                                     <img 
+//                                         src={img.path} 
+//                                         alt={img.alt} 
+//                                         className="w-full h-full object-contain p-2"
+//                                     />
+//                                 </motion.div>
+//                             ))}
+//                         </div>
+//                     )}
+//                 </div>
+//             </section>
+//         );
+//     }
+
+//     // =========================================================
+//     // SCENARIO B: TEXT + IMAGES (Original Logic Improved)
+//     // =========================================================
+    
+//     // CASE B1: Text + 2 Images (Stacked Layout)
+//     if (imageCount === 2) {
+//         return (
+//             <section className={`py-24 ${section.bg_color || 'bg-white'}`}>
+//                 <div className="container mx-auto px-6 max-w-6xl">
+//                     <div className="mb-12 max-w-4xl">
+//                         <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-900">{section.heading}</h2>
+//                         <div className="w-20 h-1.5 bg-indigo-600 mb-8 rounded-full"></div>
+//                         <p className="text-lg text-gray-600 leading-relaxed whitespace-pre-line">{section.body_text}</p>
+//                     </div>
+
+//                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+//                         {images.map((img, idx) => (
+//                             <motion.div 
+//                                 key={idx}
+//                                 className={`${frameStyle} h-80 md:h-96 cursor-pointer`}
+//                                 onClick={() => openLightbox(img.path)}
+//                                 initial={{ opacity: 0, y: 20 }}
+//                                 whileInView={{ opacity: 1, y: 0 }}
+//                                 transition={{ delay: idx * 0.1 }}
+//                             >
+//                                 <img 
+//                                     src={img.path} 
+//                                     alt={img.alt} 
+//                                     className="w-full h-full object-contain p-2 transition-transform duration-700 group-hover:scale-105"
+//                                 />
+//                                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+//                                     <Maximize2 className="text-gray-800 drop-shadow-md w-8 h-8" />
+//                                 </div>
+//                             </motion.div>
+//                         ))}
+//                     </div>
+//                 </div>
+//             </section>
+//         );
+//     }
+
+//     // CASE B2: Text + (1 Image OR Carousel)
+//     return (
+//         <section className={`py-24 ${section.bg_color || 'bg-white'}`}>
+//             <div className="container mx-auto px-6 max-w-6xl">
+//                 <div className={`flex flex-col lg:flex-row items-center gap-16 ${section.layout_type === 'image_right' ? 'lg:flex-row-reverse' : ''}`}>
+                    
+//                     {/* Text Side */}
+//                     <div className="flex-1 w-full">
+//                         <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-900">{section.heading}</h2>
+//                         <div className={`w-20 h-1.5 mb-8 rounded-full ${imageCount > 2 ? 'bg-indigo-600' : 'bg-orange-500'}`}></div>
+//                         <p className="text-lg text-gray-600 leading-relaxed whitespace-pre-line">{section.body_text}</p>
+//                     </div>
+
+//                     {/* Media Side */}
+//                     <div className="flex-1 w-full relative flex justify-center">
+//                         {imageCount > 2 ? (
+//                             // CAROUSEL
+//                             <div className={`${frameStyle} w-full shadow-2xl relative`}>
+//                                 <div className="absolute top-4 right-4 z-20 flex space-x-2">
+//                                     <button onClick={prevImage} className="p-2 bg-white/90 backdrop-blur text-gray-800 rounded-full hover:bg-white shadow-lg transition-all">
+//                                         <ChevronLeft className="w-5 h-5" />
+//                                     </button>
+//                                     <button onClick={nextImage} className="p-2 bg-white/90 backdrop-blur text-gray-800 rounded-full hover:bg-white shadow-lg transition-all">
+//                                         <ChevronRight className="w-5 h-5" />
+//                                     </button>
+//                                 </div>
+
+//                                 <div className="relative w-full h-80 md:h-[500px] cursor-pointer" onClick={() => openLightbox(images[currentImageIndex].path)}>
+//                                     <AnimatePresence mode='wait'>
+//                                         <motion.img 
+//                                             key={currentImageIndex}
+//                                             src={images[currentImageIndex].path}
+//                                             alt={images[currentImageIndex].alt}
+//                                             initial={{ opacity: 0, x: 20 }}
+//                                             animate={{ opacity: 1, x: 0 }}
+//                                             exit={{ opacity: 0, x: -20 }}
+//                                             transition={{ duration: 0.3 }}
+//                                             className="w-full h-full object-contain p-1"
+//                                         />
+//                                     </AnimatePresence>
+//                                 </div>
+                                
+//                                 <div className="absolute bottom-4 left-0 right-0 flex justify-center space-x-2 z-20">
+//                                     {images.map((_, idx) => (
+//                                         <div 
+//                                             key={idx} 
+//                                             className={`w-2 h-2 rounded-full transition-colors shadow-sm ${idx === currentImageIndex ? 'bg-gray-800' : 'bg-gray-300'}`}
+//                                         />
+//                                     ))}
+//                                 </div>
+//                             </div>
+//                         ) : (
+//                             // SINGLE IMAGE (Text Mode)
+//                             images[0] && (
+//                                 <motion.div 
+//                                     className={`${frameStyle} inline-block relative shadow-2xl`}
+//                                     onClick={() => openLightbox(images[0].path)}
+//                                     whileHover={{ y: -5 }}
+//                                 >
+//                                     <img 
+//                                         src={images[0].path} 
+//                                         alt={images[0].alt} 
+//                                         // Constrain height and allow width to auto-adjust
+//                                         className="w-auto h-auto max-h-[500px] md:max-h-[600px] max-w-full object-contain mx-auto" 
+//                                     />
+//                                 </motion.div>
+//                             )
+//                         )}
+//                     </div>
+//                 </div>
+//             </div>
+//         </section>
+//     );
+// };
+
+// import { useState } from 'react';
+// import { motion, AnimatePresence } from 'framer-motion';
+// import { Maximize2, ChevronLeft, ChevronRight } from 'lucide-react';
+
 const SectionRenderer = ({ section, openLightbox }) => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const images = section.images || [];
     const imageCount = images.length;
+    
+    const hasText = section.heading || section.body_text;
 
     const nextImage = () => setCurrentImageIndex((prev) => (prev + 1) % imageCount);
     const prevImage = () => setCurrentImageIndex((prev) => (prev - 1 + imageCount) % imageCount);
 
-    // CASE 1: Exactly 2 Images -> Stacked Layout (Text Top, Images Side-by-Side Bottom)
+    // FIXED: Removed 'w-full', 'h-full', and fixed dimensions. 
+    // Added 'fit-content' logic so the border hugs the image exactly.
+    const frameStyle = "bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-lg relative group inline-block";
+
+    // =========================================================
+    // SCENARIO A: IMAGE ONLY (No Text)
+    // =========================================================
+    if (!hasText && imageCount > 0) {
+        return (
+            <section className={`py-24 ${section.bg_color || 'bg-white'}`}>
+                <div className="container mx-auto px-6">
+                    
+                    {/* CASE A1: SINGLE IMAGE */}
+                    {imageCount === 1 && (
+                        <div className="flex justify-center">
+                            <motion.div 
+                                className={`${frameStyle} cursor-pointer`}
+                                onClick={() => openLightbox(images[0].path)}
+                                whileHover={{ scale: 1.01 }}
+                            >
+                                <img 
+                                    src={images[0].path} 
+                                    alt={images[0].alt} 
+                                    // Logic: Maximize size but keep within screen bounds
+                                    className="w-auto h-auto max-h-[85vh] max-w-full object-contain block"
+                                />
+                                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+                                    <Maximize2 className="text-gray-800 drop-shadow-md w-10 h-10" />
+                                </div>
+                            </motion.div>
+                        </div>
+                    )}
+
+                    {/* CASE A2: TWO+ IMAGES (Flex Layout) */}
+                    {imageCount >= 2 && (
+                        // FIXED: Changed from Grid to Flex to handle mixed Aspect Ratios
+                        <div className="flex flex-wrap justify-center gap-8 max-w-7xl mx-auto">
+                            {images.map((img, idx) => (
+                                <motion.div 
+                                    key={idx}
+                                    className={`${frameStyle} cursor-pointer`}
+                                    onClick={() => openLightbox(img.path)}
+                                    whileHover={{ y: -5 }}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: idx * 0.1 }}
+                                >
+                                    <img 
+                                        src={img.path} 
+                                        alt={img.alt} 
+                                        // FIXED: Set a fixed height (e.g. 500px) and let width Auto-adjust.
+                                        // This ensures Portrait and Landscape images line up perfectly in height
+                                        // but don't have ugly gray bars on the sides.
+                                        className="h-[400px] md:h-[550px] w-auto object-contain block"
+                                    />
+                                </motion.div>
+                            ))}
+                        </div>
+                    )}
+                </div>
+            </section>
+        );
+    }
+
+    // =========================================================
+    // SCENARIO B: TEXT + IMAGES
+    // =========================================================
+    
+    // CASE B1: Text + 2 Images (Stacked Layout)
     if (imageCount === 2) {
         return (
             <section className={`py-24 ${section.bg_color || 'bg-white'}`}>
                 <div className="container mx-auto px-6 max-w-6xl">
-                    {/* Text Area (Full Width Top) */}
                     <div className="mb-12 max-w-4xl">
                         <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-900">{section.heading}</h2>
                         <div className="w-20 h-1.5 bg-indigo-600 mb-8 rounded-full"></div>
                         <p className="text-lg text-gray-600 leading-relaxed whitespace-pre-line">{section.body_text}</p>
                     </div>
 
-                    {/* Images Area (Side-by-Side) */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    {/* FIXED: Changed Grid to Flex-Row */}
+                    <div className="flex flex-col md:flex-row gap-8 items-start justify-center md:justify-start">
                         {images.map((img, idx) => (
                             <motion.div 
                                 key={idx}
+                                // Remove fixed w/h classes from container
+                                className={`${frameStyle} cursor-pointer`}
+                                onClick={() => openLightbox(img.path)}
                                 initial={{ opacity: 0, y: 20 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 transition={{ delay: idx * 0.1 }}
-                                className="rounded-2xl overflow-hidden shadow-xl cursor-pointer group relative h-80 md:h-96"
-                                onClick={() => openLightbox(img.path)}
                             >
                                 <img 
                                     src={img.path} 
                                     alt={img.alt} 
-                                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                    // FIXED: Constrain Height, Auto Width
+                                    // This makes Portrait images narrow and Landscape images wide
+                                    className="h-auto max-h-[500px] w-auto max-w-full md:max-w-[45vw] object-contain block"
                                 />
-                                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
-                                    <Maximize2 className="text-white drop-shadow-md w-8 h-8" />
+                                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+                                    <Maximize2 className="text-gray-800 drop-shadow-md w-8 h-8" />
                                 </div>
                             </motion.div>
                         ))}
@@ -71,25 +483,24 @@ const SectionRenderer = ({ section, openLightbox }) => {
         );
     }
 
-    // CASE 2: > 2 Images (Carousel) OR 1 Image -> Split Layout (Text Left/Right)
+    // CASE B2: Text + (1 Image OR Carousel)
     return (
         <section className={`py-24 ${section.bg_color || 'bg-white'}`}>
             <div className="container mx-auto px-6 max-w-6xl">
-                <div className={`flex flex-col lg:flex-row items-center gap-16 ${section.layout_type === 'image_right' ? 'lg:flex-row-reverse' : ''}`}>
+                <div className={`flex flex-col lg:flex-row items-start gap-16 ${section.layout_type === 'image_right' ? 'lg:flex-row-reverse' : ''}`}>
                     
                     {/* Text Side */}
-                    <div className="flex-1">
+                    <div className="flex-1 w-full lg:sticky lg:top-32">
                         <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gray-900">{section.heading}</h2>
                         <div className={`w-20 h-1.5 mb-8 rounded-full ${imageCount > 2 ? 'bg-indigo-600' : 'bg-orange-500'}`}></div>
                         <p className="text-lg text-gray-600 leading-relaxed whitespace-pre-line">{section.body_text}</p>
                     </div>
 
                     {/* Media Side */}
-                    <div className="flex-1 w-full relative">
+                    <div className="flex-1 w-full relative flex justify-center lg:justify-end">
                         {imageCount > 2 ? (
-                            // --- CAROUSEL ---
-                            <div className="relative rounded-2xl shadow-2xl overflow-hidden bg-gray-100">
-                                {/* Controls */}
+                            // CAROUSEL (Keep fixed container for stability during sliding)
+                            <div className="bg-gray-50 border border-gray-100 rounded-2xl overflow-hidden shadow-2xl relative w-full max-w-xl mx-auto">
                                 <div className="absolute top-4 right-4 z-20 flex space-x-2">
                                     <button onClick={prevImage} className="p-2 bg-white/90 backdrop-blur text-gray-800 rounded-full hover:bg-white shadow-lg transition-all">
                                         <ChevronLeft className="w-5 h-5" />
@@ -99,8 +510,7 @@ const SectionRenderer = ({ section, openLightbox }) => {
                                     </button>
                                 </div>
 
-                                {/* Image Display */}
-                                <div className="relative h-80 md:h-[500px] cursor-pointer" onClick={() => openLightbox(images[currentImageIndex].path)}>
+                                <div className="relative w-full h-[400px] md:h-[500px] cursor-pointer" onClick={() => openLightbox(images[currentImageIndex].path)}>
                                     <AnimatePresence mode='wait'>
                                         <motion.img 
                                             key={currentImageIndex}
@@ -110,33 +520,34 @@ const SectionRenderer = ({ section, openLightbox }) => {
                                             animate={{ opacity: 1, x: 0 }}
                                             exit={{ opacity: 0, x: -20 }}
                                             transition={{ duration: 0.3 }}
-                                            className="w-full h-full object-cover"
+                                            // Object-contain ensures full image visibility
+                                            className="w-full h-full object-contain bg-gray-50"
                                         />
                                     </AnimatePresence>
                                 </div>
                                 
-                                {/* Dots */}
                                 <div className="absolute bottom-4 left-0 right-0 flex justify-center space-x-2 z-20">
                                     {images.map((_, idx) => (
                                         <div 
                                             key={idx} 
-                                            className={`w-2 h-2 rounded-full transition-colors ${idx === currentImageIndex ? 'bg-white' : 'bg-white/40'}`}
+                                            className={`w-2 h-2 rounded-full transition-colors shadow-sm ${idx === currentImageIndex ? 'bg-gray-800' : 'bg-gray-300'}`}
                                         />
                                     ))}
                                 </div>
                             </div>
                         ) : (
-                            // --- SINGLE IMAGE ---
+                            // SINGLE IMAGE (Text Mode)
                             images[0] && (
                                 <motion.div 
-                                    className="rounded-2xl shadow-2xl overflow-hidden cursor-pointer group"
+                                    className={`${frameStyle}`}
                                     onClick={() => openLightbox(images[0].path)}
                                     whileHover={{ y: -5 }}
                                 >
                                     <img 
                                         src={images[0].path} 
                                         alt={images[0].alt} 
-                                        className="w-full h-auto object-cover" 
+                                        // Allow width to auto-shrink for portrait images
+                                        className="w-auto h-auto max-h-[500px] md:max-h-[600px] max-w-full object-contain block" 
                                     />
                                 </motion.div>
                             )
@@ -147,6 +558,8 @@ const SectionRenderer = ({ section, openLightbox }) => {
         </section>
     );
 };
+
+
 
 // =====================================================================
 // MAIN COMPONENT
@@ -356,7 +769,7 @@ const ProjectDetail = () => {
             )}
 
             {/* 9. FEATURED SLIDER (Visual Gallery) */}
-            {project.slider_images?.length > 0 && (
+            {/* {project.slider_images?.length > 0 && (
                 <section className="py-24 overflow-hidden bg-white">
                      <div className="container mx-auto px-6 mb-10 flex justify-between items-end">
                         <div>
@@ -388,7 +801,54 @@ const ProjectDetail = () => {
                         ))}
                     </div>
                 </section>
-            )}
+            )} */}
+
+
+            {project.slider_images?.length > 0 && (
+    <section className="py-24 overflow-hidden bg-white">
+        <div className="container mx-auto px-6 mb-10 flex justify-between items-end">
+            <div>
+                <h2 className="text-3xl font-bold text-gray-900">Visual Gallery</h2>
+                <p className="text-gray-500 mt-2">Swipe to explore key screens</p>
+            </div>
+            <div className="hidden md:flex gap-2">
+                <ArrowLeft className="w-6 h-6 text-gray-300" />
+                <ArrowRight className="w-6 h-6 text-gray-800" />
+            </div>
+        </div>
+
+        {/* 1. Added a fixed height to the scroll container (h-[500px] or h-[60vh]) */}
+        <div className="flex space-x-6 overflow-x-auto pb-12 px-6 container mx-auto scrollbar-hide snap-x items-center">
+            {project.slider_images.map((img, i) => (
+                <motion.div 
+                    key={i} 
+                    // 2. Changed Layout Logic:
+                    // - Removed min-w-[900px]
+                    // - Added h-[400px] md:h-[600px] (Sets a consistent height for the strip)
+                    // - Added w-auto (Allows width to shrink/grow based on image ratio)
+                    className="relative shrink-0 h-[400px] md:h-[600px] w-auto snap-center group rounded-2xl overflow-hidden shadow-xl border border-gray-100 cursor-pointer"
+                    whileHover={{ scale: 1.01 }}
+                    onClick={() => setLightboxImage(img.path)}
+                >
+                    <img 
+                        src={img.path} 
+                        alt={img.alt} 
+                        // 3. Image Sizing:
+                        // - h-full (Fills the container height)
+                        // - w-auto (Adjusts width naturally to keep aspect ratio)
+                        // - object-cover (Ensures it fills the area nicely without distortion)
+                        className="h-full w-auto object-cover" 
+                    />
+                    
+                    {/* Gradient Overlay */}
+                    <div className="absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <p className="text-white font-medium truncate">{img.alt}</p>
+                    </div>
+                </motion.div>
+            ))}
+        </div>
+    </section>
+)}
 
             {/* 10. IMAGE TEXT SECTIONS (Dynamic Layouts: 1, 2, Carousel) */}
             {project.image_text_sections?.map((section, idx) => (
