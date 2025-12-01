@@ -218,7 +218,7 @@ const LogoCloud = () => {
         x: {
           repeat: Infinity,
           repeatType: 'loop',
-          duration: 45, // Slightly longer duration for smoother continuous motion
+          duration: 10, // Slightly longer duration for smoother continuous motion
           ease: 'linear',
         },
       },
