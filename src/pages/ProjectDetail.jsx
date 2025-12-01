@@ -714,7 +714,7 @@ const ProjectDetail = () => {
             )}
 
             {/* 7. KEY METRICS */}
-            {project.key_metrics?.length > 0 && (
+            {/* {project.key_metrics?.length > 0 && (
                 <section className="py-24 bg-gray-900 text-white mt-12">
                     <div className="container mx-auto px-6">
                          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
@@ -734,7 +734,7 @@ const ProjectDetail = () => {
                          </div>
                     </div>
                 </section>
-            )}
+            )} */}
 
             {/* 8. FLIP CARDS (Principles) */}
             {project.flip_card_principles?.length > 0 && (
@@ -917,7 +917,7 @@ const ProjectDetail = () => {
             )}
 
             {/* 13. QUOTE */}
-            {project.quote_data && (
+            {/* {project.quote_data && (
                 <section className="py-24 bg-indigo-900 text-white relative overflow-hidden">
                     <div className="absolute top-0 left-0 w-64 h-64 bg-indigo-500 rounded-full filter blur-3xl opacity-20 -translate-x-1/2 -translate-y-1/2"></div>
                     <div className="container mx-auto px-6 max-w-4xl text-center relative z-10">
@@ -933,10 +933,10 @@ const ProjectDetail = () => {
                         </div>
                     </div>
                 </section>
-            )}
+            )} */}
 
             {/* 14. ACCESSIBILITY */}
-            {project.accessibility_insights?.length > 0 && (
+            {/* {project.accessibility_insights?.length > 0 && (
                 <section className="py-24 container mx-auto px-6 max-w-6xl">
                     <div className="flex flex-col md:flex-row gap-12 items-center mb-12">
                         <div className="flex-1">
@@ -959,7 +959,7 @@ const ProjectDetail = () => {
                         ))}
                     </div>
                 </section>
-            )}
+            )} */}
 
             {/* 15. TOOLS USED */}
             {project.tools_used?.length > 0 && (
@@ -979,7 +979,7 @@ const ProjectDetail = () => {
             )}
             
             {/* 16. CTA / FOOTER */}
-            {project.call_to_action && (
+            {/* {project.call_to_action && (
                 <section className="py-20 container mx-auto px-6 mb-12">
                     <div 
                         className="rounded-[2.5rem] p-12 md:p-24 text-center text-white shadow-2xl relative overflow-hidden"
@@ -1000,7 +1000,7 @@ const ProjectDetail = () => {
                         </div>
                     </div>
                 </section>
-            )}
+            )} */}
 
             {/* 17. LIGHTBOX */}
             <AnimatePresence>
