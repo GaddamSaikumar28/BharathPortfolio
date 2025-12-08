@@ -229,10 +229,10 @@ const LogoCloud = () => {
     <section className="py-20 bg-gradient-to-r from-blue-50 to-indigo-50 overflow-hidden relative">
       <div className="container mx-auto px-4 mb-12 relative z-10">
         <h3 className="text-center text-lg font-extrabold tracking-tight text-gray-800 sm:text-2xl mb-2">
-          Trusted by Industry Leaders
+          Reimaginig UI UX for Global Leaders
         </h3>
         <p className="text-center text-md text-gray-600 max-w-2xl mx-auto">
-          Powering innovation and growth for businesses across various sectors.
+          Concept driven UI / UX redesigns inspired by Amazon, Google, Walmart and more.
         </p>
       </div>
 
