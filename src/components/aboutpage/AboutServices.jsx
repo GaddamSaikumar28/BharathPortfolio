@@ -36,10 +36,10 @@ const AboutServices = () => {
           <h2 className="text-4xl font-extrabold text-gray-900">
             What I Do
           </h2>
-          <p className="text-lg text-gray-600 mt-4">
+          {/* <p className="text-lg text-gray-600 mt-4">
             I offer a complete suite of design services to bring your
             vision from concept to completion.
-          </p>
+          </p> */}
         </AnimateOnScroll>
 
         <motion.div

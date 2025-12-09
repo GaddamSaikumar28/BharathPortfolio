@@ -34,7 +34,7 @@ const AboutValues = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <AnimateOnScroll className="text-center max-w-2xl mx-auto mb-16">
           <h2 className="text-4xl font-extrabold text-gray-900">
-            Our Core Values
+            My Core Values
           </h2>
           <p className="text-lg text-gray-600 mt-4">
             The principles that guide my work and collaboration.
